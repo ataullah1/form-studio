@@ -8,7 +8,7 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [x] Step 1 Repository and 3D integration
 - [x] Step 2 Desk geometry and camera
 - [ ] Step 3 Materials and visual quality — implementation verified; physical-phone acceptance pending
-- [ ] Step 4 Sizes and accessories
+- [x] Step 4 Sizes and accessories
 - [ ] Step 5 Lighting and interaction
 - [ ] Step 6 Pricing and local draft
 - [ ] Step 7 Save and share backend
@@ -18,7 +18,18 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [ ] Step 11 Tests and mobile performance
 - [ ] Step 12 Release and portfolio
 
-## Current session — Step 3 implementation
+## Current session — Step 4 sizes and accessories
+
+- Implemented typed canonical ProductConfiguration reducer with explicit invalid-ID/version/extra-field rejection and known-accessory deduplication/order. Scene, controls, 2D dimensions and itemized illustrative estimate consume the same state. No persistence/share payload transmission introduced.
+- Enabled 120×60, 140×70 and 160×80 cm selection. Existing metre-based slab/frame functions now drive the rendered desk; no whole-model scale. Added fixed-anchor original lamp, monitor stand and underside cable tray. Their dimensions stay fixed while edge-derived anchors move with size.
+- Added Reset configuration: default 140×70 oak/black, no accessories. Desk/accessory quantity is fixed at one. Quote draft stays separate. Camera fits selected accessory height and preserves its position on finish/frame-only changes.
+- Verification: lint, typecheck, 58 unit tests and production build passed. Full production-browser suite: 22 passed (50.1s). Strengthened reset-image comparison and shared pixel helper subsequently verified in a targeted six-test configuration/camera run. Tests cover all 24 size/accessory subsets at desktop/mobile widths, rapid changes, reset, invalid inputs, independent accessory dimensions, frame clearance and fitted accessory corners. Existing material/fallback/lazy-loading tests passed.
+- Visual review: all accessories enabled at each size at 1440/768/390/360 px; no horizontal overflow or page errors in viewport audit. Reviewed smallest desktop composition and largest mobile composition; lamp and stand fit without overlap, with fixed proportions. Tray lives below the rear tabletop and can be occluded in the default view. Evidence: docs/evidence/step-4/README.md.
+- Device limits: macOS installed Chrome 155.0.8059.85, headless software WebGL and emulated viewports. No physical phone/Safari/Android or hardware performance test; prior Step 3 physical-phone acceptance remains pending. User requested continuing to Step 4; no backend work performed.
+- No new third-party assets/dependencies. No commit, push or deployment. Suggested commit: feat: add desk sizes and fixed-anchor accessories.
+- Next functional step: Step 5 — lighting presets and camera interaction, when requested.
+
+## Previous session — Step 3 implementation
 
 - Implemented three separate licensed oak/walnut/ash map sets, black/white frame selection and shared finish/frame state. Summary updates immediately, including the catalog walnut surcharge; selected labels also work in the 2D view. Sizes/accessories, save/share and quote submission remain disabled.
 - Added correctly annotated sRGB colour/data maps, metre-based grain scale, low normal strength, matte finish presets and a finite reduced-motion-aware material reveal. Screenshot review corrected overly pale walnut with a documented finish coat over its distinct source map.

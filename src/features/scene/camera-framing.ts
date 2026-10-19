@@ -1,10 +1,10 @@
-import type { DeskDimensions, Triple } from './desk-dimensions';
+import type { Triple } from './desk-dimensions';
 
 export const CAMERA_FOV = 38;
 export interface CameraCommand { revision: number; action: 'reset' | 'zoom-in' | 'zoom-out' }
 
 /** Fit a bounding sphere to the smaller camera field of view, including portrait screens. */
-export function calculateCameraFraming(dimensions: DeskDimensions, aspect: number) {
+export function calculateCameraFraming(dimensions: { width: number; height: number; depth: number }, aspect: number) {
   if (!Number.isFinite(aspect) || aspect <= 0) throw new Error('Camera aspect must be positive');
   const radius = Math.hypot(dimensions.width / 2, dimensions.height / 2, dimensions.depth / 2);
   const verticalHalfFov = CAMERA_FOV * Math.PI / 360;

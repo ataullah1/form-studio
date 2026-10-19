@@ -51,3 +51,7 @@ All three sets are by **Jenelle van Heerden**, distributed by Poly Haven under *
 Downloaded Diffuse, OpenGL normal (`nor_gl`) and Rough JPEG maps at 1k from Poly Haven's official files API. Original MD5 verified against API metadata. Converted with sharp 0.35.5 in temporary asset tooling (no app dependency), 1024², metadata stripped: colour WebP quality 85; normal/roughness lossless WebP retaining the original JPEG samples. No source colour grading or resampling beyond the declared output size. Exact download URLs, hashes, output hashes, authors and bytes are in [texture-sources.json](evidence/step-3/texture-sources.json). Nine outputs total approximately 4.1 MiB; no 4K/HDRI/GLB files.
 
 Runtime finish coats multiply each separate source colour map (oak #e5bb80, walnut #765039, ash #fff5df), with species-specific roughness/normal strength. These are art-directed concept finishes, not measured manufacturer colour samples. Option swatches use the same source colour maps and coat colours; landing grain illustrations remain explicitly illustrative. Colour maps are sRGB; normal and roughness are untransformed data maps. One tile spans one metre using the extrusion's metre UVs, with grain along the width. See SCENE.md for ownership and rendering details.
+
+## Step 4 accessories
+
+Lamp, monitor stand and cable tray in src/features/scene/desk-accessories.tsx are original code-authored box/cylinder geometry. No third-party model, image, HDRI or dependency added. Existing Step 3 texture rights and ownership are unchanged.

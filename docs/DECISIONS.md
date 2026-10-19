@@ -67,3 +67,11 @@
 - Use a finite reduced-motion-aware material reveal and keep demand rendering. Full lighting/interaction expansion remains Step 5.
 - Verify six combinations, failure/retry, stale downloads, teardown and thirty switches. Report physical-phone and hardware-GPU checks as pending; do not mark the first desktop-and-phone milestone accepted from emulation alone.
 - No commit, push or deployment; provide the user a commit message.
+
+## Step 4 — canonical configuration and fixed accessories
+
+- Replace the small appearance state with a typed reducer over ProductConfiguration. Pass the canonical state to controls, scene, itemized display estimate and 2D dimensions; reject invalid IDs/versions/extra fields and normalize known accessory order/duplicates. No share transport or local draft persistence yet.
+- Enable three catalog sizes; reuse metre-based desk geometry/rails/leg placement. Add original code-modeled lamp, stand and tray at edge-derived fixed anchors with independent dimensions and frame-matching surfaces. No drag placement or lamp lighting (Step 5).
+- Include selected accessory height in camera bounds; preserve camera through finish/frame changes. Reset configuration restores default product state and leaves quote draft separate.
+- Verify all three sizes × eight accessory subsets with physical bounds/camera tests and desktop/mobile browser integration. Record viewport emulation honestly; prior real-phone material acceptance remains pending. User explicitly requested proceeding to the next step.
+- Preserve user workflow: no automatic commit, push or deployment; provide a commit message.

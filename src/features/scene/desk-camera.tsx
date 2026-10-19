@@ -5,9 +5,8 @@ import { useThree } from '@react-three/fiber';
 import { useCallback, useLayoutEffect, useMemo, useRef, type ComponentRef } from 'react';
 import { PerspectiveCamera } from 'three';
 import { calculateCameraFraming, type CameraCommand } from './camera-framing';
-import type { DeskDimensions } from './desk-dimensions';
 
-export function DeskCamera({ dimensions, command }: { dimensions: DeskDimensions; command: CameraCommand }) {
+export function DeskCamera({ dimensions, command }: { dimensions: { width: number; height: number; depth: number }; command: CameraCommand }) {
   const camera = useThree(state => state.camera);
   const size = useThree(state => state.size);
   const invalidate = useThree(state => state.invalidate);

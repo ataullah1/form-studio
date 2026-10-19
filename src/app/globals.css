@@ -331,3 +331,7 @@ img, svg { display: block; }
 .swatch.oak { background-color: #e5bb80; background-blend-mode: multiply; }
 .swatch.walnut { background-color: #765039; background-blend-mode: multiply; }
 .swatch.ash { background-color: #fff5df; background-blend-mode: multiply; }
+
+.panel fieldset:enabled .extra { cursor: pointer; color: var(--colour-ink); }
+.extra input:focus-visible { outline: 3px solid var(--colour-accent); outline-offset: 3px; }
+.configuration-reset { margin: 0 0 28px; width: 100%; min-height: 44px; }

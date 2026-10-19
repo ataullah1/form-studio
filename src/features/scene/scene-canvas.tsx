@@ -3,22 +3,24 @@
 import { Canvas } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import { PCFSoftShadowMap, type WebGLRenderer } from 'three';
-import { defaultConfiguration } from '@/lib/catalog';
 import { deriveDeskDimensions } from './desk-dimensions';
 import { DeskModel } from './desk-model';
+import { deriveProductBounds } from './accessory-layout';
 import { DeskCamera } from './desk-camera';
 import { CAMERA_FOV, type CameraCommand } from './camera-framing';
-import type { AppearanceSelection } from '../configurator/appearance';
+import type { ProductConfiguration } from '@/lib/catalog';
 import type { TextureReport } from './wood-surface';
 
-interface Props { onReady: () => void; onUnavailable: () => void; command: CameraCommand; appearance: AppearanceSelection; attempt: number; onTextureStatus: (report: TextureReport) => void }
+interface Props { onReady: () => void; onUnavailable: () => void; command: CameraCommand; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }
 
-export default function SceneCanvas({ onReady, onUnavailable, command, appearance, attempt, onTextureStatus }: Props) {
+export default function SceneCanvas({ onReady, onUnavailable, command, configuration, attempt, onTextureStatus }: Props) {
   const sceneColours = useMemo(() => {
     const tokens = getComputedStyle(document.documentElement);
     return { surface: tokens.getPropertyValue('--colour-scene').trim(), shadow: tokens.getPropertyValue('--colour-ink').trim() };
   }, []);
-  const dimensions = useMemo(() => deriveDeskDimensions(defaultConfiguration.sizeId), []);
+  const dimensions = useMemo(() => deriveDeskDimensions(configuration.sizeId), [configuration.sizeId]);
+  const productHeight = deriveProductBounds(dimensions, configuration).height;
+  const framingDimensions = useMemo(() => ({ width: dimensions.width, depth: dimensions.depth, height: productHeight }), [dimensions, productHeight]);
   const renderer = useRef<WebGLRenderer | null>(null);
   const readyFrame = useRef<number | null>(null);
 
@@ -57,7 +59,7 @@ export default function SceneCanvas({ onReady, onUnavailable, command, appearanc
       renderer.current = gl;
       readyFrame.current = requestAnimationFrame(onReady);
     }}
-    aria-label="Interactive Studio Desk 01 material preview, 140 by 70 centimetres"
+    aria-label={`Interactive Studio Desk 01 material preview, ${dimensions.width * 100} by ${dimensions.depth * 100} centimetres`}
   >
     <color attach="background" args={[sceneColours.surface]} />
     <ambientLight intensity={1.15} />
@@ -78,11 +80,11 @@ export default function SceneCanvas({ onReady, onUnavailable, command, appearanc
       shadow-radius={3}
     />
     <directionalLight position={[2, 2, -3]} intensity={0.7} />
-    <DeskModel dimensions={dimensions} appearance={appearance} attempt={attempt} onTextureStatus={onTextureStatus} />
+    <DeskModel dimensions={dimensions} configuration={configuration} attempt={attempt} onTextureStatus={onTextureStatus} />
     <mesh name="floor" rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
       <planeGeometry args={[200, 200]} />
       <shadowMaterial color={sceneColours.shadow} transparent opacity={0.18} />
     </mesh>
-    <DeskCamera dimensions={dimensions} command={command} />
+    <DeskCamera dimensions={framingDimensions} command={command} />
   </Canvas>;
 }

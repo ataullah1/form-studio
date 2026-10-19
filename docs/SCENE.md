@@ -4,7 +4,7 @@
 
 All dimensions are metres. X is width, Y is up, Z is depth; negative Z is the rear. The origin is at the floor under the centre of the desk. The floor is y=0, the tabletop surface is y=0.74, its underside is y=0.71, and its centre is y=0.725. The default product footprint is 1.40 × 0.70.
 
-`deriveDeskDimensions(sizeId)` is the single pure source of geometry measurements. It supports all three catalog sizes, but the public size selector remains disabled until Step 4. No nonuniform whole-model scaling is used.
+`deriveDeskDimensions(sizeId)` is the single pure source of geometry measurements. It supports all three catalog sizes; Step 4 enables the public size selector. No nonuniform whole-model scaling is used.
 
 ## Model construction
 
@@ -62,7 +62,7 @@ A geometry describes shape, a material describes surface response to light, and 
 
 ## Step 3 surfaces and resource ownership
 
-`Configurator` owns only finish/frame state; its partial functional updates feed both HTML summary and lazy scene. Size is still the default catalog size. The small illustrative estimate includes the catalog walnut surcharge; the full pricing/validation engine remains Step 6. Selection is immediately visible even while textures download. 2D references use the selected finish/frame labels.
+Step 3 initially gave `Configurator` only finish/frame state; its partial functional updates feed both HTML summary and lazy scene. Step 4 supersedes that state with the full canonical configuration below. The small illustrative estimate includes the catalog walnut surcharge; the full pricing engine remains Step 6. Selection is immediately visible even while textures download. 2D references use the selected finish/frame labels.
 
 Each finish has independent 1k colour, OpenGL normal and roughness maps. Colour uses SRGBColorSpace; data maps use NoColorSpace. ImageBitmap decoding disables colour conversion/premultiplication and explicitly flips Y; Texture.flipY remains false. Source grain was visually checked as horizontal: texture rotation is zero, aligned with tabletop width. ExtrudeGeometry's metre-based XY UVs and a 1/m tile repeat preserve the one-metre source scale. Offset centres the tile. Edge UVs are the extrusion's procedural wrapping, not modeled end grain or veneer seams.
 
@@ -73,3 +73,25 @@ Each mounted WoodSurface creates one `WoodTextureLibrary`; no global useLoader c
 Keep the previous successful material while a new finish downloads. If a map fails, show a neutral surface, explicit message and Retry finish button while preserving summary/camera/frame. Stale selections cannot overwrite the latest selection. Unmount aborts pending fetches, disposes all owned textures and closes decoded ImageBitmaps, including late decodes. R3F owns declarative materials/geometries and renderer; the library exclusively owns manually loaded textures/bitmaps.
 
 See [Step 3 evidence](evidence/step-3/README.md). Physical-phone/GPU checks remain pending; desktop software rendering is not evidence of mobile hardware performance.
+
+## Step 4 configuration and accessories
+
+One `useReducer` in Configurator owns the complete catalog-versioned ProductConfiguration. Controls dispatch typed size/finish/frame/accessory/reset actions; scene, HTML estimate and 2D summary receive that same object. No duplicate UI configuration or persistence. `normalizeConfiguration` rejects unknown IDs, metadata versions and extra fields, and gives known accessories canonical catalog order/set semantics. There is one desk and at most one of each accessory. No share transport is implemented yet; its future input must use the same validation contract.
+
+The three footprints derive tabletop geometry, leg spacing, rails and crossbar from metres, without whole-model scaling. R3F disposes replaced declarative geometry/materials. Finish textures remain owned by the existing per-viewer library and survive size changes. Reset configuration restores the 140×70 oak/black desk with no accessories; it leaves the unsaved quote draft alone.
+
+Fixed bottom-centre anchors in `deriveAccessoryLayout`:
+
+| Accessory | Anchor | Fixed dimensions / construction |
+| --- | --- | --- |
+| Lamp | Left edge +0.14 m, rear edge +0.14 m, tabletop surface | 14 cm diameter base, 32 cm pole, angled shade; conservative 22×44×16 cm bounding envelope |
+| Monitor stand | Width centre, rear edge +0.16 m, tabletop surface | 46×20 cm top, 11 cm total height, two fixed supports |
+| Cable tray | Width centre, rear edge +0.19 m, underside −0.105 m | 50×12 cm tray, shallow lips, two mounting brackets reaching underside |
+
+All parts are original code geometry with matte frame-matching materials; no downloads/models added. Stand/lamp rest on the top; tray/brackets stay below it and clear the rear/side rails at all sizes. Attachment surfaces intentionally meet. No arbitrary drag placement, emissive lamp/light contribution or night preset in this step.
+
+Camera framing uses the product bounds including selected accessory height. Size/height changes reframe the whole product; changing finish/frame or an accessory that leaves bounds unchanged preserves the current camera. This changes framing only, not mesh scale or grain scale. Existing orbit/zoom limits, error boundary, demand rendering and fallback remain.
+
+The 2D schematic updates numeric dimensions and explicitly lists selected accessories; it is labelled not to scale and does not illustrate accessory geometry. The live estimate adds size, walnut surcharge and unique accessories from catalog facts; server-authoritative pricing, draft storage and backend work remain future steps.
+
+Evidence: [Step 4 tests and screenshots](evidence/step-4/README.md). Real-phone checks remain unperformed.
