@@ -1,13 +1,18 @@
 'use client';
 
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { useEffect, useRef } from 'react';
-import type { WebGLRenderer } from 'three';
+import { useEffect, useMemo, useRef } from 'react';
+import { PCFSoftShadowMap, type WebGLRenderer } from 'three';
+import { defaultConfiguration } from '@/lib/catalog';
+import { deriveDeskDimensions } from './desk-dimensions';
+import { DeskModel } from './desk-model';
+import { DeskCamera } from './desk-camera';
+import { CAMERA_FOV, type CameraCommand } from './camera-framing';
 
-interface Props { onReady: () => void; onUnavailable: () => void }
+interface Props { onReady: () => void; onUnavailable: () => void; command: CameraCommand }
 
-export default function SceneCanvas({ onReady, onUnavailable }: Props) {
+export default function SceneCanvas({ onReady, onUnavailable, command }: Props) {
+  const dimensions = useMemo(() => deriveDeskDimensions(defaultConfiguration.sizeId), []);
   const renderer = useRef<WebGLRenderer | null>(null);
   const readyFrame = useRef<number | null>(null);
 
@@ -38,23 +43,40 @@ export default function SceneCanvas({ onReady, onUnavailable }: Props) {
   return <Canvas
     frameloop="demand"
     dpr={[1, 1.5]}
-    camera={{ position: [2.6, 2, 3], fov: 42 }}
+    camera={{ position: [2, 1.8, 2.7], fov: CAMERA_FOV, near: 0.025, far: 40 }}
+    shadows={{ type: PCFSoftShadowMap }}
     gl={{ antialias: true, alpha: false }}
     fallback={<div role="status">3D unavailable. Please use the 2D view.</div>}
     onCreated={({ gl }) => {
       renderer.current = gl;
       readyFrame.current = requestAnimationFrame(onReady);
     }}
-    aria-label="Interactive 3D integration test object; this is not the final desk"
+    aria-label="Interactive Studio Desk 01 geometry preview, 140 by 70 centimetres"
   >
     <color attach="background" args={['#eaece3']} />
-    <ambientLight intensity={1.4} />
-    <directionalLight position={[3, 4, 2]} intensity={2} />
-    <mesh rotation={[0.15, 0.4, 0]}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="#b58d5f" roughness={0.65} />
+    <ambientLight intensity={1.15} />
+    <hemisphereLight args={['#fff9ee', '#9b9f8e', 1.1]} />
+    <directionalLight
+      position={[-2, 4, 2]}
+      intensity={2.1}
+      castShadow
+      shadow-mapSize={[1024, 1024]}
+      shadow-camera-left={-2.5}
+      shadow-camera-right={2.5}
+      shadow-camera-top={2.5}
+      shadow-camera-bottom={-2.5}
+      shadow-camera-near={0.1}
+      shadow-camera-far={10}
+      shadow-normalBias={0.012}
+      shadow-bias={-0.0001}
+      shadow-radius={3}
+    />
+    <directionalLight position={[2, 2, -3]} intensity={0.7} />
+    <DeskModel dimensions={dimensions} />
+    <mesh name="floor" rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+      <planeGeometry args={[200, 200]} />
+      <meshStandardMaterial color="#eaece3" roughness={1} />
     </mesh>
-    <gridHelper args={[5, 10, '#aeb7a2', '#d1d7c8']} position={[0, -0.8, 0]} />
-    <OrbitControls makeDefault enablePan={false} minDistance={2} maxDistance={7} maxPolarAngle={Math.PI / 2} />
+    <DeskCamera dimensions={dimensions} command={command} />
   </Canvas>;
 }

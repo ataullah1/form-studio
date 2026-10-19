@@ -30,3 +30,12 @@
 - Kept catalog-backed HTML controls, summary and quote draft outside the scene boundary. Product selectors are disabled until Step 4. Quote fields can be typed into but have no form action/storage/submission until Step 8. No mock success is shown.
 - Added focused catalog invariant checks and production-browser integration checks. Browser evidence is viewport emulation on desktop Chrome with software rendering; no real-device/GPU-performance claim.
 - Fixed Tailwind integration overflow by scoping product legend styles rather than suppressing body overflow.
+
+## Step 2 — Physical desk and responsive camera
+
+- Use a pure metre-based dimension function across all three catalog sizes, with a separate extruded tabletop, 13 frame/foot components and no whole-group scale. Rounded corners are 35 mm, edge bevel 4 mm; compensate for bevel expansion to preserve published size/thickness. See SCENE.md.
+- Use neutral matte tabletop/charcoal frame materials and simple fixed lighting/shadow floor. Wood presets, texture ownership and finish UI remain Step 3; accessories/state remain Step 4.
+- Fit a conservative product bounding sphere to the narrower perspective field of view, with a 12% distance margin. Resize reframes automatically. Disable pan, damping and auto-rotate; bound vertical orbit/zoom so the closest/lowest legal camera stays above the tabletop. Reset/zoom buttons are outside Canvas.
+- Keep camera-command revisions separate from product configuration; do not reapply an old zoom command on resize.
+- Retain explicit lazy loading and every Step 1 fallback/draft boundary. Update UI labels from integration fixture to geometry preview.
+- Verify actual extrusion bounds, physical joints, projected camera corners, rendered reset/zoom behavior, viewport/orientation behavior and a short idle/context-release sample. Real-phone checks remain unperformed and are recorded honestly.

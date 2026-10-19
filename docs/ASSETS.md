@@ -21,3 +21,7 @@ Use simple self-owned scene lighting initially. HDR environment and GLB models a
 | Step 1 cube/grid | Original code geometry using installed Three/Fiber/Drei libraries | No external texture/model files; libraries retain their package licenses | None | Integration fixture, not final desk |
 
 No new external texture, GLB, HDRI or font assets have been introduced.
+
+## Step 2 additions
+
+The runtime cube/grid has been replaced by original parameterized desk geometry in desk-model.tsx, desk-dimensions.ts and tabletop-shape.ts. Tabletop outline/extrusion, rounded frame/feet and floor are code-authored; neutral Three standard materials use no image textures. Fixed lights/shadow maps replace the integration grid. No external model/texture/font/HDRI downloads were introduced. Step 1 screenshots remain historical test-fixture evidence; Step 2 images show the actual neutral desk.

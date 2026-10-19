@@ -6,7 +6,7 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 
 - [x] Step 0 Scope and screen plan
 - [x] Step 1 Repository and 3D integration
-- [ ] Step 2 Desk geometry and camera
+- [x] Step 2 Desk geometry and camera
 - [ ] Step 3 Materials and visual quality
 - [ ] Step 4 Sizes and accessories
 - [ ] Step 5 Lighting and interaction
@@ -20,16 +20,16 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 
 ## Current session
 
-- Current step: Step 1 complete — repository and client-only 3D integration verified.
-- Completed work: initialized independent local Git repository; pinned pnpm/dependencies/lockfile; implemented Next App Router/TypeScript/Tailwind shell, landing and configure routes, typed versioned catalog, lazy R3F test scene, loading/timeout/error/context-loss handling, accessible 2D schematic and editable HTML quote draft outside Canvas. Original Step 0 preview retained.
-- Changed files: package.json, pnpm-lock.yaml, pnpm-workspace.yaml, Next/TypeScript/ESLint/PostCSS/Vitest/Playwright configs; src/app; src/features/scene, configurator and quotes; src/lib/catalog; public/assets; tests/e2e; README and planning/evidence documents.
-- Checks and actual results: PASS — frozen-lockfile install, lint, typecheck, 3 Vitest tests, production build and all 12 Playwright browser tests. Repeated all quality checks and the browser suite from an isolated clean index export with no copied node_modules/.next. Tests confirm deferred renderer download, WebGL fallback, loading state, lazy-module and renderer failures, context-loss fallback, repeated navigation, no-JavaScript HTML, and no horizontal overflow at 360/390/768/1440 px.
-- Device and browser tested: macOS, Node 26.7.0, pnpm 11.21.0, headless Google Chrome 155.0.8059.85 through Playwright with software WebGL. Mobile widths are emulated; no real-phone/Safari/Android check or hardware-GPU benchmark.
-- Visual review: eight Step 1 screenshots saved; desktop/mobile test scene and mobile landing inspected. Evidence and installed dependency metadata are in docs/evidence/step-1/.
-- Known limits: test cube/grid only; no finished desk or textures. Product choices remain visibly disabled until Step 4; quote fields are editable drafts with no submission/storage until Step 8. No backend/auth/deployment. ESLint 9 tooling compatibility limitation recorded in docs/DEPENDENCIES.md.
-- Decisions: see docs/DECISIONS.md and docs/DEPENDENCIES.md. No push, deployment, purchase or production-data operation.
-- Commit: Step 0/1 baseline is included in the local commit titled "feat: establish Form Studio app and client-only 3D integration"; use git log -1 for its hash.
-- Next task: Step 2 only — replace integration fixture with parameterized metre-based desk geometry, beveled tabletop, separate frame/legs/crossbar, floor contact, bounded orbit/zoom/reset and responsive portrait/landscape framing. Defer wood textures/accessories/backend to their roadmap steps.
+- Current step: Step 2 complete — parameterized desk geometry and responsive camera.
+- Completed work: replaced cube/grid with a 140×70 cm default desk, 74 cm surface height, 3 cm beveled rounded tabletop, independent metal legs/rails/rear crossbar/feet, floor and contact shadow. Pure geometry functions support all three catalog footprints. Added bounded orbit/zoom, keyboard-operable zoom/reset buttons and container-aware reset/reframing after orientation changes. Preserved lazy loading and every Step 1 fallback/draft boundary.
+- Changed files: src/features/scene/{desk-dimensions,tabletop-shape,desk-model,camera-framing,desk-camera,desk-geometry.test}; scene-canvas/scene-viewer; app labels/styles; foundation browser checks and new desk-camera checks; README, SCENE/ASSETS/DECISIONS and Step 2 evidence. Next regenerated next-env.d.ts production type paths during build.
+- Checks and actual results: PASS — lint, typecheck, 24 unit tests and production build. Full production browser pass: 15 tests passed; an additional idle/context-release test passed, bringing unique browser checks to 16. Strengthened orbit/zoom/orientation test passed in a targeted rerun. No product-code changes followed the production build. See docs/evidence/step-2/README.md for exact runs and screenshot artifacts.
+- Device and browser tested: macOS, Node 26.7.0, pnpm 11.21.0, Chrome 155.0.8059.85 through Playwright with software WebGL. Screenshots at 1440×900, 768×900, 390×844, 360×800 and 844×390. These are emulated viewports; real-phone/Safari/Android and hardware-GPU tests remain unperformed.
+- Visual review: desktop, mobile portrait and landscape desk images inspected; the default desk fits, corners/bevels are visible and feet meet the shadowed floor. Neutral materials only; no wood-quality milestone claimed.
+- Known limits: wood finishes/frame selectors belong to Step 3; interactive sizes/accessories to Step 4. All sizes have geometry/math tests, but only the default footprint is publicly rendered. Close zoom intentionally allows cropped inspection; Reset returns a full fit. Quote fields remain unsaved drafts; no backend/admin/deployment. Short idle/context checks do not prove long-duration memory or phone performance.
+- Decisions: see docs/SCENE.md and docs/DECISIONS.md; existing dependency versions retained.
+- Commit: local commit titled "feat: add parameterized desk geometry and responsive camera"; use git log -1 for its hash. No push or deployment.
+- Next task: Step 3 only — select/document licensed self-hosted oak, walnut and ash texture maps, add two frame colour presets, handle colour space/resource ownership/loading failures and review materials on desktop/phone where available.
 
 ## Evidence rules
 

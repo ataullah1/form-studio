@@ -1,6 +1,6 @@
 # Form Studio
 
-An independent furniture configurator concept by Md Ataullah. Steps 0 and 1 are implemented: responsive screen plan, Next.js application shell, typed catalog and an on-demand client-only 3D integration test. The test cube is intentionally labelled; the finished desk belongs to Steps 2–3.
+An independent furniture configurator concept by Md Ataullah. Steps 0–2 are implemented: responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The current scene uses neutral geometry-review materials; wood finishes belong to Step 3.
 
 ## Run locally
 
@@ -11,7 +11,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://localhost:3000. The landing is prerendered HTML. Build your desk opens `/configure`; Load 3D test scene then downloads the renderer. No credentials, database or .env file is needed in Step 1.
+Open http://localhost:3000. The landing is prerendered HTML. Build your desk opens `/configure`; View desk in 3D then downloads the renderer. No credentials, database or .env file is needed in Step 1.
 
 ```sh
 pnpm lint
@@ -37,20 +37,20 @@ Tests own a production server on **127.0.0.1:4173**; leave that port free. Alter
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:e2e
 ```
 
-Chromium is launched with software-WebGL support for headless QA. This is not a mobile GPU benchmark. Tests cover deferred renderer loading, healthy WebGL, unavailable WebGL, failed scene download, slow download, context loss, navigation teardown, no-JavaScript HTML and four viewport widths. Reports/traces are ignored by Git.
+Chromium is launched with software-WebGL support for headless QA. This is not a mobile GPU benchmark. Tests cover deferred renderer loading, healthy/unavailable WebGL, module/renderer failures, slow download, context loss, navigation teardown, no-JavaScript HTML, four viewport widths, orbit/zoom/reset, orientation changes and idle resource release. Reports/traces are ignored by Git.
 
 ## Current behavior and limits
 
 - `/`: English product landing, with an explicitly described static concept illustration. No Canvas is mounted here.
-- `/configure`: catalog-backed default facts, disabled planned product selectors, $399 illustrative default estimate, accessible 2D dimensions and an optional 3D test object.
+- `/configure`: catalog-backed default facts, disabled planned product selectors, $399 illustrative default estimate, accessible 2D dimensions and an optional interactive 3D desk.
 - Renderer load/start errors, unavailable WebGL2, a 20-second startup timeout or context loss show a 2D schematic. Summary and editable quote draft fields stay outside the renderer boundary.
 - Quote fields are a **local draft only**, with no form action, persistence or transmission. Submission is disabled until Step 8. Do not use real contact details for demo checks.
-- Finish/size/accessory state, real desk geometry, pricing validation/engine, localStorage, share persistence, quote backend and admin are future steps. No claims of manufacturing suitability or sales performance.
+- Wood materials, finish/size/accessory state, pricing validation/engine, localStorage, share persistence, quote backend and admin are future steps. No claims of manufacturing suitability or sales performance.
 
 ## Project structure
 
 - `src/app`: server-rendered routes, root layout and styles.
-- `src/features/scene`: client-only viewer, lazy Canvas, error boundary and standalone 2D schematic.
+- `src/features/scene`: client-only viewer, parameterized desk, pure dimensions/framing, bounded camera, lazy Canvas, error boundary and standalone 2D schematic.
 - `src/features/configurator`: HTML option/summary shell.
 - `src/features/quotes`: HTML quote draft, isolated from WebGL.
 - `src/lib/catalog`: versioned product facts and configuration types.
@@ -65,6 +65,7 @@ Chromium is launched with software-WebGL support for headless QA. This is not a 
 - [Scope](docs/SCOPE.md), [catalog specification](docs/CATALOG.md), [screen baseline](docs/SCREEN-PLAN.md)
 - [Dependency compatibility](docs/DEPENDENCIES.md)
 - [Assets](docs/ASSETS.md), [decisions](docs/DECISIONS.md)
-- [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md)
+- [Scene geometry and camera guide](docs/SCENE.md)
+- [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
-Next: **Step 2 only**, parameterized desk geometry and responsive camera. No push, deployment, external accounts, payments or database provisioning has been performed.
+Next: **Step 3 only**, licensed self-hosted wood finishes, frame colours and visual-quality review. No push, deployment, external accounts, payments or database provisioning has been performed.
