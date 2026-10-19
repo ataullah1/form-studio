@@ -1,0 +1,32 @@
+# Decisions
+
+## 2026-10-19 — Step 0
+- Keep the supplied full roadmap at docs/ROADMAP.md and the active checklist at docs/PROGRESS.md; retain the original source documents.
+- Use a dependency-free HTML/CSS screen plan in preview/ so layout work does not prematurely pick framework versions or implement Step 1. Later translate the accepted design into Next.js components.
+- Preview uses one responsive document for landing and desktop/mobile configurator compositions. Mobile uses a stacked panel before considering a sheet/tab interaction.
+- Use an original SVG composition and CSS swatches as visibly labelled placeholders. They are not finished 3D/material assets. No AI-generated or third-party imagery is needed for Step 0.
+- Keep unavailable product actions disabled and state their planned status; do not simulate saved configurations or successful quote requests.
+- Adopt the IDs and schema/catalog versions in CATALOG.md as the initial specification. Roadmap remains authoritative for product scope.
+- Do not push, deploy, buy services or create external accounts during this local planning step.
+
+## Details to settle in later steps
+- Step 1: verify stable compatible Next.js/React/Three/Fiber/Drei releases using official documentation, pin pnpm and lockfile. No package compatibility claim is made in Step 0.
+- Step 7: persist configuration-save idempotency keys plus payload fingerprint; define retry and conflict behavior. The roadmap's minimal database list does not explicitly list these fields.
+- Step 8/12: specify the scheduled seven-day quote-contact purge, status-event retention and cleanup authorization; no personal information in public snapshots.
+- Step 3/11: owner visual review and physical mobile testing; record devices and evidence rather than assuming headless rendering proves mobile GPU performance.
+
+## Step 0 finalization
+- Completed a local installed-Chrome browser review through temporary Playwright tooling without introducing project dependencies. Saved the final four-width screenshots and measurements in docs/evidence/step-0/.
+- Final screen baseline is docs/SCREEN-PLAN.md. The user's request to finish Step 0 authorizes finalizing this deliverable; it is not recorded as personal approval of screenshots.
+- Keep Git initialization in Step 1 as planned; no standalone initialization/commit is performed in this static planning step.
+
+## Step 1 — Next.js foundation and client-only scene
+
+- Initialized an independent local Git repository on main, keeping the original roadmap and Step 0 preview intact. No remote, push or deployment.
+- Added a Next App Router/TypeScript/Tailwind application with exact dependency pins and a pnpm lockfile. See DEPENDENCIES.md for checked versions, official references and the documented ESLint 9 peer-compatibility limitation.
+- Landing is a prerendered Server Component; `/configure` isolates the viewer. Only SceneViewer is a client entry; next/dynamic with ssr:false loads the R3F/Drei/Three module after explicit user request. No renderer code is imported by landing components.
+- Kept the integration fixture a clearly labelled cube/grid. Do not confuse it with the Step 2 desk or Step 3 material-quality milestone.
+- Viewer loading/module errors and renderer exceptions are scoped by a React boundary. WebGL2 capability failure, startup timeout and context loss use an accessible 2D dimension schematic. R3F owns scene/renderer disposal; native context-loss listeners and startup timers have teardown paths.
+- Kept catalog-backed HTML controls, summary and quote draft outside the scene boundary. Product selectors are disabled until Step 4. Quote fields can be typed into but have no form action/storage/submission until Step 8. No mock success is shown.
+- Added focused catalog invariant checks and production-browser integration checks. Browser evidence is viewport emulation on desktop Chrome with software rendering; no real-device/GPU-performance claim.
+- Fixed Tailwind integration overflow by scoping product legend styles rather than suppressing body overflow.

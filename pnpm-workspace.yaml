@@ -1,0 +1,5 @@
+# A single-package workspace; pnpm 11 reads project settings here.
+saveExact: true
+strictPeerDependencies: true
+allowBuilds:
+  unrs-resolver: true

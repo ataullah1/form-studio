@@ -1,0 +1,106 @@
+[
+  {
+    "width": 360,
+    "httpStatus": 200,
+    "errors": [],
+    "viewport": 360,
+    "documentWidth": 360,
+    "viewer": {
+      "x": 19,
+      "y": 1267.65625,
+      "width": 322,
+      "height": 411.4375
+    },
+    "panel": {
+      "x": 19,
+      "y": 1679.09375,
+      "width": 322,
+      "height": 1034.78125
+    },
+    "imageLoaded": true,
+    "disabledButtons": true,
+    "overflowing": [],
+    "anchor": {
+      "hash": "#configure",
+      "headingTop": 23.78125
+    }
+  },
+  {
+    "width": 390,
+    "httpStatus": 200,
+    "errors": [],
+    "viewport": 390,
+    "documentWidth": 390,
+    "viewer": {
+      "x": 20.5,
+      "y": 1227.3125,
+      "width": 349,
+      "height": 430.9375
+    },
+    "panel": {
+      "x": 20.5,
+      "y": 1658.25,
+      "width": 349,
+      "height": 1034.78125
+    },
+    "imageLoaded": true,
+    "disabledButtons": true,
+    "overflowing": [],
+    "anchor": {
+      "hash": "#configure",
+      "headingTop": 24.4375
+    }
+  },
+  {
+    "width": 768,
+    "httpStatus": 200,
+    "errors": [],
+    "viewport": 768,
+    "documentWidth": 768,
+    "viewer": {
+      "x": 39.390625,
+      "y": 879.234375,
+      "width": 379.21875,
+      "height": 964.78125
+    },
+    "panel": {
+      "x": 418.609375,
+      "y": 879.234375,
+      "width": 310,
+      "height": 964.78125
+    },
+    "imageLoaded": true,
+    "disabledButtons": true,
+    "overflowing": [],
+    "anchor": {
+      "hash": "#configure",
+      "headingTop": 23.5625
+    }
+  },
+  {
+    "width": 1440,
+    "httpStatus": 200,
+    "errors": [],
+    "viewport": 1440,
+    "documentWidth": 1440,
+    "viewer": {
+      "x": 73,
+      "y": 1145.8125,
+      "width": 805.6875,
+      "height": 980.78125
+    },
+    "panel": {
+      "x": 878.6875,
+      "y": 1145.8125,
+      "width": 488.3125,
+      "height": 980.78125
+    },
+    "imageLoaded": true,
+    "disabledButtons": true,
+    "overflowing": [],
+    "anchor": {
+      "hash": "#configure",
+      "headingTop": 24.09375
+    }
+  }
+]

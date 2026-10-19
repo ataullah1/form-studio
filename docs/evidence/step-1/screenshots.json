@@ -1,0 +1,29 @@
+{
+  "browser": "155.0.8059.85",
+  "results": [
+    {
+      "width": 390,
+      "documentWidth": 390,
+      "canvases": 1,
+      "canvas": {
+        "x": 38.5,
+        "y": 467.203125,
+        "width": 313,
+        "height": 300
+      },
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "documentWidth": 1440,
+      "canvases": 1,
+      "canvas": {
+        "x": 98,
+        "y": 408.609375,
+        "width": 755.6875,
+        "height": 430
+      },
+      "errors": []
+    }
+  ]
+}
