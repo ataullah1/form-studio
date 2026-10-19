@@ -15,7 +15,9 @@ Excluded: checkout/payments, shipping engine, marketplace, arbitrary model uploa
 The scene area reserves room for a single future client-only Canvas; product copy, controls and summary remain HTML. The current SVG is a labelled static composition placeholder, not the finished model or a first-milestone pass. All planned product controls are disabled in this preview; navigation anchors work.
 
 ## Visual direction
-Warm off-white #f7f5f0, charcoal #292c26, muted green #384735 and wood accents. System sans-serif for controls and Georgia for editorial product headings. No external fonts or image requests. Clear focus states, native controls, visible labels and reduced-motion support.
+Current identity: architectural furniture atelier. Mineral #F4EDE3, espresso #2B211C, terracotta #A3442D and chalk #FFFBF5, using semantic CSS variables with measured text/control contrast. Upright Bodoni Moda headings and Manrope body/controls via next/font. Asymmetric composition, square material studies and fine specification rules; no green UI or decorative italics. See ROADMAP.md, DECISIONS.md and evidence/visual-identity/.
+
+The original preview/ and Step 0 screenshots are preserved historical screen-plan artifacts; their former green/system-font identity is superseded by the current application. Public routes are / and /configure; functional scope and product dimensions remain unchanged.
 
 ## Acceptance boundary
 Step 0 delivers documented scope/catalog and a responsive static screen plan. It does not establish working 3D, persistence, authentication or pricing logic. The static baseline and browser review are finalized in SCREEN-PLAN.md; owner subjective approval has not been claimed. Later steps must meet the full roadmap's acceptance checks.

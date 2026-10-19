@@ -1,0 +1,106 @@
+[
+  {
+    "foreground": "ink",
+    "background": "page",
+    "foregroundHex": "#2b211c",
+    "backgroundHex": "#f4ede3",
+    "ratio": 13.51,
+    "target": 4.5
+  },
+  {
+    "foreground": "muted",
+    "background": "page",
+    "foregroundHex": "#705e53",
+    "backgroundHex": "#f4ede3",
+    "ratio": 5.29,
+    "target": 4.5
+  },
+  {
+    "foreground": "muted",
+    "background": "surface",
+    "foregroundHex": "#705e53",
+    "backgroundHex": "#fffbf5",
+    "ratio": 5.96,
+    "target": 4.5
+  },
+  {
+    "foreground": "muted",
+    "background": "scene",
+    "foregroundHex": "#705e53",
+    "backgroundHex": "#e9dfd1",
+    "ratio": 4.67,
+    "target": 4.5
+  },
+  {
+    "foreground": "muted",
+    "background": "disabled",
+    "foregroundHex": "#705e53",
+    "backgroundHex": "#e9dfd2",
+    "ratio": 4.67,
+    "target": 4.5
+  },
+  {
+    "foreground": "surface",
+    "background": "accent",
+    "foregroundHex": "#fffbf5",
+    "backgroundHex": "#a3442d",
+    "ratio": 5.95,
+    "target": 4.5
+  },
+  {
+    "foreground": "accent",
+    "background": "page",
+    "foregroundHex": "#a3442d",
+    "backgroundHex": "#f4ede3",
+    "ratio": 5.28,
+    "target": 4.5
+  },
+  {
+    "foreground": "accent",
+    "background": "selection",
+    "foregroundHex": "#a3442d",
+    "backgroundHex": "#f2dfd3",
+    "ratio": 4.75,
+    "target": 4.5
+  },
+  {
+    "foreground": "page",
+    "background": "ink",
+    "foregroundHex": "#f4ede3",
+    "backgroundHex": "#2b211c",
+    "ratio": 13.51,
+    "target": 4.5
+  },
+  {
+    "foreground": "darkMuted",
+    "background": "ink",
+    "foregroundHex": "#cbbbab",
+    "backgroundHex": "#2b211c",
+    "ratio": 8.4,
+    "target": 4.5
+  },
+  {
+    "foreground": "lightAccent",
+    "background": "ink",
+    "foregroundHex": "#e4ac94",
+    "backgroundHex": "#2b211c",
+    "ratio": 7.95,
+    "target": 4.5
+  },
+  {
+    "foreground": "controlBorder",
+    "background": "surface",
+    "foregroundHex": "#8c7464",
+    "backgroundHex": "#fffbf5",
+    "ratio": 4.25,
+    "target": 3
+  },
+  {
+    "foreground": "controlBorder",
+    "background": "scene",
+    "foregroundHex": "#8c7464",
+    "backgroundHex": "#e9dfd1",
+    "ratio": 3.32,
+    "target": 3
+  }
+]

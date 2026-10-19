@@ -10,9 +10,9 @@ export function DeskSchematic() {
       <g fill="none" stroke="currentColor" strokeWidth="2">
         <rect x="80" y="78" width="320" height="9" rx="3" fill="#c39c69" />
         <path d="M96 87v151h12V87m264 0v151h12V87M108 110h264M60 78v160m-6-160h12m-12 160h12M80 55h320m-320-6v12m320-12v12" />
-        <path d="M72 238h336" stroke="#b6bdac" />
+        <path d="M72 238h336" stroke="var(--colour-control-border)" />
       </g>
-      <g fill="currentColor" textAnchor="middle" fontSize="12" fontFamily="Arial, sans-serif">
+      <g fill="currentColor" textAnchor="middle" fontSize="12" fontFamily="var(--font-body), sans-serif">
         <text x="240" y="40">{size.widthMetres * 100} cm</text>
         <text x="35" y="165">{catalogV1.heightMetres * 100} cm</text>
         <text x="240" y="270">Depth {size.depthMetres * 100} cm · Top 3 cm · Oak / Black</text>

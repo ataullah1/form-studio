@@ -1,6 +1,6 @@
 # Form Studio
 
-An independent furniture configurator concept by Md Ataullah. Steps 0–2 are implemented: responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The current scene uses neutral geometry-review materials; wood finishes belong to Step 3.
+An independent furniture configurator concept by Md Ataullah. Steps 0–2 are implemented: responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The current scene uses neutral geometry-review materials; wood finishes belong to Step 3. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
 
 ## Run locally
 
@@ -11,7 +11,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://localhost:3000. The landing is prerendered HTML. Build your desk opens `/configure`; View desk in 3D then downloads the renderer. No credentials, database or .env file is needed in Step 1.
+Open http://localhost:3000. The landing is prerendered HTML. Build your desk opens `/configure`; View desk in 3D then downloads the renderer. No credentials, database or .env file is needed for the current app. The production build fetches Bodoni Moda and Manrope through next/font/google and serves the optimized font files locally at runtime.
 
 ```sh
 pnpm lint
@@ -62,18 +62,19 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - `src/features/configurator`: HTML option/summary shell.
 - `src/features/quotes`: HTML quote draft, isolated from WebGL.
 - `src/lib/catalog`: versioned product facts and configuration types.
-- `public/assets`: local concept illustration; licensed runtime textures have not been selected.
+- `public/assets`: local concept illustration and UI-only material grain studies; licensed runtime textures have not been selected.
 - `tests/e2e`: production-browser integration checks.
-- `preview`: preserved Step 0 HTML/CSS/SVG screen plan, viewable directly via `preview/index.html`.
+- `preview`: archived Step 0 HTML/CSS/SVG screen plan (superseded visual identity), viewable directly via `preview/index.html`.
 
 ## Planning and evidence
 
 - [Full roadmap](docs/ROADMAP.md)
 - [Active progress tracker](docs/PROGRESS.md)
-- [Scope](docs/SCOPE.md), [catalog specification](docs/CATALOG.md), [screen baseline](docs/SCREEN-PLAN.md)
+- [Scope](docs/SCOPE.md), [catalog specification](docs/CATALOG.md), [archived screen baseline](docs/SCREEN-PLAN.md)
 - [Dependency compatibility](docs/DEPENDENCIES.md)
 - [Assets](docs/ASSETS.md), [decisions](docs/DECISIONS.md)
 - [Scene geometry and camera guide](docs/SCENE.md)
+- [Current visual identity screenshots and contrast evidence](docs/evidence/visual-identity/README.md)
 - [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
 Next: **Step 3 only**, licensed self-hosted wood finishes, frame colours and visual-quality review. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.

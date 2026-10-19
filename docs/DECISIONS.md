@@ -46,3 +46,15 @@
 - Page views/route navigation only; no custom events or quote form values added. Dashboard enablement and live collection require a subsequent user deployment and verification.
 - Local browser product tests stub only the Vercel-owned analytics script; a standalone Next server cannot supply that endpoint. This does not verify live collection.
 - User working agreement: do not create commits or push automatically. Provide a suggested commit message after completing changes; the user commits/pushes/deploys.
+
+## Visual identity revision — architectural furniture atelier
+
+- User requests a distinct Form Studio identity rather than Review Room's off-white/green/italic editorial style. This is an art-direction change within completed Steps 0–2, not a product restart or implementation of Steps 3–12.
+- Adopt semantic mineral (#F4EDE3), espresso (#2B211C), burnt terracotta (#A3442D) and chalk (#FFFBF5) tokens. Use separately checked muted, disabled, border and on-dark accent colours. Replace conflicting CSS coherently rather than layering the old green identity.
+- Use upright Bodoni Moda and Manrope through next/font/google, served locally by Next after build. Add their verified OFL license notices to public/licenses and asset metadata to ASSETS.md. No package upgrades or new UI framework.
+- Present landing typography/product poster asymmetrically, material studies on espresso, specification-led details and a typographic footer. Reuse the existing static desk illustration; no landing Canvas. New original SVG grain studies are UI-only illustrations, not runtime material maps or evidence of completed finish switching.
+- Apply the same system to /configure, its existing HTML options/estimate, quote draft, error/loading and 2D schematic. The compact viewer capability note replaces the development banner. Preserve native disabled states and explicit future-feature disclosures. Shared header/footer components contain presentation only.
+- Geometry, catalog, camera calculations/commands and route architecture stay unchanged. Stage background and floor shadow colours read the semantic palette; the existing floor becomes a shadow receiver over the warm backdrop. Product materials are not turned into selectable presets.
+- Keep viewer/controls in document flow. An attempted sticky viewer was removed after landscape screenshot validation showed clipped compositions in short viewports. Fix mobile material overflow with real line breaks and zero-minimum grid tracks, not hidden page overflow.
+- Original Step 0 preview/screenshots are historical artifacts; the current art direction supersedes them. Step 10 remains incomplete and owns final product-story expansion.
+- Preserve Vercel Analytics and the user's no-commit/no-push/no-deploy workflow.

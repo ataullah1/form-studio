@@ -49,13 +49,13 @@ export function SceneViewer() {
 
   const fallback = <Unavailable reason="3D is unavailable. Showing the 2D schematic." />;
   return <section className="scene-viewer" aria-labelledby="viewer-title">
-    <div className="viewer-top"><h2 id="viewer-title">Scene preview</h2><span className="pill">Step 2 · Geometry preview</span></div>
-    <p className="scene-notice">140 × 70 × 74 cm · Neutral geometry preview. Wood finishes arrive in Step 3.</p>
-    {(mode === 'idle') && <>
+    <div className="viewer-top"><h2 id="viewer-title">Scene preview</h2><span className="scene-version">01 / 3D</span></div>
+    <p className="scene-notice">Geometry preview — material and configuration options are in development.</p>
+    {(mode === 'idle') && <div className="scene-idle">
       <DeskSchematic />
       <button type="button" className="button" onClick={start}>View desk in 3D ↗</button>
       <noscript><p>JavaScript is unavailable. The 2D schematic, product summary and draft fields remain available.</p></noscript>
-    </>}
+    </div>}
     {(mode === 'loading' || mode === 'ready') && <>
       <div className="canvas-region" data-testid="scene-region" aria-busy={mode === 'loading'}>
         <SceneBoundary fallback={fallback} onError={unavailable}>

@@ -1,4 +1,6 @@
-# Step 0 — Final screen and visual baseline
+# Step 0 — Archived screen and visual baseline
+
+Historical Step 0 plan. The current architectural atelier identity supersedes these visuals; see [current visual evidence](evidence/visual-identity/README.md).
 
 Finalized on 2026-10-19 for the requested Step 0 scope. This is the implementation baseline; it does not claim the owner has personally reviewed or approved screenshots.
 

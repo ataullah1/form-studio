@@ -12,6 +12,10 @@ import { CAMERA_FOV, type CameraCommand } from './camera-framing';
 interface Props { onReady: () => void; onUnavailable: () => void; command: CameraCommand }
 
 export default function SceneCanvas({ onReady, onUnavailable, command }: Props) {
+  const sceneColours = useMemo(() => {
+    const tokens = getComputedStyle(document.documentElement);
+    return { surface: tokens.getPropertyValue('--colour-scene').trim(), shadow: tokens.getPropertyValue('--colour-ink').trim() };
+  }, []);
   const dimensions = useMemo(() => deriveDeskDimensions(defaultConfiguration.sizeId), []);
   const renderer = useRef<WebGLRenderer | null>(null);
   const readyFrame = useRef<number | null>(null);
@@ -53,9 +57,9 @@ export default function SceneCanvas({ onReady, onUnavailable, command }: Props) 
     }}
     aria-label="Interactive Studio Desk 01 geometry preview, 140 by 70 centimetres"
   >
-    <color attach="background" args={['#eaece3']} />
+    <color attach="background" args={[sceneColours.surface]} />
     <ambientLight intensity={1.15} />
-    <hemisphereLight args={['#fff9ee', '#9b9f8e', 1.1]} />
+    <hemisphereLight args={['#fff9ee', '#a28b79', 1.1]} />
     <directionalLight
       position={[-2, 4, 2]}
       intensity={2.1}
@@ -75,7 +79,7 @@ export default function SceneCanvas({ onReady, onUnavailable, command }: Props) 
     <DeskModel dimensions={dimensions} />
     <mesh name="floor" rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
       <planeGeometry args={[200, 200]} />
-      <meshStandardMaterial color="#eaece3" roughness={1} />
+      <shadowMaterial color={sceneColours.shadow} transparent opacity={0.18} />
     </mesh>
     <DeskCamera dimensions={dimensions} command={command} />
   </Canvas>;

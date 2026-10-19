@@ -18,7 +18,7 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [ ] Step 11 Tests and mobile performance
 - [ ] Step 12 Release and portfolio
 
-## Current session
+## Functional baseline — Step 2
 
 - Current step: Step 2 complete — parameterized desk geometry and responsive camera.
 - Completed work: replaced cube/grid with a 140×70 cm default desk, 74 cm surface height, 3 cm beveled rounded tabletop, independent metal legs/rails/rear crossbar/feet, floor and contact shadow. Pure geometry functions support all three catalog footprints. Added bounded orbit/zoom, keyboard-operable zoom/reset buttons and container-aware reset/reframing after orientation changes. Preserved lazy loading and every Step 1 fallback/draft boundary.
@@ -40,6 +40,18 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - Remaining: user enables Analytics in the Vercel dashboard if needed, commits/pushes these changes and verifies data after the resulting deployment. Live collection/dashboard state has not been verified.
 - Working agreement: no automatic commit/push/deploy. Suggested commit message: feat: add Vercel Web Analytics.
 - Roadmap status remains Step 2 complete; Step 3 is still next.
+
+## Current session — Visual identity revision within Step 2
+
+- Visual direction: architectural furniture atelier. Replaced the former green/italic UI with mineral #F4EDE3, espresso #2B211C, terracotta #A3442D and chalk #FFFBF5 semantic tokens. Upright Bodoni Moda and Manrope are loaded through next/font; verified OFL notices are in public/licenses.
+- Visual changes: shared typographic Form Studio/01 header/footer, requested hero headline/copy/CTA, asymmetric static product poster with technical dimension annotations, square UI-only material studies on espresso, specification-led details, precise HTML configurator panel/estimate and warm scene stage. Removed the full-width development banner in favor of the requested compact capability note. Preserved disabled future controls and unsaved quote-draft disclosures.
+- Changed files: app pages/layout/global styles/icon; shared site-chrome component; presentational panel/quote/viewer/schematic code; stage colours/shadow receiver; original SVG material-study assets and font license notices; copy-sensitive existing browser selectors; roadmap Visual Direction and related scope/asset/decision docs.
+- Preserved: routes, stack/dependency versions, catalog, dimensions, geometry functions/model, camera framing/commands, lazy renderer, all loading/error/fallback paths, native disabled states, Analytics and existing product behavior. No Step 3–12 features added. Step 10 remains unchecked.
+- Verification: final lint, typecheck, all 24 unit tests, production build and all 16 browser tests passed. Final screenshots and per-route audits at 360/390/768/1440 px show no horizontal overflow, no page errors, zero landing Canvas and one active configurator Canvas. Checked keyboard focus, keyboard fallback activation, disabled controls, editable draft fields and reduced motion. Text contrast pairs pass 4.5:1; enabled control boundaries pass 3:1. See docs/evidence/visual-identity/README.md, browser-review.json and contrast.json.
+- Review fixes: restored material heading line breaks and zero-minimum grid sizing to fix mobile overflow; removed sticky scene placement after the landscape camera check exposed a short-viewport composition problem. Regenerated screenshots and reran the complete browser suite after fixes.
+- Limits: headless desktop Chrome with emulated viewport widths/software WebGL; no physical phone, Safari/Android, hardware performance, deployed-site or live analytics verification. Material studies are illustrations only, not actual 3D finish support.
+- Working agreement: no commit, push, deployment, migration or production data action. Suggested message: feat: redesign Form Studio with an architectural atelier identity.
+- Next incomplete functional step: Step 3 — licensed self-hosted materials and visual quality. This revision does not change functional step completion.
 
 ## Evidence rules
 

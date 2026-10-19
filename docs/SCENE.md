@@ -25,7 +25,7 @@ The tabletop has a neutral matte material; the frame has a neutral charcoal mate
 
 ## Lighting and floor
 
-Ambient/hemisphere lighting plus two directional lights keep the structure readable. One directional light casts a 1024² shadow map onto a matte floor at y=0. The model casts/receives shadows. Floor contact is visible in saved screenshots. This is a simple fixed-light setup; day/night presets and later quality controls are not implemented yet.
+Ambient/hemisphere lighting plus two directional lights keep the structure readable. One directional light casts a 1024² shadow map onto a floor shadow receiver at y=0. The visual identity revision uses a transparent espresso shadow material over the semantic warm-mineral scene background. The model casts/receives shadows. Floor contact is visible in saved screenshots. This is a simple fixed-light setup; day/night presets and later quality controls are not implemented yet.
 
 ## Camera
 

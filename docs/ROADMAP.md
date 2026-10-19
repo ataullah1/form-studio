@@ -64,7 +64,13 @@ Redis, dedicated Express server বা separate realtime service দিয়ে �
 # Visual Direction and Asset Plan
 
 ## Art direction
-Warm off-white background, charcoal text এবং wood-inspired accent ব্যবহার করুন। Product হবে কেন্দ্রবিন্দু; অতিরিক্ত glow, particle বা animation দিয়ে desk ঢাকবেন না। Desktop এ বড় scene এবং পাশে customization panel; mobile এ scene এর নিচে tabs বা sheet। Main action হবে Build your desk।
+Brand direction: **Architectural furniture atelier** — bold, tactile, precise এবং product-focused। Review Room থেকে আলাদা identity: warm mineral page #F4EDE3, espresso text/dark section #2B211C, burnt terracotta accent #A3442D, chalk surface #FFFBF5 এবং dark surface এ #F4EDE3 text। Semantic CSS variables থেকে muted text, borders, focus এবং disabled/selection styles ব্যবহার করুন; actual text/background contrast verify করুন। UI থেকে green/olive বাদ; future natural product materials UI palette থেকে স্বাধীন থাকবে।
+
+Typography: next/font দিয়ে upright Bodoni Moda display headings এবং Manrope body/navigation/controls। Oversized headings, asymmetric product composition, square surfaces, fine rules এবং numbered specifications ব্যবহার করুন। Decorative italic emphasis, pill decoration এবং generic rounded-card grids নয়। Main action: Build your desk।
+
+Landing hero থাকবে optimized static illustration/poster; অতিরিক্ত Canvas নয়। Desktop configurator এ সবচেয়ে বড় useful scene area এবং পাশে HTML specification panel; mobile এ viewer-এর পরে controls normal document flow-তে থাকবে। Loading/error boundary, orbit/zoom/reset এবং non-WebGL fallback অক্ষত থাকবে। Full-width development banner নয়; viewer-এর পাশে compact note: “Geometry preview — material and configuration options are in development.” Material library Step 3 পর্যন্ত preview হিসেবে labelled থাকবে এবং unfinished product controls disabled থাকবে। Independent-concept ও illustrative-pricing disclosures স্পষ্ট রাখুন।
+
+Restrained feedback transitions, prefers-reduced-motion এবং normal browser scrolling বজায় রাখুন। অতিরিক্ত glow, particle, custom cursor, continuous decorative animation বা mandatory intro নয়। এটি existing Step 2 screens-এর visual revision; Step 3–12 feature completion নয়। Final product-story expansion এখনও Step 10-এর দায়িত্ব।
 
 ## নির্ধারিত product
 Working product name Studio Desk 01। Height ৭৪ সেমি; tabletop thickness ৩ সেমি। Width/depth preset ১২০×৬০, ১৪০×৭০ এবং ১৬০×৮০ সেমি। এগুলো demo design dimension; load rating বা ergonomic certification দাবি করবেন না।

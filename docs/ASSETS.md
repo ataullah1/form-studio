@@ -25,3 +25,15 @@ No new external texture, GLB, HDRI or font assets have been introduced.
 ## Step 2 additions
 
 The runtime cube/grid has been replaced by original parameterized desk geometry in desk-model.tsx, desk-dimensions.ts and tabletop-shape.ts. Tabletop outline/extrusion, rounded frame/feet and floor are code-authored; neutral Three standard materials use no image textures. Fixed lights/shadow maps replace the integration grid. No external model/texture/font/HDRI downloads were introduced. Step 1 screenshots remain historical test-fixture evidence; Step 2 images show the actual neutral desk.
+
+## Architectural atelier identity revision
+
+| Asset | Source / creator | License / attribution | Modifications / use |
+| --- | --- | --- | --- |
+| Bodoni Moda | The Bodoni Moda Project Authors; https://github.com/google/fonts/tree/main/ofl/bodonimoda | SIL OFL 1.1; verified source notice copied to public/licenses/Bodoni-Moda-OFL.txt | next/font/google self-hosts/subsets upright display font at build |
+| Manrope | The Manrope Project Authors; https://github.com/google/fonts/tree/main/ofl/manrope | SIL OFL 1.1; verified source notice copied to public/licenses/Manrope-OFL.txt | next/font/google self-hosts/subsets body/controls font at build |
+| public/assets/material-studies/{oak,walnut,ash}.svg | Original code-authored grain contour illustrations for this revision | No third-party image source; no external image license claim | UI material library crops and disabled option swatches only; not runtime wood textures |
+| src/app/icon.svg | Original Form Studio monogram from Step 1, revised here | No third-party source | Square terracotta/chalk identity |
+| public/assets/desk-concept.svg | Existing original concept illustration | Existing original asset record applies | Reframed with CSS dimension annotations; not a new model or texture |
+
+No external photos, GLBs or runtime material maps have been introduced. Existing Step 0/1/2 screenshots retain their historical appearance.

@@ -26,9 +26,9 @@ test('landing and initial configurator defer the Three renderer until requested'
     }
   });
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('space to think');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Built around you.');
   await expect(page.locator('canvas')).toHaveCount(0);
-  await page.getByRole('link', { name: 'Make it yours' }).click();
+  await page.getByRole('link', { name: 'Build your desk' }).first().click();
   await expect(page.getByRole('button', { name: 'View desk in 3D' })).toBeVisible();
   await Promise.all(responses);
   expect(rendererRequests).toEqual([]);
@@ -89,7 +89,7 @@ test('a failed lazy scene chunk is contained by the viewer boundary', async ({ p
   await page.getByRole('button', { name: 'View desk in 3D' }).click();
   await expect(page.getByText('3D is unavailable.', { exact: false })).toBeVisible({ timeout: 25000 });
   await expect(page.getByLabel('Project message', { exact: false })).toHaveValue('Fictional draft stays here.');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('workspace');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Your desk');
 });
 
 test('repeated navigation creates one Canvas and tears it down on exit', async ({ page }) => {
@@ -98,7 +98,7 @@ test('repeated navigation creates one Canvas and tears it down on exit', async (
     await page.goto('/configure');
     await startScene(page);
     await page.getByRole('link', { name: 'Back to collection' }).click();
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('space to think');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Built around you.');
     await expect(page.locator('canvas')).toHaveCount(0);
   }
   expect(errors).toEqual([]);
@@ -121,8 +121,8 @@ test('server HTML still exposes product facts and draft fields without JavaScrip
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4173/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('space to think');
-  await page.getByRole('link', { name: 'Make it yours' }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Built around you.');
+  await page.getByRole('link', { name: 'Build your desk' }).first().click();
   await expect(page.getByRole('img', { name: 'Studio Desk 01 — 2D dimension schematic' })).toBeVisible();
   await page.getByLabel('Name', { exact: true }).fill('Fictional offline draft');
   await expect(page.getByRole('region', { name: 'Default configuration summary' })).toContainText('$399');
