@@ -55,3 +55,7 @@ Runtime finish coats multiply each separate source colour map (oak #e5bb80, waln
 ## Step 4 accessories
 
 Lamp, monitor stand and cable tray in src/features/scene/desk-accessories.tsx are original code-authored box/cylinder geometry. No third-party model, image, HDRI or dependency added. Existing Step 3 texture rights and ownership are unchanged.
+
+## Step 5 lighting
+
+Day/night use original code-authored fixed light presets. The lamp bulb is original sphere geometry with a local light. No HDRI, environment image, external model or new font introduced; prior texture licenses remain unchanged.

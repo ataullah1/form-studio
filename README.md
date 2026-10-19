@@ -1,6 +1,6 @@
 # Form Studio
 
-An independent furniture configurator concept by Md Ataullah. Steps 0–4 are implemented (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
+An independent furniture configurator concept by Md Ataullah. Steps 0–5 are implemented (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
 
 ## Run locally
 
@@ -37,7 +37,7 @@ Tests own a production server on **127.0.0.1:4173**; leave that port free. Alter
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:e2e
 ```
 
-Chromium is launched with software-WebGL support for headless QA. This is not a mobile GPU benchmark. Tests cover deferred renderer loading, healthy/unavailable WebGL, module/renderer failures, slow download, context loss, navigation teardown, no-JavaScript HTML, four viewport widths, orbit/zoom/reset, orientation changes, idle resource release, all six finish/frame combinations, failure/retry, stale downloads 30 material changes with bounded GPU textures, and all 24 size/accessory combinations at desktop/mobile widths with configuration reset. Reports/traces are ignored by Git.
+Chromium is launched with software-WebGL support for headless QA. This is not a mobile GPU benchmark. Tests cover deferred renderer loading, healthy/unavailable WebGL, module/renderer failures, slow download, context loss, navigation teardown, no-JavaScript HTML, four viewport widths, orbit/zoom/reset, orientation changes, idle resource release, all six finish/frame combinations, failure/retry, stale downloads 30 material changes with bounded GPU textures, and all 24 size/accessory combinations at desktop/mobile widths with configuration reset. Additional checks cover viewer-only lighting, finite camera transitions, offscreen render pause and emulated touch orbit/pinch/outside scrolling. Reports/traces are ignored by Git.
 
 ## Vercel Web Analytics
 
@@ -53,7 +53,7 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - `/configure`: canonical typed configuration with three sizes, three finishes, two frames and three optional accessories; Reset configuration, itemized illustrative estimate, selected 2D dimensions and optional interactive 3D desk. Default estimate $399; accessories/size/walnut change the local estimate.
 - Renderer load/start errors, unavailable WebGL2, a 20-second startup timeout or context loss show a 2D schematic. Summary and editable quote draft fields stay outside the renderer boundary.
 - Quote fields are a **local draft only**, with no form action, persistence or transmission. Submission is disabled until Step 8. Do not use real contact details for demo checks.
-- Lighting presets, full pricing validation/engine, localStorage, share persistence, quote backend and admin are future steps. No claims of manufacturing suitability or sales performance.
+- Full pricing validation/engine, localStorage, share persistence, quote backend and admin are future steps. No claims of manufacturing suitability or sales performance.
 
 ## Project structure
 
@@ -75,8 +75,9 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Assets](docs/ASSETS.md), [decisions](docs/DECISIONS.md)
 - [Scene geometry and camera guide](docs/SCENE.md)
 - [Current visual identity screenshots and contrast evidence](docs/evidence/visual-identity/README.md)
+- [Step 5 interaction evidence](docs/evidence/step-5/README.md)
 - [Step 4 configuration evidence](docs/evidence/step-4/README.md)
 - [Step 3 materials evidence](docs/evidence/step-3/README.md)
 - [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
-Next: **Step 5**, lighting and interaction. Physical-phone review of the Step 3 material milestone remains pending. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.
+Next: **Step 6**, pricing validation and local draft. Physical-phone review of the Step 3 material milestone remains pending. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.

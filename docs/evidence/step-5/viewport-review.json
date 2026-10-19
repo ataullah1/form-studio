@@ -1,0 +1,55 @@
+{
+  "browser": "155.0.8059.85",
+  "rendering": "Headless installed Chrome, SwiftShader software WebGL; emulated viewports, not physical devices",
+  "audit": [
+    {
+      "width": 1440,
+      "lighting": "Day",
+      "documentWidth": 1440,
+      "canvases": 1
+    },
+    {
+      "width": 1440,
+      "lighting": "Night",
+      "documentWidth": 1440,
+      "canvases": 1
+    },
+    {
+      "width": 768,
+      "lighting": "Day",
+      "documentWidth": 768,
+      "canvases": 1
+    },
+    {
+      "width": 768,
+      "lighting": "Night",
+      "documentWidth": 768,
+      "canvases": 1
+    },
+    {
+      "width": 390,
+      "lighting": "Day",
+      "documentWidth": 390,
+      "canvases": 1
+    },
+    {
+      "width": 390,
+      "lighting": "Night",
+      "documentWidth": 390,
+      "canvases": 1
+    },
+    {
+      "width": 360,
+      "lighting": "Day",
+      "documentWidth": 360,
+      "canvases": 1
+    },
+    {
+      "width": 360,
+      "lighting": "Night",
+      "documentWidth": 360,
+      "canvases": 1
+    }
+  ],
+  "pageErrors": []
+}

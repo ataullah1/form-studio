@@ -75,3 +75,11 @@
 - Include selected accessory height in camera bounds; preserve camera through finish/frame changes. Reset configuration restores default product state and leaves quote draft separate.
 - Verify all three sizes × eight accessory subsets with physical bounds/camera tests and desktop/mobile browser integration. Record viewport emulation honestly; prior real-phone material acceptance remains pending. User explicitly requested proceeding to the next step.
 - Preserve user workflow: no automatic commit, push or deployment; provide a commit message.
+
+## Step 5 — viewer lighting and bounded camera interaction
+
+- Keep day/night and camera commands local to SceneViewer, separate from canonical product/pricing state. Day retains the existing identity; night remains readable with no lamp. Selected lamp adds a restrained short-range warm light only at night, without another shadow map.
+- Retain one OrbitControls. Add bounded Front/Detail/Reset destinations and a finite 260ms camera-direction/distance blend; direct moves for reduced motion, immediate zoom, user-input cancellation and immediate resize reframing. Explicitly clamp tall-accessory reset elevation after a new unit check exposed a mismatch with the legal orbit envelope.
+- Keep demand rendering and update fixed-light shadows only after product/lighting/resume changes. Pause offscreen/hidden rendering through IntersectionObserver/visibility state; disable paused controls and invalidate on resume.
+- Preserve context-loss 2D fallback and all product/draft boundaries. Test touch orbit/pinch, exterior scrolling and form usability through Chromium touch emulation; document that these are not physical-phone or Safari checks.
+- No new dependency, third-party asset, backend, persistence, commit, push or deployment. Next is Step 6 when requested.

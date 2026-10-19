@@ -25,7 +25,7 @@ Step 2 used neutral geometry-review materials. Step 3 replaces the tabletop surf
 
 ## Lighting and floor
 
-Ambient/hemisphere lighting plus two directional lights keep the structure readable. One directional light casts a 1024² shadow map onto a floor shadow receiver at y=0. The visual identity revision uses a transparent espresso shadow material over the semantic warm-mineral scene background. The model casts/receives shadows. Floor contact is visible in saved screenshots. This is a simple fixed-light setup; day/night presets and later quality controls are not implemented yet.
+Ambient/hemisphere lighting plus two directional lights keep the structure readable. One directional light casts a 1024² shadow map onto a floor shadow receiver at y=0. The visual identity revision uses a transparent espresso shadow material over the semantic warm-mineral scene background. The model casts/receives shadows. Floor contact is visible in saved screenshots. Step 5 extends this with fixed day/night presets (see below); quality presets remain future work.
 
 ## Camera
 
@@ -37,7 +37,7 @@ Reset returns to a fixed three-quarter direction, recomputed for the current con
 - Vertical orbit is bounded to keep the camera above the tabletop. At the closest legal zoom and lowest legal elevation, the eye is at least 10 cm above the top surface.
 - Minimum distance stays outside the product bounding sphere, including the near plane; maximum distance is finite.
 - Zoom buttons respect the same bounds as wheel/pinch. Close zoom may deliberately crop the product for inspection; Reset shows the whole desk.
-- Reset/zoom are immediate, without a camera animation or damping tail. Step 5 may add reduced-motion-aware transitions.
+- Zoom remains immediate. Step 5 adds a finite 260ms transition for Front/Detail/Reset; reduced-motion users get immediate views. No damping tail or auto-rotation.
 
 The HTML buttons and summary are outside Canvas. Canvas drag/pinch captures gestures only inside its region; normal page scrolling remains available outside it. Physical touch behavior still requires phone checks.
 
@@ -88,10 +88,24 @@ Fixed bottom-centre anchors in `deriveAccessoryLayout`:
 | Monitor stand | Width centre, rear edge +0.16 m, tabletop surface | 46×20 cm top, 11 cm total height, two fixed supports |
 | Cable tray | Width centre, rear edge +0.19 m, underside −0.105 m | 50×12 cm tray, shallow lips, two mounting brackets reaching underside |
 
-All parts are original code geometry with matte frame-matching materials; no downloads/models added. Stand/lamp rest on the top; tray/brackets stay below it and clear the rear/side rails at all sizes. Attachment surfaces intentionally meet. No arbitrary drag placement, emissive lamp/light contribution or night preset in this step.
+All parts are original code geometry with matte frame-matching materials; no downloads/models added. Stand/lamp rest on the top; tray/brackets stay below it and clear the rear/side rails at all sizes. Attachment surfaces intentionally meet. Step 4 had no arbitrary drag placement or lamp lighting; Step 5 adds the night light below.
 
 Camera framing uses the product bounds including selected accessory height. Size/height changes reframe the whole product; changing finish/frame or an accessory that leaves bounds unchanged preserves the current camera. This changes framing only, not mesh scale or grain scale. Existing orbit/zoom limits, error boundary, demand rendering and fallback remain.
 
 The 2D schematic updates numeric dimensions and explicitly lists selected accessories; it is labelled not to scale and does not illustrate accessory geometry. The live estimate adds size, walnut surcharge and unique accessories from catalog facts; server-authoritative pricing, draft storage and backend work remain future steps.
 
 Evidence: [Step 4 tests and screenshots](evidence/step-4/README.md). Real-phone checks remain unperformed.
+
+## Step 5 lighting, camera and render policy
+
+`SceneViewer` owns day/night mode and camera commands independently of ProductConfiguration. Neither enters the display estimate or future product payload. Day retains the warm atelier stage and prior lighting. Night uses a #292b32 background, cooler key/fill, ambient 0.65 and hemisphere 0.7 so wood remains readable even without the optional lamp. If the catalog lamp is selected, night adds a small warm emissive bulb and a local point light (intensity 0.35, distance 1.1m, decay 2, no additional shadow map). Removing the accessory removes its light. No HDRI, new asset or dependency.
+
+One OrbitControls instance still owns orbit/pinch/zoom and camera limits. Front uses a centred front azimuth and safe elevation; Detail uses a closer three-quarter distance clamped to the same minimum; Reset restores the fitted full product. Tall-accessory reset positions now explicitly obey the legal polar envelope before reaching the controls. Front keeps an elevated inspection angle rather than a low orthographic manufacturing elevation. Detail intentionally permits closer/cropped inspection; Reset fits the full product.
+
+Named views blend camera direction and distance separately over 260ms, retaining the fixed product target and avoiding a straight chord through the desk. Only the finite transition requests frames; manual input cancels it immediately. Reduced motion (including live preference changes) moves directly to the destination. Resize/product-bound changes reframe immediately and cancel an old transition. Zoom remains immediate. No second control system, perpetual animation or auto-rotate.
+
+`RenderPolicy` limits shadow refreshes to product, lighting and resume changes; camera-only frames reuse the fixed-light shadow map. It restores the prior renderer setting on teardown. Demand rendering stops when idle. IntersectionObserver with a 120px pre-entry margin and document visibility events switch an offscreen/hidden Canvas to `frameloop=never`, disable controls and allow pending state to appear on resume. Async texture decoding can still finish while paused, but no draw is scheduled. Paused transitions remain bounded and resume with a capped frame delta.
+
+The UI explicitly distinguishes the drag/pinch area from page scrolling. Existing touch-action:none is scoped to Canvas; exterior document scrolling remains native. Day/Night use pressed-state buttons and visible mode text. All buttons have at least 44px height. Front/Detail/Reset, zoom and 2D fallback remain HTML outside the renderer. Product options, selected swatch text/keyboard handling, quote draft and context-loss fallback are preserved.
+
+Evidence: [Step 5 checks](evidence/step-5/README.md). Chrome touch emulation passed; physical phone, Safari/Android and actual background-tab lifecycle/hardware performance remain unverified.

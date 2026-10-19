@@ -9,11 +9,14 @@ import { deriveProductBounds } from './accessory-layout';
 import { DeskCamera } from './desk-camera';
 import { CAMERA_FOV, type CameraCommand } from './camera-framing';
 import type { ProductConfiguration } from '@/lib/catalog';
+import { RenderPolicy } from './render-policy';
+import { lightingPresets, type LightingMode } from './viewer-settings';
 import type { TextureReport } from './wood-surface';
 
-interface Props { onReady: () => void; onUnavailable: () => void; command: CameraCommand; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }
+interface Props { lighting: LightingMode; active: boolean; onReady: () => void; onUnavailable: () => void; command: CameraCommand; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }
 
-export default function SceneCanvas({ onReady, onUnavailable, command, configuration, attempt, onTextureStatus }: Props) {
+export default function SceneCanvas({ onReady, onUnavailable, command, lighting, active, configuration, attempt, onTextureStatus }: Props) {
+  const preset = lightingPresets[lighting];
   const sceneColours = useMemo(() => {
     const tokens = getComputedStyle(document.documentElement);
     return { surface: tokens.getPropertyValue('--colour-scene').trim(), shadow: tokens.getPropertyValue('--colour-ink').trim() };
@@ -49,7 +52,7 @@ export default function SceneCanvas({ onReady, onUnavailable, command, configura
   }, [onUnavailable]);
 
   return <Canvas
-    frameloop="demand"
+    frameloop={active ? 'demand' : 'never'}
     dpr={[1, 1.5]}
     camera={{ position: [2, 1.8, 2.7], fov: CAMERA_FOV, near: 0.025, far: 40 }}
     shadows={{ type: PCFSoftShadowMap }}
@@ -61,12 +64,13 @@ export default function SceneCanvas({ onReady, onUnavailable, command, configura
     }}
     aria-label={`Interactive Studio Desk 01 material preview, ${dimensions.width * 100} by ${dimensions.depth * 100} centimetres`}
   >
-    <color attach="background" args={[sceneColours.surface]} />
-    <ambientLight intensity={1.15} />
-    <hemisphereLight args={['#fff9ee', '#a28b79', 1.1]} />
+    <color attach="background" args={[preset.background ?? sceneColours.surface]} />
+    <ambientLight intensity={preset.ambient} />
+    <hemisphereLight args={['#fff9ee', '#a28b79', preset.hemisphere]} />
     <directionalLight
       position={[-2, 4, 2]}
-      intensity={2.1}
+      intensity={preset.key}
+      color={preset.keyColour}
       castShadow
       shadow-mapSize={[1024, 1024]}
       shadow-camera-left={-2.5}
@@ -79,12 +83,13 @@ export default function SceneCanvas({ onReady, onUnavailable, command, configura
       shadow-bias={-0.0001}
       shadow-radius={3}
     />
-    <directionalLight position={[2, 2, -3]} intensity={0.7} />
-    <DeskModel dimensions={dimensions} configuration={configuration} attempt={attempt} onTextureStatus={onTextureStatus} />
+    <directionalLight position={[2, 2, -3]} intensity={preset.fill} />
+    <DeskModel dimensions={dimensions} configuration={configuration} lighting={lighting} attempt={attempt} onTextureStatus={onTextureStatus} />
     <mesh name="floor" rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
       <planeGeometry args={[200, 200]} />
-      <shadowMaterial color={sceneColours.shadow} transparent opacity={0.18} />
+      <shadowMaterial color={sceneColours.shadow} transparent opacity={preset.shadowOpacity} />
     </mesh>
-    <DeskCamera dimensions={framingDimensions} command={command} />
+    <RenderPolicy active={active} configuration={configuration} lighting={lighting} />
+    <DeskCamera dimensions={framingDimensions} command={command} active={active} />
   </Canvas>;
 }

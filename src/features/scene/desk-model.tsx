@@ -6,9 +6,10 @@ import { useMemo } from 'react';
 import { tabletopExtrusion } from './tabletop-shape';
 import type { DeskDimensions } from './desk-dimensions';
 import { WoodSurface, type TextureReport } from './wood-surface';
+import type { LightingMode } from './viewer-settings';
 import type { ProductConfiguration } from '@/lib/catalog';
 
-export function DeskModel({ dimensions, configuration, attempt, onTextureStatus }: { dimensions: DeskDimensions; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }) {
+export function DeskModel({ dimensions, configuration, lighting, attempt, onTextureStatus }: { lighting: LightingMode; dimensions: DeskDimensions; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }) {
   const { shape, settings } = useMemo(() => tabletopExtrusion(dimensions), [dimensions]);
 
   return <group name="studio-desk-01">
@@ -39,6 +40,6 @@ export function DeskModel({ dimensions, configuration, attempt, onTextureStatus 
         roughness={0.58}
       />
     </RoundedBox>)}
-    <DeskAccessories dimensions={dimensions} configuration={configuration} />
+    <DeskAccessories dimensions={dimensions} configuration={configuration} lighting={lighting} />
   </group>;
 }

@@ -9,7 +9,7 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [x] Step 2 Desk geometry and camera
 - [ ] Step 3 Materials and visual quality — implementation verified; physical-phone acceptance pending
 - [x] Step 4 Sizes and accessories
-- [ ] Step 5 Lighting and interaction
+- [x] Step 5 Lighting and interaction
 - [ ] Step 6 Pricing and local draft
 - [ ] Step 7 Save and share backend
 - [ ] Step 8 Quote request workflow
@@ -18,7 +18,19 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [ ] Step 11 Tests and mobile performance
 - [ ] Step 12 Release and portfolio
 
-## Current session — Step 4 sizes and accessories
+## Current session — Step 5 lighting and interaction
+
+- Implemented separate viewer-only day/night state, readable night studio and restrained warm lamp contribution only when selected at night. Product configuration/illustrative estimate remain unchanged by lighting or camera controls.
+- Added Front and Detail alongside Reset/zoom, preserving one OrbitControls. Named views have a bounded 260ms direction/distance transition, immediate reduced-motion behavior, manual-input cancellation and immediate reframe on resize/product-bound change. Corrected tall-accessory reset position to obey the polar envelope explicitly.
+- Added demand-render visibility gating (120px intersection margin + document visibility), paused controls, resume invalidation and product/lighting-only shadow-map refresh. No auto-rotation, perpetual animation, extra shadow map, package or external asset.
+- Verified: lint/typecheck, all 61 unit tests and production build passed. Full browser run: 23 of 24 passed; the remaining new assertion mixed innerText and textContent. Corrected that test-only comparison; targeted interaction rerun: both passed (9.9s). All 24 unique browser checks passed across these final runs, including existing context loss, material failure/retry, 30 switches, configuration/camera and fallback tests. Final lint/typecheck rerun passed.
+- New browser checks: unchanged summary and camera after day/night round trip; stopped draw calls after named-view transitions; offscreen lighting change performs no draws then resume works; lamp removal returns ambient night; emulated touch orbit/pinch releases controls, exterior touch scroll moves document, quote draft remains editable, reduced-motion views reset correctly.
+- Visual evidence: day/night with selected lamp at 1440/768/390/360 px, night Front/Detail and night without lamp. Inspected mobile night and desktop no-lamp views: tabletop is readable. Viewport audit has no overflow/page errors and one canvas per case. See docs/evidence/step-5/README.md.
+- Limits: installed macOS Chrome 155.0.8059.85 with software WebGL/touch emulation. No physical phone, Safari/Android, hardware performance or actual background-tab lifecycle validation. Step 3 physical-phone acceptance remains pending.
+- No commit, push or deployment. Suggested commit: feat: add day-night lighting and accessible camera presets.
+- Next functional step: Step 6 pricing validation and local draft, when requested.
+
+## Previous session — Step 4 sizes and accessories
 
 - Implemented typed canonical ProductConfiguration reducer with explicit invalid-ID/version/extra-field rejection and known-accessory deduplication/order. Scene, controls, 2D dimensions and itemized illustrative estimate consume the same state. No persistence/share payload transmission introduced.
 - Enabled 120×60, 140×70 and 160×80 cm selection. Existing metre-based slab/frame functions now drive the rendered desk; no whole-model scale. Added fixed-anchor original lamp, monitor stand and underside cable tray. Their dimensions stay fixed while edge-derived anchors move with size.

@@ -335,3 +335,8 @@ img, svg { display: block; }
 .panel fieldset:enabled .extra { cursor: pointer; color: var(--colour-ink); }
 .extra input:focus-visible { outline: 3px solid var(--colour-accent); outline-offset: 3px; }
 .configuration-reset { margin: 0 0 28px; width: 100%; min-height: 44px; }
+
+.interaction-hint { font-size: 12px; color: var(--colour-muted); margin: 14px 0; }
+.lighting-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0; }
+.lighting-actions span { font-size: 12px; color: var(--colour-muted); }
+.lighting-actions [aria-pressed="true"] { border-color: var(--colour-accent); color: var(--colour-accent); background: var(--colour-selection); }

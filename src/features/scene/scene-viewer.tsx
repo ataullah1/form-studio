@@ -1,12 +1,13 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { DeskSchematic } from './desk-schematic';
 import { SceneBoundary } from './scene-boundary';
 import type { CameraCommand } from './camera-framing';
 import { catalogV1 } from '@/lib/catalog';
 import type { ProductConfiguration } from '@/lib/catalog';
+import type { LightingMode } from './viewer-settings';
 import type { TextureReport } from './wood-surface';
 
 const SceneCanvas = dynamic(() => import('./scene-canvas'), {
@@ -24,6 +25,9 @@ function Unavailable({ reason, configuration }: { reason: string; configuration:
 
 /** Starts no WebGL or Three import until explicitly requested. */
 export function SceneViewer({ configuration }: { configuration: ProductConfiguration }) {
+  const [lighting, setLighting] = useState<LightingMode>('day');
+  const [active, setActive] = useState(true);
+  const region = useRef<HTMLDivElement>(null);
   const [attempt, setAttempt] = useState(0);
   const [textureReport, setTextureReport] = useState<TextureReport | null>(null);
   const onTextureStatus = useCallback((report: TextureReport) => setTextureReport(report), []);
@@ -42,6 +46,18 @@ export function SceneViewer({ configuration }: { configuration: ProductConfigura
     const timeout = window.setTimeout(unavailable, 20000);
     return () => window.clearTimeout(timeout);
   }, [mode, unavailable]);
+
+  useEffect(() => {
+    const element = region.current;
+    if (!element) return;
+    let inView = true;
+    const update = () => setActive(inView && !document.hidden);
+    const observer = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; update(); }, { rootMargin: '120px' });
+    observer.observe(element);
+    document.addEventListener('visibilitychange', update);
+    update();
+    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
+  }, [mode]);
 
   function start() {
     // Current Three renderer requires WebGL2. Dispose this capability probe;
@@ -65,9 +81,9 @@ export function SceneViewer({ configuration }: { configuration: ProductConfigura
       <noscript><p>JavaScript is unavailable. The 2D schematic, product summary and draft fields remain available.</p></noscript>
     </div>}
     {(mode === 'loading' || mode === 'ready') && <>
-      <div className="canvas-region" data-testid="scene-region" aria-busy={mode === 'loading'}>
+      <div ref={region} className="canvas-region" data-testid="scene-region" aria-busy={mode === 'loading'}>
         <SceneBoundary fallback={fallback} onError={unavailable}>
-          <SceneCanvas onReady={ready} onUnavailable={unavailable} command={cameraCommand} configuration={configuration} attempt={attempt} onTextureStatus={onTextureStatus} />
+          <SceneCanvas onReady={ready} onUnavailable={unavailable} command={cameraCommand} lighting={lighting} active={active} configuration={configuration} attempt={attempt} onTextureStatus={onTextureStatus} />
         </SceneBoundary>
       </div>
       <p className="scene-status" role="status">{mode === 'loading' ? 'Starting 3D renderer…' : '3D desk ready. Drag to rotate; scroll or pinch to zoom.'}</p>
@@ -76,7 +92,14 @@ export function SceneViewer({ configuration }: { configuration: ProductConfigura
         {textureStatus === 'ready' && <p>{finishLabel} finish ready · {catalogV1.frameColours[configuration.frameColourId].label} frame</p>}
         {textureStatus === 'error' && <><p>{finishLabel} texture unavailable. Neutral surface shown; your selection is preserved.</p><button type="button" className="secondary-button" onClick={() => setAttempt(value => value + 1)}>Retry finish</button></>}
       </div>}
+      <p className="interaction-hint">Drag or pinch inside the 3D area. Scroll the page outside it.</p>
+      <div className="lighting-actions" role="group" aria-label="Scene lighting">
+        {(['day', 'night'] as const).map(value => <button key={value} type="button" className="secondary-button" disabled={mode !== 'ready'} aria-pressed={lighting === value} onClick={() => setLighting(value)}>{value === 'day' ? 'Day' : 'Night'}</button>)}
+        <span>{lighting === 'day' ? 'Day studio' : configuration.accessoryIds.includes('lamp') ? 'Night studio · Desk lamp on' : 'Night studio · Ambient light'}</span>
+      </div>
       <div className="camera-actions" aria-label="Viewer controls">
+        <button type="button" className="secondary-button" disabled={mode !== 'ready'} onClick={() => moveCamera('front')}>Front view</button>
+        <button type="button" className="secondary-button" disabled={mode !== 'ready'} onClick={() => moveCamera('detail')}>Detail view</button>
         <button type="button" className="secondary-button" disabled={mode !== 'ready'} onClick={() => moveCamera('reset')}>Reset view</button>
         <button type="button" className="secondary-button" disabled={mode !== 'ready'} onClick={() => moveCamera('zoom-in')}>Zoom in</button>
         <button type="button" className="secondary-button" disabled={mode !== 'ready'} onClick={() => moveCamera('zoom-out')}>Zoom out</button>
