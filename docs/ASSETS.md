@@ -6,7 +6,7 @@
 | preview/styles.css wood swatches | Original CSS gradients created in Step 0 | No third-party source | Abstract colour/grain indications | Not runtime wood textures |
 | UI fonts | Browser/OS system sans-serif and Georgia | No font files distributed | None | Preview only |
 
-## Required before Step 3
+## Historical requirements before Step 3
 Select self-hosted seamless oak, walnut and ash material maps. Record each asset's exact source URL, creator, license, required attribution, downloaded filenames, modifications and intended usage. Record license evidence; do not infer rights from search thumbnails or an unrelated code license.
 
 Use simple self-owned scene lighting initially. HDR environment and GLB models are optional; if added, register licenses and GLB units, origin, node names and material slots. No third-party texture, GLB or HDRI has been selected/downloaded yet. Final geometry and wood materials remain pending.
@@ -32,8 +32,22 @@ The runtime cube/grid has been replaced by original parameterized desk geometry 
 | --- | --- | --- | --- |
 | Bodoni Moda | The Bodoni Moda Project Authors; https://github.com/google/fonts/tree/main/ofl/bodonimoda | SIL OFL 1.1; verified source notice copied to public/licenses/Bodoni-Moda-OFL.txt | next/font/google self-hosts/subsets upright display font at build |
 | Manrope | The Manrope Project Authors; https://github.com/google/fonts/tree/main/ofl/manrope | SIL OFL 1.1; verified source notice copied to public/licenses/Manrope-OFL.txt | next/font/google self-hosts/subsets body/controls font at build |
-| public/assets/material-studies/{oak,walnut,ash}.svg | Original code-authored grain contour illustrations for this revision | No third-party image source; no external image license claim | UI material library crops and disabled option swatches only; not runtime wood textures |
+| public/assets/material-studies/{oak,walnut,ash}.svg | Original code-authored grain contour illustrations for this revision | No third-party image source; no external image license claim | UI material library crops and historical option swatches; not runtime wood textures |
 | src/app/icon.svg | Original Form Studio monogram from Step 1, revised here | No third-party source | Square terracotta/chalk identity |
 | public/assets/desk-concept.svg | Existing original concept illustration | Existing original asset record applies | Reframed with CSS dimension annotations; not a new model or texture |
 
 No external photos, GLBs or runtime material maps have been introduced. Existing Step 0/1/2 screenshots retain their historical appearance.
+
+## Step 3 — self-hosted wood materials
+
+All three sets are by **Jenelle van Heerden**, distributed by Poly Haven under **CC0 1.0**. Attribution is not required; creator/source credit is retained here. [Poly Haven license evidence](https://polyhaven.com/license) identifies the assets as CC0; the license is [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/). Retrieved 2026-10-19.
+
+| Finish | Exact asset source | Local files | Source tile |
+| --- | --- | --- | --- |
+| Oak | https://polyhaven.com/a/oak_veneer_02 | public/assets/textures/wood/oak/{colour,normal,roughness}.webp | 1 × 1 metre |
+| Walnut | https://polyhaven.com/a/black_walnut_veneer_01 | public/assets/textures/wood/walnut/{colour,normal,roughness}.webp | 1 × 1 metre |
+| Ash | https://polyhaven.com/a/ash_veneer | public/assets/textures/wood/ash/{colour,normal,roughness}.webp | 1 × 1 metre |
+
+Downloaded Diffuse, OpenGL normal (`nor_gl`) and Rough JPEG maps at 1k from Poly Haven's official files API. Original MD5 verified against API metadata. Converted with sharp 0.35.5 in temporary asset tooling (no app dependency), 1024², metadata stripped: colour WebP quality 85; normal/roughness lossless WebP retaining the original JPEG samples. No source colour grading or resampling beyond the declared output size. Exact download URLs, hashes, output hashes, authors and bytes are in [texture-sources.json](evidence/step-3/texture-sources.json). Nine outputs total approximately 4.1 MiB; no 4K/HDRI/GLB files.
+
+Runtime finish coats multiply each separate source colour map (oak #e5bb80, walnut #765039, ash #fff5df), with species-specific roughness/normal strength. These are art-directed concept finishes, not measured manufacturer colour samples. Option swatches use the same source colour maps and coat colours; landing grain illustrations remain explicitly illustrative. Colour maps are sRGB; normal and roughness are untransformed data maps. One tile spans one metre using the extrusion's metre UVs, with grain along the width. See SCENE.md for ownership and rendering details.

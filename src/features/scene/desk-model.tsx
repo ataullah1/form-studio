@@ -4,8 +4,10 @@ import { RoundedBox } from '@react-three/drei';
 import { useMemo } from 'react';
 import { tabletopExtrusion } from './tabletop-shape';
 import type { DeskDimensions } from './desk-dimensions';
+import { WoodSurface, type TextureReport } from './wood-surface';
+import type { AppearanceSelection } from '../configurator/appearance';
 
-export function DeskModel({ dimensions }: { dimensions: DeskDimensions }) {
+export function DeskModel({ dimensions, appearance, attempt, onTextureStatus }: { dimensions: DeskDimensions; appearance: AppearanceSelection; attempt: number; onTextureStatus: (report: TextureReport) => void }) {
   const { shape, settings } = useMemo(() => tabletopExtrusion(dimensions), [dimensions]);
 
   return <group name="studio-desk-01">
@@ -17,7 +19,7 @@ export function DeskModel({ dimensions }: { dimensions: DeskDimensions }) {
       receiveShadow
     >
       <extrudeGeometry args={[shape, settings]} onUpdate={geometry => geometry.center()} />
-      <meshStandardMaterial color="#c2b7a4" roughness={0.72} metalness={0} />
+      <WoodSurface finishId={appearance.finishId} attempt={attempt} onStatus={onTextureStatus} />
     </mesh>
     {dimensions.parts.map(part => <RoundedBox
       key={part.id}
@@ -31,7 +33,7 @@ export function DeskModel({ dimensions }: { dimensions: DeskDimensions }) {
       receiveShadow
     >
       <meshStandardMaterial
-        color={part.id.startsWith('foot-') ? '#242923' : '#353b34'}
+        color={part.id.startsWith('foot-') ? '#242923' : appearance.frameColourId === 'white' ? '#e9e6df' : '#292d29'}
         metalness={part.id.startsWith('foot-') ? 0 : 0.45}
         roughness={0.58}
       />

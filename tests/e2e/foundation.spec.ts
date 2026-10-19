@@ -12,6 +12,7 @@ async function startScene(page: Page) {
   await page.getByRole('button', { name: 'View desk in 3D' }).click();
   await expect(page.getByText('3D desk ready.', { exact: false })).toBeVisible();
   await expect(page.locator('canvas')).toHaveCount(1);
+  await expect(page.getByText('Oak finish ready', { exact: false })).toBeVisible();
 }
 
 test('landing and initial configurator defer the Three renderer until requested', async ({ page }) => {
@@ -59,7 +60,7 @@ test('without WebGL, schematic, summary and editable quote draft remain availabl
   await page.getByRole('button', { name: 'View desk in 3D' }).click();
   await expect(page.getByText('3D is unavailable.', { exact: false })).toBeVisible();
   await expect(page.getByRole('img', { name: 'Studio Desk 01 — 2D dimension schematic' })).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Default configuration summary' })).toContainText('$399');
+  await expect(page.getByRole('region', { name: 'Configuration summary' })).toContainText('$399');
   await expect(page.getByLabel('Name', { exact: true })).toHaveValue('Demo Workspace');
   await page.getByLabel('Email', { exact: true }).fill('demo@example.com');
   await expect(page.getByRole('button', { name: /Demo quote submission/ })).toBeDisabled();
@@ -111,7 +112,7 @@ for (const width of [360, 390, 768, 1440]) {
     await page.goto('/configure');
     await startScene(page);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
-    await expect(page.getByRole('region', { name: 'Default configuration summary' })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Configuration summary' })).toBeVisible();
     await expect(page.getByLabel('Name', { exact: true })).toBeEditable();
     expect(errors).toEqual([]);
   });
@@ -125,7 +126,7 @@ test('server HTML still exposes product facts and draft fields without JavaScrip
   await page.getByRole('link', { name: 'Build your desk' }).first().click();
   await expect(page.getByRole('img', { name: 'Studio Desk 01 — 2D dimension schematic' })).toBeVisible();
   await page.getByLabel('Name', { exact: true }).fill('Fictional offline draft');
-  await expect(page.getByRole('region', { name: 'Default configuration summary' })).toContainText('$399');
+  await expect(page.getByRole('region', { name: 'Configuration summary' })).toContainText('$399');
   await context.close();
 });
 
@@ -161,7 +162,7 @@ test('renderer creation failure is contained without hiding the HTML shell', asy
   await page.goto('/configure');
   await page.getByRole('button', { name: 'View desk in 3D' }).click();
   await expect(page.getByText('3D is unavailable.', { exact: false })).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Default configuration summary' })).toContainText('$399');
+  await expect(page.getByRole('region', { name: 'Configuration summary' })).toContainText('$399');
   await page.getByLabel('Name', { exact: true }).fill('Fictional renderer failure draft');
   await expect(page.getByLabel('Name', { exact: true })).toHaveValue('Fictional renderer failure draft');
 });

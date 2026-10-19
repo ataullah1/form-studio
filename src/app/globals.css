@@ -173,9 +173,9 @@ img, svg { display: block; }
 .swatches input { position: absolute; opacity: 0; }
 .swatch { display: block; width: 38px; height: 38px; border: 4px solid var(--colour-surface); }
 .swatches input:checked+.swatch { outline: 2px solid var(--colour-accent); }
-.oak { background: url('/assets/material-studies/oak.svg') center / cover; }
-.walnut { background: url('/assets/material-studies/walnut.svg') center / cover; }
-.ash { background: url('/assets/material-studies/ash.svg') center / cover; }
+.oak { background: url('/assets/textures/wood/oak/colour.webp') center / cover; }
+.walnut { background: url('/assets/textures/wood/walnut/colour.webp') center / cover; }
+.ash { background: url('/assets/textures/wood/ash/colour.webp') center / cover; }
 .choices { clear: both; display: flex; gap: 8px; }
 .choices button { flex: 1; min-width: 0; min-height: 46px; padding: 10px 6px; border: 1px solid var(--colour-border); background: transparent; color: var(--colour-muted); font-size: 12px; }
 .choices .chosen { border-color: var(--colour-accent); color: var(--colour-accent); background: var(--colour-selection); box-shadow: inset 0 0 0 1px var(--colour-accent); }
@@ -315,3 +315,19 @@ img, svg { display: block; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* Available material choices are separate from the still-disabled future options. */
+.panel fieldset:enabled .swatches label { cursor: pointer; min-width: 50px; min-height: 62px; position: relative; }
+.swatches input { width: 100%; height: 100%; inset: 0; cursor: inherit; }
+.swatches input:focus-visible { outline: none; }
+.swatches input:focus-visible+.swatch { outline: 3px solid var(--focus-colour); outline-offset: 4px; }
+.choices button:enabled { color: var(--colour-ink); border-color: var(--colour-control-border); }
+.choices button.chosen:enabled { color: var(--colour-accent); border-color: var(--colour-accent); }
+.choices button:enabled:hover { background: var(--colour-selection); }
+.texture-feedback { color: var(--colour-muted); font-size: 12px; padding: 0 0 15px; }
+.texture-feedback .secondary-button { margin-top: 10px; }
+
+/* Match the physical finish coat used over each distinct 3D wood map. */
+.swatch.oak { background-color: #e5bb80; background-blend-mode: multiply; }
+.swatch.walnut { background-color: #765039; background-blend-mode: multiply; }
+.swatch.ash { background-color: #fff5df; background-blend-mode: multiply; }

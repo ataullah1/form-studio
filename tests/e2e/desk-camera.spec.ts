@@ -39,9 +39,11 @@ async function changedInteriorFraction(page: Page, before: Buffer, after: Buffer
 }
 
 async function openDesk(page: Page) {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/configure');
   await page.getByRole('button', { name: 'View desk in 3D' }).click();
   await expect(page.getByText('3D desk ready.', { exact: false })).toBeVisible();
+  await expect(page.getByText('Oak finish ready', { exact: false })).toBeVisible();
   await settle(page);
 }
 

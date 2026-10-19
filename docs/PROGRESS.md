@@ -7,7 +7,7 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [x] Step 0 Scope and screen plan
 - [x] Step 1 Repository and 3D integration
 - [x] Step 2 Desk geometry and camera
-- [ ] Step 3 Materials and visual quality
+- [ ] Step 3 Materials and visual quality — implementation verified; physical-phone acceptance pending
 - [ ] Step 4 Sizes and accessories
 - [ ] Step 5 Lighting and interaction
 - [ ] Step 6 Pricing and local draft
@@ -18,7 +18,19 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [ ] Step 11 Tests and mobile performance
 - [ ] Step 12 Release and portfolio
 
-## Functional baseline — Step 2
+## Current session — Step 3 implementation
+
+- Implemented three separate licensed oak/walnut/ash map sets, black/white frame selection and shared finish/frame state. Summary updates immediately, including the catalog walnut surcharge; selected labels also work in the 2D view. Sizes/accessories, save/share and quote submission remain disabled.
+- Added correctly annotated sRGB colour/data maps, metre-based grain scale, low normal strength, matte finish presets and a finite reduced-motion-aware material reveal. Screenshot review corrected overly pale walnut with a documented finish coat over its distinct source map.
+- Added per-viewer bounded texture ownership, partial failure cleanup, fetch timeout/abort, stale-selection protection, ImageBitmap closure and disposal on unmount. Loading retains the last successful surface; failures show neutral material with retry and preserved selection.
+- Assets: three CC0 Poly Haven veneer sets by Jenelle van Heerden, nine self-hosted 1k WebP maps, approximately 4.1 MiB. Exact source URLs, hashes, transformations and license references are in ASSETS.md and evidence/step-3/texture-sources.json.
+- Verification: PASS lint, typecheck, all 28 unit tests, production build and all 20 production-browser tests. Browser tests include six combinations, keyboard selection, neutral fallback/retry, slow stale downloads and 30 switches with stable WebGL texture creation/live counts after warmup and no additional successful-map downloads. Existing camera, idle, context-loss and navigation tests passed.
+- Visual review: saved all three finishes at 1440/768/390/360 px, black frames for oak/walnut and white for ash, plus close detail and material failure. Chrome 155.0.8059.85 on macOS using headless software WebGL. No overflow or page errors in the recorded viewport audit. Emulation is not a physical-phone test.
+- Acceptance status: local implementation and desktop/emulated-mobile review complete. Physical phone, Safari/Android and hardware GPU checks unavailable and unverified. Leave Step 3's strict desktop-and-real-phone checkbox and first visual milestone pending until device review; no backend work begun.
+- Evidence: docs/evidence/step-3/README.md. No commit, push or deployment. Suggested commit: feat: add licensed wood finishes and frame colour selection.
+- Next: physical-phone visual/touch review, then Step 4 sizes/accessories when requested.
+
+## Historical functional baseline — Step 2
 
 - Current step: Step 2 complete — parameterized desk geometry and responsive camera.
 - Completed work: replaced cube/grid with a 140×70 cm default desk, 74 cm surface height, 3 cm beveled rounded tabletop, independent metal legs/rails/rear crossbar/feet, floor and contact shadow. Pure geometry functions support all three catalog footprints. Added bounded orbit/zoom, keyboard-operable zoom/reset buttons and container-aware reset/reframing after orientation changes. Preserved lazy loading and every Step 1 fallback/draft boundary.
@@ -41,7 +53,7 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - Working agreement: no automatic commit/push/deploy. Suggested commit message: feat: add Vercel Web Analytics.
 - Roadmap status remains Step 2 complete; Step 3 is still next.
 
-## Current session — Visual identity revision within Step 2
+## Previous session — Visual identity revision within Step 2
 
 - Visual direction: architectural furniture atelier. Replaced the former green/italic UI with mineral #F4EDE3, espresso #2B211C, terracotta #A3442D and chalk #FFFBF5 semantic tokens. Upright Bodoni Moda and Manrope are loaded through next/font; verified OFL notices are in public/licenses.
 - Visual changes: shared typographic Form Studio/01 header/footer, requested hero headline/copy/CTA, asymmetric static product poster with technical dimension annotations, square UI-only material studies on espresso, specification-led details, precise HTML configurator panel/estimate and warm scene stage. Removed the full-width development banner in favor of the requested compact capability note. Preserved disabled future controls and unsaved quote-draft disclosures.

@@ -1,6 +1,6 @@
 # Form Studio
 
-An independent furniture configurator concept by Md Ataullah. Steps 0–2 are implemented: responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The current scene uses neutral geometry-review materials; wood finishes belong to Step 3. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
+An independent furniture configurator concept by Md Ataullah. Steps 0–3 are implemented (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene now supports three licensed wood finishes and black/white frames, with texture loading, neutral fallback and retry. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
 
 ## Run locally
 
@@ -37,7 +37,7 @@ Tests own a production server on **127.0.0.1:4173**; leave that port free. Alter
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:e2e
 ```
 
-Chromium is launched with software-WebGL support for headless QA. This is not a mobile GPU benchmark. Tests cover deferred renderer loading, healthy/unavailable WebGL, module/renderer failures, slow download, context loss, navigation teardown, no-JavaScript HTML, four viewport widths, orbit/zoom/reset, orientation changes and idle resource release. Reports/traces are ignored by Git.
+Chromium is launched with software-WebGL support for headless QA. This is not a mobile GPU benchmark. Tests cover deferred renderer loading, healthy/unavailable WebGL, module/renderer failures, slow download, context loss, navigation teardown, no-JavaScript HTML, four viewport widths, orbit/zoom/reset, orientation changes, idle resource release, all six finish/frame combinations, failure/retry, stale downloads and 30 material changes with bounded GPU textures. Reports/traces are ignored by Git.
 
 ## Vercel Web Analytics
 
@@ -50,19 +50,19 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 ## Current behavior and limits
 
 - `/`: English product landing, with an explicitly described static concept illustration. No Canvas is mounted here.
-- `/configure`: catalog-backed default facts, disabled planned product selectors, $399 illustrative default estimate, accessible 2D dimensions and an optional interactive 3D desk.
+- `/configure`: live oak/walnut/ash and black/white selection, disabled future size/accessory controls, $399 illustrative estimate ($439 walnut), accessible selected-finish 2D dimensions and an optional interactive 3D desk.
 - Renderer load/start errors, unavailable WebGL2, a 20-second startup timeout or context loss show a 2D schematic. Summary and editable quote draft fields stay outside the renderer boundary.
 - Quote fields are a **local draft only**, with no form action, persistence or transmission. Submission is disabled until Step 8. Do not use real contact details for demo checks.
-- Wood materials, finish/size/accessory state, pricing validation/engine, localStorage, share persistence, quote backend and admin are future steps. No claims of manufacturing suitability or sales performance.
+- Size/accessory state, full pricing validation/engine, localStorage, share persistence, quote backend and admin are future steps. No claims of manufacturing suitability or sales performance.
 
 ## Project structure
 
 - `src/app`: server-rendered routes, root layout and styles.
 - `src/features/scene`: client-only viewer, parameterized desk, pure dimensions/framing, bounded camera, lazy Canvas, error boundary and standalone 2D schematic.
-- `src/features/configurator`: HTML option/summary shell.
+- `src/features/configurator`: shared appearance state and accessible HTML options/live summary.
 - `src/features/quotes`: HTML quote draft, isolated from WebGL.
 - `src/lib/catalog`: versioned product facts and configuration types.
-- `public/assets`: local concept illustration and UI-only material grain studies; licensed runtime textures have not been selected.
+- `public/assets`: local concept illustration, UI grain studies and self-hosted CC0 wood maps; provenance in docs/ASSETS.md.
 - `tests/e2e`: production-browser integration checks.
 - `preview`: archived Step 0 HTML/CSS/SVG screen plan (superseded visual identity), viewable directly via `preview/index.html`.
 
@@ -75,6 +75,7 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Assets](docs/ASSETS.md), [decisions](docs/DECISIONS.md)
 - [Scene geometry and camera guide](docs/SCENE.md)
 - [Current visual identity screenshots and contrast evidence](docs/evidence/visual-identity/README.md)
+- [Step 3 materials evidence](docs/evidence/step-3/README.md)
 - [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
-Next: **Step 3 only**, licensed self-hosted wood finishes, frame colours and visual-quality review. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.
+Next: physical-phone review of the Step 3 material milestone, then **Step 4**, sizes and accessories. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.

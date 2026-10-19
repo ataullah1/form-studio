@@ -42,7 +42,7 @@ export default function HomePage() {
             <div className="material-crop"><Image src={`/assets/material-studies/${material.id}.svg`} alt={`Illustrative ${material.label.toLowerCase()} grain study; not a final product texture`} width={400} height={560} sizes="(max-width: 650px) 44vw, 24vw" /><span aria-hidden="true">{material.number}</span></div>
             <figcaption><div><h3>{material.label}</h3><span>{material.price}</span></div><p>{material.description}</p></figcaption>
           </figure>)}
-          <p className="material-disclosure"><span aria-hidden="true">↳</span> Material previews only. 3D finishes are in development.</p>
+          <p className="material-disclosure"><span aria-hidden="true">↳</span> Illustrative grain studies. Explore the finish textures in the 3D viewer.</p>
         </div>
       </section>
 

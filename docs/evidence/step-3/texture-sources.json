@@ -1,0 +1,161 @@
+{
+  "retrievedOn": "2026-10-19",
+  "assets": [
+    {
+      "finish": "oak",
+      "assetId": "oak_veneer_02",
+      "source": "https://polyhaven.com/a/oak_veneer_02",
+      "license": "CC0-1.0",
+      "licenseSource": "https://polyhaven.com/license",
+      "authors": {
+        "Jenelle van Heerden": "All"
+      },
+      "sourceDimensions": [
+        1000,
+        1000
+      ],
+      "maps": [
+        {
+          "kind": "colour",
+          "sourceURL": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_02/oak_veneer_02_diff_1k.jpg",
+          "sourceMD5": "895eda215c5d808bbc42041b498a856c",
+          "sourceBytes": 586151,
+          "sourceWidth": 1024,
+          "sourceHeight": 1024,
+          "file": "public/assets/textures/wood/oak/colour.webp",
+          "bytes": 88506,
+          "sha256": "fb6fda9345ef68b554a80b788e44aa5fe848262fc433c84ca97ed7c62ebf2fa8",
+          "modification": "Resize to 1024×1024; strip metadata; WebP quality 85"
+        },
+        {
+          "kind": "normal",
+          "sourceURL": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_02/oak_veneer_02_nor_gl_1k.jpg",
+          "sourceMD5": "18eb5cfc641f6ae9b169f53e89e1230c",
+          "sourceBytes": 306086,
+          "sourceWidth": 1024,
+          "sourceHeight": 1024,
+          "file": "public/assets/textures/wood/oak/normal.webp",
+          "bytes": 497964,
+          "sha256": "ab1e813e1834a4181446884c257ddd7efc01bc4a70e8c291adc4f05756c3e90e",
+          "modification": "Resize to 1024×1024; strip metadata; lossless WebP (preserving source JPEG channel samples)"
+        },
+        {
+          "kind": "roughness",
+          "sourceURL": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_02/oak_veneer_02_rough_1k.jpg",
+          "sourceMD5": "bec1b2deb8bbef15a03b4a50b7453867",
+          "sourceBytes": 767259,
+          "sourceWidth": 1024,
+          "sourceHeight": 1024,
+          "file": "public/assets/textures/wood/oak/roughness.webp",
+          "bytes": 676744,
+          "sha256": "5ce7349ec32fc3e2745802438fbcfa8cae46d792a548e7c7281bbd65b4b84a1c",
+          "modification": "Resize to 1024×1024; strip metadata; lossless WebP (preserving source JPEG channel samples)"
+        }
+      ]
+    },
+    {
+      "finish": "walnut",
+      "assetId": "black_walnut_veneer_01",
+      "source": "https://polyhaven.com/a/black_walnut_veneer_01",
+      "license": "CC0-1.0",
+      "licenseSource": "https://polyhaven.com/license",
+      "authors": {
+        "Jenelle van Heerden": "All"
+      },
+      "sourceDimensions": [
+        1000,
+        1000
+      ],
+      "maps": [
+        {
+          "kind": "colour",
+          "sourceURL": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/black_walnut_veneer_01/black_walnut_veneer_01_diff_1k.jpg",
+          "sourceMD5": "ab8f92fde28797a8cb68f53e77249e62",
+          "sourceBytes": 592588,
+          "sourceWidth": 1024,
+          "sourceHeight": 1024,
+          "file": "public/assets/textures/wood/walnut/colour.webp",
+          "bytes": 94132,
+          "sha256": "7ff83a73463f3fb38f502cd03beba73cbe7a8df06c91e77c5a28c0ee1a538491",
+          "modification": "Resize to 1024×1024; strip metadata; WebP quality 85"
+        },
+        {
+          "kind": "normal",
+          "sourceURL": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/black_walnut_veneer_01/black_walnut_veneer_01_nor_gl_1k.jpg",
+          "sourceMD5": "d69b5e919068c013ec1a4d4aa8ef52b7",
+          "sourceBytes": 403301,
+          "sourceWidth": 1024,
+          "sourceHeight": 1024,
+          "file": "public/assets/textures/wood/walnut/normal.webp",
+          "bytes": 774730,
+          "sha256": "77149f5cea1bb86d98dbe497766536129e0abed712d802c5bf08f0204e08fd62",
+          "modification": "Resize to 1024×1024; strip metadata; lossless WebP (preserving source JPEG channel samples)"
+        },
+        {
+          "kind": "roughness",
+          "sourceURL": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/black_walnut_veneer_01/black_walnut_veneer_01_rough_1k.jpg",
+          "sourceMD5": "3c70a389d27c4799a3b6df9a4e5cb104",
+          "sourceBytes": 724300,
+          "sourceWidth": 1024,
+          "sourceHeight": 1024,
+          "file": "public/assets/textures/wood/walnut/roughness.webp",
+          "bytes": 644230,
+          "sha256": "4da7b170b6760cdb4500f46c6f7196d0f896d2e31d2767fad61af6fc46c6c80d",
+          "modification": "Resize to 1024×1024; strip metadata; lossless WebP (preserving source JPEG channel samples)"
+        }
+      ]
+    },
+    {
+      "finish": "ash",
+      "assetId": "ash_veneer",
+      "source": "https://polyhaven.com/a/ash_veneer",
+      "license": "CC0-1.0",
+      "licenseSource": "https://polyhaven.com/license",
+      "authors": {
+        "Jenelle van Heerden": "All"
+      },
+      "sourceDimensions": [
+        1000,
+        1000
+      ],
+      "maps": [
+        {
+          "kind": "colour",
+          "sourceURL": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/ash_veneer/ash_veneer_diff_1k.jpg",
+          "sourceMD5": "5be48b4be87620998cfaee5a4281169d",
+          "sourceBytes": 592273,
+          "sourceWidth": 1024,
+          "sourceHeight": 1024,
+          "file": "public/assets/textures/wood/ash/colour.webp",
+          "bytes": 87370,
+          "sha256": "6d987cdfa1a0e5f20f900a840f3bc4a250137b6e8cbae5f341f3eb0950b21059",
+          "modification": "Resize to 1024×1024; strip metadata; WebP quality 85"
+        },
+        {
+          "kind": "normal",
+          "sourceURL": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/ash_veneer/ash_veneer_nor_gl_1k.jpg",
+          "sourceMD5": "6986a1e827968726d996b76d77f3a2ac",
+          "sourceBytes": 397524,
+          "sourceWidth": 1024,
+          "sourceHeight": 1024,
+          "file": "public/assets/textures/wood/ash/normal.webp",
+          "bytes": 759568,
+          "sha256": "c22f657cf97b92fb42e5a8ca08caae26bbf37628b5478bc8fa53a53127f53112",
+          "modification": "Resize to 1024×1024; strip metadata; lossless WebP (preserving source JPEG channel samples)"
+        },
+        {
+          "kind": "roughness",
+          "sourceURL": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/ash_veneer/ash_veneer_rough_1k.jpg",
+          "sourceMD5": "175ba23d74984b0cfb1d9eac636cc255",
+          "sourceBytes": 797439,
+          "sourceWidth": 1024,
+          "sourceHeight": 1024,
+          "file": "public/assets/textures/wood/ash/roughness.webp",
+          "bytes": 692136,
+          "sha256": "cfd9bb871aae0768d058b4d8be8164c1ad6c93397a94afb17bdc4eefe98e1765",
+          "modification": "Resize to 1024×1024; strip metadata; lossless WebP (preserving source JPEG channel samples)"
+        }
+      ]
+    }
+  ]
+}

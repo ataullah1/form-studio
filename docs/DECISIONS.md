@@ -58,3 +58,12 @@
 - Keep viewer/controls in document flow. An attempted sticky viewer was removed after landscape screenshot validation showed clipped compositions in short viewports. Fix mobile material overflow with real line breaks and zero-minimum grid tracks, not hidden page overflow.
 - Original Step 0 preview/screenshots are historical artifacts; the current art direction supersedes them. Step 10 remains incomplete and owns final product-story expansion.
 - Preserve Vercel Analytics and the user's no-commit/no-push/no-deploy workflow.
+
+## Step 3 — real material presets
+
+- Retain the existing identity/geometry/camera and package versions. Enable only three finish radios and two frame buttons, with one shared appearance state; sizes/accessories remain Step 4.
+- Use three distinct self-hosted Poly Haven CC0 1k veneer sets; preserve source/data colour handling and documented one-metre grain scale. Multiply the sources with concept finish coats after screenshot review showed the uncoated walnut reading too pale. No manufacturer colour-match claim.
+- Own a bounded per-viewer texture library with explicit fetch timeouts, stale-result guards, partial failure cleanup, bitmap closure and unmount disposal. No global loader-cache mutation. Preserve last successful wood during loading; neutral material and explicit retry on failure.
+- Use a finite reduced-motion-aware material reveal and keep demand rendering. Full lighting/interaction expansion remains Step 5.
+- Verify six combinations, failure/retry, stale downloads, teardown and thirty switches. Report physical-phone and hardware-GPU checks as pending; do not mark the first desktop-and-phone milestone accepted from emulation alone.
+- No commit, push or deployment; provide the user a commit message.

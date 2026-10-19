@@ -1,4 +1,4 @@
-# Desk geometry and camera — Step 2
+# Desk geometry, camera and materials
 
 ## Coordinate convention
 
@@ -21,7 +21,7 @@ The tabletop outline is inset by the bevel amount before extrusion. Extrusion de
 
 Frame components are separate rounded meshes with fixed section sizes; only their lengths/positions derive from footprint dimensions. Feet are separate parts. R3F owns and disposes the declaratively mounted geometry/materials. The shape/extrusion parameters are memoized rather than rebuilt each frame.
 
-The tabletop has a neutral matte material; the frame has a neutral charcoal material. These are geometry-review materials, not final oak/black finish presets. No runtime textures, HDR environments, external model files, accessories or backend work is introduced here.
+Step 2 used neutral geometry-review materials. Step 3 replaces the tabletop surface with selected wood maps and adds black/white frame materials; geometry is unchanged. No HDR environment, external model, accessory or backend is introduced.
 
 ## Lighting and floor
 
@@ -59,3 +59,17 @@ Implementation references checked against the installed packages:
 ## Learning map
 
 A geometry describes shape, a material describes surface response to light, and a mesh joins them at a position. The scene groups the product, lighting and floor. The camera chooses what the visitor sees; controls move that camera around a fixed target. Changing a camera does not alter desk dimensions, product selection or price.
+
+## Step 3 surfaces and resource ownership
+
+`Configurator` owns only finish/frame state; its partial functional updates feed both HTML summary and lazy scene. Size is still the default catalog size. The small illustrative estimate includes the catalog walnut surcharge; the full pricing/validation engine remains Step 6. Selection is immediately visible even while textures download. 2D references use the selected finish/frame labels.
+
+Each finish has independent 1k colour, OpenGL normal and roughness maps. Colour uses SRGBColorSpace; data maps use NoColorSpace. ImageBitmap decoding disables colour conversion/premultiplication and explicitly flips Y; Texture.flipY remains false. Source grain was visually checked as horizontal: texture rotation is zero, aligned with tabletop width. ExtrudeGeometry's metre-based XY UVs and a 1/m tile repeat preserve the one-metre source scale. Offset centres the tile. Edge UVs are the extrusion's procedural wrapping, not modeled end grain or veneer seams.
+
+Oak/walnut/ash have separate grain maps plus a restrained material coat, roughness 0.82/0.80/0.86 and normal strength 0.12/0.10/0.10. No metallic wood. Frame coats are charcoal #292d29 / warm white #e9e6df; feet remain dark. These concept finishes are not calibrated product photography. A 180ms brightness reveal softens a newly ready finish, skips reduced-motion users and stops invalidating when complete. This is a short material reveal, not a dual-map crossfade. Existing demand rendering and idle behavior remain intact.
+
+Each mounted WoodSurface creates one `WoodTextureLibrary`; no global useLoader cache is mutated. The cache holds at most three finishes/nine texture maps and deduplicates in-flight requests. Renderer anisotropy is capped at 8, with mipmaps. Only selected finish data maps load; small colour-map swatches can load before 3D. A successful set is reused through switches; explicit retry reloads only a failed set. Failed partial results are disposed. A twelve-second per-map timeout prevents indefinite loading.
+
+Keep the previous successful material while a new finish downloads. If a map fails, show a neutral surface, explicit message and Retry finish button while preserving summary/camera/frame. Stale selections cannot overwrite the latest selection. Unmount aborts pending fetches, disposes all owned textures and closes decoded ImageBitmaps, including late decodes. R3F owns declarative materials/geometries and renderer; the library exclusively owns manually loaded textures/bitmaps.
+
+See [Step 3 evidence](evidence/step-3/README.md). Physical-phone/GPU checks remain pending; desktop software rendering is not evidence of mobile hardware performance.

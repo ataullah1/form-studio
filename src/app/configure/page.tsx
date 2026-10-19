@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
-import { SceneViewer } from '@/features/scene/scene-viewer';
-import { ConfigurationPanel } from '@/features/configurator/configuration-panel';
+import { Configurator } from '@/features/configurator/configurator';
 import { QuoteDraft } from '@/features/quotes/quote-draft';
 
 export const metadata: Metadata = {
@@ -15,7 +14,7 @@ export default function ConfigurePage() {
     <main id="main-content">
       <section className="configure" aria-labelledby="configure-title">
         <div className="configure-heading"><div><p className="eyebrow">STUDIO DESK 01 / FORM STUDIES</p><h1 id="configure-title">Your desk,<br />in perspective.</h1></div><p>Explore its proportions.<br />Rotate, zoom, take a closer look.</p></div>
-        <div className="builder"><SceneViewer /><ConfigurationPanel /></div>
+        <Configurator />
       </section>
       <QuoteDraft />
     </main>

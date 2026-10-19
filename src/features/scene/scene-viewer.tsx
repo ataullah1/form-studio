@@ -5,22 +5,30 @@ import { useCallback, useEffect, useState } from 'react';
 import { DeskSchematic } from './desk-schematic';
 import { SceneBoundary } from './scene-boundary';
 import type { CameraCommand } from './camera-framing';
+import { catalogV1 } from '@/lib/catalog';
+import type { AppearanceSelection } from '../configurator/appearance';
+import type { TextureReport } from './wood-surface';
 
 const SceneCanvas = dynamic(() => import('./scene-canvas'), {
   ssr: false,
   loading: () => <p className="scene-message" role="status">Loading the 3D module…</p>,
 });
 
-function Unavailable({ reason }: { reason: string }) {
+function Unavailable({ reason, appearance }: { reason: string; appearance: AppearanceSelection }) {
   return <div className="scene-unavailable">
     <p role="status">{reason} Your desk information and quote draft are still available.</p>
-    <DeskSchematic />
+    <DeskSchematic appearance={appearance} />
     <a className="text-link" href="/configure">Reload page to retry 3D</a>
   </div>;
 }
 
 /** Starts no WebGL or Three import until explicitly requested. */
-export function SceneViewer() {
+export function SceneViewer({ appearance }: { appearance: AppearanceSelection }) {
+  const [attempt, setAttempt] = useState(0);
+  const [textureReport, setTextureReport] = useState<TextureReport | null>(null);
+  const onTextureStatus = useCallback((report: TextureReport) => setTextureReport(report), []);
+  const textureStatus = textureReport?.finishId === appearance.finishId && textureReport.attempt === attempt ? textureReport.status : 'loading';
+  const finishLabel = catalogV1.finishes[appearance.finishId].label;
   const [mode, setMode] = useState<'idle' | 'loading' | 'ready' | 'fallback'>('idle');
   const [cameraCommand, setCameraCommand] = useState<CameraCommand>({ revision: 0, action: 'reset' });
   function moveCamera(action: CameraCommand['action']) {
@@ -47,22 +55,27 @@ export function SceneViewer() {
     } catch { unavailable(); }
   }
 
-  const fallback = <Unavailable reason="3D is unavailable. Showing the 2D schematic." />;
+  const fallback = <Unavailable reason="3D is unavailable. Showing the 2D schematic." appearance={appearance} />;
   return <section className="scene-viewer" aria-labelledby="viewer-title">
     <div className="viewer-top"><h2 id="viewer-title">Scene preview</h2><span className="scene-version">01 / 3D</span></div>
-    <p className="scene-notice">Geometry preview — material and configuration options are in development.</p>
+    <p className="scene-notice">Explore three wood finishes and two frame colours. Sizes and accessories are in development.</p>
     {(mode === 'idle') && <div className="scene-idle">
-      <DeskSchematic />
+      <DeskSchematic appearance={appearance} />
       <button type="button" className="button" onClick={start}>View desk in 3D ↗</button>
       <noscript><p>JavaScript is unavailable. The 2D schematic, product summary and draft fields remain available.</p></noscript>
     </div>}
     {(mode === 'loading' || mode === 'ready') && <>
       <div className="canvas-region" data-testid="scene-region" aria-busy={mode === 'loading'}>
         <SceneBoundary fallback={fallback} onError={unavailable}>
-          <SceneCanvas onReady={ready} onUnavailable={unavailable} command={cameraCommand} />
+          <SceneCanvas onReady={ready} onUnavailable={unavailable} command={cameraCommand} appearance={appearance} attempt={attempt} onTextureStatus={onTextureStatus} />
         </SceneBoundary>
       </div>
       <p className="scene-status" role="status">{mode === 'loading' ? 'Starting 3D renderer…' : '3D desk ready. Drag to rotate; scroll or pinch to zoom.'}</p>
+      {mode === 'ready' && <div className="texture-feedback" role="status" aria-live="polite">
+        {textureStatus === 'loading' && <p>Loading {finishLabel} finish… The previous surface stays visible until ready.</p>}
+        {textureStatus === 'ready' && <p>{finishLabel} finish ready · {catalogV1.frameColours[appearance.frameColourId].label} frame</p>}
+        {textureStatus === 'error' && <><p>{finishLabel} texture unavailable. Neutral surface shown; your selection is preserved.</p><button type="button" className="secondary-button" onClick={() => setAttempt(value => value + 1)}>Retry finish</button></>}
+      </div>}
       <div className="camera-actions" aria-label="Viewer controls">
         <button type="button" className="secondary-button" disabled={mode !== 'ready'} onClick={() => moveCamera('reset')}>Reset view</button>
         <button type="button" className="secondary-button" disabled={mode !== 'ready'} onClick={() => moveCamera('zoom-in')}>Zoom in</button>

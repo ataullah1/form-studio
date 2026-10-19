@@ -8,10 +8,12 @@ import { deriveDeskDimensions } from './desk-dimensions';
 import { DeskModel } from './desk-model';
 import { DeskCamera } from './desk-camera';
 import { CAMERA_FOV, type CameraCommand } from './camera-framing';
+import type { AppearanceSelection } from '../configurator/appearance';
+import type { TextureReport } from './wood-surface';
 
-interface Props { onReady: () => void; onUnavailable: () => void; command: CameraCommand }
+interface Props { onReady: () => void; onUnavailable: () => void; command: CameraCommand; appearance: AppearanceSelection; attempt: number; onTextureStatus: (report: TextureReport) => void }
 
-export default function SceneCanvas({ onReady, onUnavailable, command }: Props) {
+export default function SceneCanvas({ onReady, onUnavailable, command, appearance, attempt, onTextureStatus }: Props) {
   const sceneColours = useMemo(() => {
     const tokens = getComputedStyle(document.documentElement);
     return { surface: tokens.getPropertyValue('--colour-scene').trim(), shadow: tokens.getPropertyValue('--colour-ink').trim() };
@@ -55,7 +57,7 @@ export default function SceneCanvas({ onReady, onUnavailable, command }: Props) 
       renderer.current = gl;
       readyFrame.current = requestAnimationFrame(onReady);
     }}
-    aria-label="Interactive Studio Desk 01 geometry preview, 140 by 70 centimetres"
+    aria-label="Interactive Studio Desk 01 material preview, 140 by 70 centimetres"
   >
     <color attach="background" args={[sceneColours.surface]} />
     <ambientLight intensity={1.15} />
@@ -76,7 +78,7 @@ export default function SceneCanvas({ onReady, onUnavailable, command }: Props) 
       shadow-radius={3}
     />
     <directionalLight position={[2, 2, -3]} intensity={0.7} />
-    <DeskModel dimensions={dimensions} />
+    <DeskModel dimensions={dimensions} appearance={appearance} attempt={attempt} onTextureStatus={onTextureStatus} />
     <mesh name="floor" rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
       <planeGeometry args={[200, 200]} />
       <shadowMaterial color={sceneColours.shadow} transparent opacity={0.18} />
