@@ -31,6 +31,16 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - Commit: local commit titled "feat: add parameterized desk geometry and responsive camera"; use git log -1 for its hash. No push or deployment.
 - Next task: Step 3 only — select/document licensed self-hosted oak, walnut and ash texture maps, add two frame colour presets, handle colour space/resource ownership/loading failures and review materials on desktop/phone where available.
 
+## Additional session — Vercel Analytics
+
+- User reports deployment at https://formstudioo.vercel.app/ and requests Web Analytics integration.
+- Added exact @vercel/analytics 2.0.1 and mounted its Next.js Analytics component once in src/app/layout.tsx. Package/lockfile updated; no custom events or quote-field payloads added.
+- Browser product tests now share a fixture that stubs only Vercel's platform-owned analytics script. A local Next server does not serve that endpoint; the stub prevents local telemetry/network errors without changing application code.
+- Verified: lint, typecheck, all 24 unit tests, production build and all 16 production-browser tests passed. A local smoke check with the platform script stubbed observed one Analytics script request/element and queued pageviews for / and /configure after client navigation.
+- Remaining: user enables Analytics in the Vercel dashboard if needed, commits/pushes these changes and verifies data after the resulting deployment. Live collection/dashboard state has not been verified.
+- Working agreement: no automatic commit/push/deploy. Suggested commit message: feat: add Vercel Web Analytics.
+- Roadmap status remains Step 2 complete; Step 3 is still next.
+
 ## Evidence rules
 
 Only mark a step complete after its acceptance checks pass. Record untested real-device checks. Do not store credentials or quote contact details here. Keep third-party asset rights in docs/ASSETS.md.

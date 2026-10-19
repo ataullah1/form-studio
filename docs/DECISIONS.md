@@ -39,3 +39,10 @@
 - Keep camera-command revisions separate from product configuration; do not reapply an old zoom command on resize.
 - Retain explicit lazy loading and every Step 1 fallback/draft boundary. Update UI labels from integration fixture to geometry preview.
 - Verify actual extrusion bounds, physical joints, projected camera corners, rendered reset/zoom behavior, viewport/orientation behavior and a short idle/context-release sample. Real-phone checks remain unperformed and are recorded honestly.
+
+## Vercel Analytics integration
+
+- User reports hosting at https://formstudioo.vercel.app/. Added exact @vercel/analytics 2.0.1, whose Next >=13 and React ^18/^19 peers cover the installed stack. Mounted its Next.js Analytics component once in the server root layout using the official integration.
+- Page views/route navigation only; no custom events or quote form values added. Dashboard enablement and live collection require a subsequent user deployment and verification.
+- Local browser product tests stub only the Vercel-owned analytics script; a standalone Next server cannot supply that endpoint. This does not verify live collection.
+- User working agreement: do not create commits or push automatically. Provide a suggested commit message after completing changes; the user commits/pushes/deploys.

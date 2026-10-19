@@ -39,6 +39,14 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/Ma
 
 Chromium is launched with software-WebGL support for headless QA. This is not a mobile GPU benchmark. Tests cover deferred renderer loading, healthy/unavailable WebGL, module/renderer failures, slow download, context loss, navigation teardown, no-JavaScript HTML, four viewport widths, orbit/zoom/reset, orientation changes and idle resource release. Reports/traces are ignored by Git.
 
+## Vercel Web Analytics
+
+`@vercel/analytics/next` is mounted once in the root layout for page views and Next.js route navigation. No custom events or quote-field values are sent by application code.
+
+In the Vercel project dashboard, open **Analytics → Enable**, then deploy these changes. Visit the deployed site and check the Analytics dashboard. No application API key or new .env variable is required. The platform serves `/_vercel/insights/script.js`; a standalone local production server does not serve that endpoint. Browser product tests stub only that platform script so they do not send analytics data. Live collection must be verified after deployment.
+
+Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analytics/quickstart).
+
 ## Current behavior and limits
 
 - `/`: English product landing, with an explicitly described static concept illustration. No Canvas is mounted here.
@@ -68,4 +76,4 @@ Chromium is launched with software-WebGL support for headless QA. This is not a 
 - [Scene geometry and camera guide](docs/SCENE.md)
 - [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
-Next: **Step 3 only**, licensed self-hosted wood finishes, frame colours and visual-quality review. No push, deployment, external accounts, payments or database provisioning has been performed.
+Next: **Step 3 only**, licensed self-hosted wood finishes, frame colours and visual-quality review. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.

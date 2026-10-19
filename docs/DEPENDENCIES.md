@@ -32,3 +32,7 @@ Only the resolver package's native postinstall is explicitly allowed in pnpm-wor
 - [pnpm project settings](https://pnpm.io/settings)
 
 Pinned peer ranges were verified against the installed official packages' package.json files, not inferred from the docs' latest examples. Recheck these sources and package metadata before changing versions.
+
+## Analytics addition
+
+Added exact `@vercel/analytics@2.0.1` using its npm metadata and the official [Next.js integration guide](https://vercel.com/docs/analytics/quickstart). Advertised peers are Next >=13 and React ^18/^19, covering this project's installed versions. Root layout mounts the `/next` component once. The earlier step-1 version snapshot is historical and has not been rewritten.
