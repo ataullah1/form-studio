@@ -1,0 +1,43 @@
+{
+  "browser": "155.0.8059.85",
+  "rendering": "Headless installed Chrome; emulated widths, not physical devices",
+  "audit": [
+    {
+      "edit": false,
+      "width": 1440,
+      "documentWidth": 1440,
+      "canvases": 0
+    },
+    {
+      "edit": false,
+      "width": 390,
+      "documentWidth": 390,
+      "canvases": 0
+    },
+    {
+      "edit": false,
+      "width": 360,
+      "documentWidth": 360,
+      "canvases": 0
+    },
+    {
+      "edit": true,
+      "width": 1440,
+      "documentWidth": 1440,
+      "canvases": 0
+    },
+    {
+      "edit": true,
+      "width": 390,
+      "documentWidth": 390,
+      "canvases": 0
+    },
+    {
+      "edit": true,
+      "width": 360,
+      "documentWidth": 360,
+      "canvases": 0
+    }
+  ],
+  "pageErrors": []
+}

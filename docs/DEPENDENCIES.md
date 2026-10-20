@@ -36,3 +36,15 @@ Pinned peer ranges were verified against the installed official packages' packag
 ## Analytics addition
 
 Added exact `@vercel/analytics@2.0.1` using its npm metadata and the official [Next.js integration guide](https://vercel.com/docs/analytics/quickstart). Advertised peers are Next >=13 and React ^18/^19, covering this project's installed versions. Root layout mounts the `/next` component once. The earlier step-1 version snapshot is historical and has not been rewritten.
+
+## Step 7 additions — 2026-10-20
+
+Pinned Prisma / @prisma/client / @prisma/adapter-pg 7.10.1, pg / @types/pg 8.23.1, dotenv 18.0.8 and server-only 0.0.1 after registry/official documentation checks. Registry latest Prisma was 8.0.0-rc.23; deliberately chose the stable v7 line with matching client/adapter. Prisma's Node engine (^20.19 / ^22.12 / >=24) covers this repository's required versions. No framework/renderer upgrades.
+
+Generated client is ignored and rebuilt by postinstall/build; Prisma migrations do not run automatically during installation/build. Explicitly allow Prisma/engine package scripts in pnpm-workspace.yaml alongside the prior native resolver. Reproducible frozen install succeeded. `prisma.config.ts` reads DIRECT_URL for migration tooling and runtime uses only DATABASE_URL through a PostgreSQL adapter, with max 3 connections per process. No database is contacted to prerender the landing/configurator.
+
+Verified with local PostgreSQL 18.6, Node 26.7.0 and installed Chrome. Cloud Supabase pooler/TLS and Vercel integration remain pending. See SHARING.md for official references/setup.
+
+## Provider selection update
+
+Neon is now selected. Standard PrismaPg/pg TCP transport is retained; no Supabase or Neon API SDK is required. The pooled runtime/direct migration endpoint split is documented in SHARING.md. No dependency or schema change is needed for this provider choice. Cloud Neon connectivity remains unverified.

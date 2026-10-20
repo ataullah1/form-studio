@@ -1,6 +1,6 @@
 # Form Studio
 
-An independent furniture configurator concept by Md Ataullah. Steps 0–6 are implemented (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. Validated integer-cent estimates and a browser-local product draft now preserve designs across refresh. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
+An independent furniture configurator concept by Md Ataullah. Steps 0–7 are implemented locally (cloud database/deployment setup pending) (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. Validated integer-cent estimates and a browser-local product draft now preserve designs across refresh. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
 
 ## Run locally
 
@@ -11,7 +11,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://localhost:3000. The landing is prerendered HTML. Build your desk opens `/configure`; View desk in 3D then downloads the renderer. No credentials, database or .env file is needed for the current app. The production build fetches Bodoni Moda and Manrope through next/font/google and serves the optimized font files locally at runtime.
+Open http://localhost:3000. The landing is prerendered HTML. Build your desk opens `/configure`; View desk in 3D then downloads the renderer. No credentials/database are needed to build or use the local configurator. Save & share requires server-only database configuration; .env.example and docs/SHARING.md describe setup. The production build fetches Bodoni Moda and Manrope through next/font/google and serves the optimized font files locally at runtime.
 
 ```sh
 pnpm lint
@@ -54,7 +54,7 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - Renderer load/start errors, unavailable WebGL2, a 20-second startup timeout or context loss show a 2D schematic. Summary and editable quote draft fields stay outside the renderer boundary.
 - Quote fields are a **local draft only**, with no form action, persistence or transmission. Submission is disabled until Step 8. Do not use real contact details for demo checks.
 - Validated product configuration is saved in localStorage after a 350ms debounce, with refresh restore, immediate reset, invalid-draft discard and a usable storage-unavailable path. Quote fields, lighting and camera are excluded.
-- Share persistence, server price recomputation, quote backend and admin are future steps. No claims of manufacturing suitability or sales performance.
+- Save & share now stores immutable server-priced PostgreSQL snapshots; `/s/[publicId]` offers read-only viewing and Edit a copy. Neon/Vercel configuration is still required for live saving; see docs/SHARING.md. Quote backend and admin remain future steps. No claims of manufacturing suitability or sales performance.
 
 ## Project structure
 
@@ -64,7 +64,8 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - `src/features/quotes`: HTML quote draft, isolated from WebGL.
 - `src/lib/catalog`: versioned product facts/types plus pure strict validation and integer-cent pricing.
 - `public/assets`: local concept illustration, UI grain studies and self-hosted CC0 wood maps; provenance in docs/ASSETS.md.
-- `tests/e2e`: production-browser integration checks.
+- `src/server`, `prisma`: server-only persistence, rate limiting, private-schema migration and runtime role grants.
+- `tests/e2e`: production-browser integration checks; DB-sharing checks use a disposable local database.
 - `preview`: archived Step 0 HTML/CSS/SVG screen plan (superseded visual identity), viewable directly via `preview/index.html`.
 
 ## Planning and evidence
@@ -77,10 +78,12 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Scene geometry and camera guide](docs/SCENE.md)
 - [Current visual identity screenshots and contrast evidence](docs/evidence/visual-identity/README.md)
 - [Pricing and local draft contract](docs/PRICING-AND-DRAFTS.md)
+- [Sharing backend and Neon setup](docs/SHARING.md)
+- [Step 7 evidence](docs/evidence/step-7/README.md)
 - [Step 6 evidence](docs/evidence/step-6/README.md)
 - [Step 5 interaction evidence](docs/evidence/step-5/README.md)
 - [Step 4 configuration evidence](docs/evidence/step-4/README.md)
 - [Step 3 materials evidence](docs/evidence/step-3/README.md)
 - [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
-Next: **Step 7**, save/share backend. Physical-phone review of the Step 3 material milestone remains pending. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.
+Next: connect the prepared backend to Neon/Vercel, then **Step 8**, demo quote workflow. Physical-phone review of the Step 3 material milestone remains pending. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.

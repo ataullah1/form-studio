@@ -1,5 +1,7 @@
-# A single-package workspace; pnpm 11 reads project settings here.
+# Single-package workspace with explicit native/ORM build approval.
 saveExact: true
 strictPeerDependencies: true
 allowBuilds:
   unrs-resolver: true
+  '@prisma/engines': true
+  prisma: true

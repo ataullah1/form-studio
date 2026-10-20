@@ -16,7 +16,7 @@ Golden estimates:
 | Default size, walnut, all three accessories | $399 | $40 + $45 + $35 + $20 | $539 |
 | 120×60 oak/black, cable tray | $349 | $20 | $369 |
 
-Lighting/camera never enter ProductConfiguration or pricing. These are client-side estimates; there is **no server security verification yet**. Step 7 must validate again and recalculate from catalog facts, ignoring client totals.
+Lighting/camera never enter ProductConfiguration or pricing. These are client-side estimates; local server-side validation and persistence tests now pass, but live deployment security remains unverified. Step 7 now validates and recalculates from catalog facts before snapshot persistence; Supabase/live deployment remain unverified.
 
 ## Local persistence lifecycle
 
@@ -35,3 +35,7 @@ No share URL parser, public route, API or persistence backend is implemented her
 `loadInitialConfiguration(storage, sharedSnapshot)` always uses a supplied validated snapshot without reading storage, even if storage is blocked. Invalid supplied snapshots throw and must become the future share route's explicit unavailable/error state; they must never fall back to an unrelated local design. Server/noscript references use that supplied snapshot too. The unedited shared source does not overwrite an existing local draft. Explicit product edits create a validated local copy; reset is also an explicit edit. The shared source object remains untouched. Lighting/camera changes do not count as product edits.
 
 Tests verify local-versus-shared precedence and invalid-shared rejection at the pure loader boundary. Real shared-URL end-to-end behavior remains Step 7, rather than a simulated public share feature.
+
+## Step 7 integration update
+
+The future precedence contract above is now wired into `/s/[publicId]?edit=1`: the server resolves a snapshot before Configurator mounts, keyed by public ID. Read-only public pages never mount the local draft editor. Cross-browser restoration and local-draft priority behavior pass real local Postgres integration tests. See SHARING.md; original Step 6 boundaries above remain historical context.

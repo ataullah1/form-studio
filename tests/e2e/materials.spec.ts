@@ -29,7 +29,7 @@ test('all six finish/frame combinations agree with the summary and preserve futu
   }
   await expect(page.getByRole('button', { name: '120 × 60 cm', exact: true })).toBeEnabled();
   await expect(page.getByRole('checkbox', { name: /Desk lamp/ })).toBeEnabled();
-  await expect(page.getByRole('button', { name: /Save & share/ })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Save & share/ })).toBeEnabled();
   await expect(page.getByRole('button', { name: /Demo quote submission/ })).toBeDisabled();
   await page.getByRole('button', { name: 'Use 2D view' }).click();
   await page.getByRole('radio', { name: 'Oak', exact: true }).focus();

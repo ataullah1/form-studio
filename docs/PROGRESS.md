@@ -11,14 +11,34 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [x] Step 4 Sizes and accessories
 - [x] Step 5 Lighting and interaction
 - [x] Step 6 Pricing and local draft
-- [ ] Step 7 Save and share backend
+- [x] Step 7 Save and share backend — local verified; Neon/Vercel connection pending
 - [ ] Step 8 Quote request workflow
 - [ ] Step 9 Restricted admin inbox
 - [ ] Step 10 Product story and discovery
 - [ ] Step 11 Tests and mobile performance
 - [ ] Step 12 Release and portfolio
 
-## Current session — Step 6 pricing and local draft (2026-10-20)
+## Provider update — Neon selected
+
+- User explicitly chose Neon instead of Supabase. Updated .env.example, current README/setup guide and Step 7 roadmap provider. Existing Prisma/PostgreSQL persistence, private schema, SQL-created runtime role, immutable snapshots and shared database rate limits remain unchanged.
+- Runtime uses the Neon pooled -pooler endpoint with plain form_studio_runtime username; migrations use a direct owner endpoint. No Supabase SDK/API key dependency exists. Historical Step 7 references below describe the original provider plan, not current setup requirements.
+- Checked Neon's official connection/role documentation: use the SQL-created restricted role, not Console-created elevated runtime roles. Live Neon project/credentials, migration and Vercel deployment are still pending; no account action performed.
+- No commit/push. Suggested commit: chore: configure Neon PostgreSQL deployment setup.
+
+## Current session — Step 7 immutable save/share backend (2026-10-20)
+
+- Added Prisma/PostgreSQL schema/migration, server-only connection adapter, ignored generated client and .env.example placeholders. Stable Prisma/client/adapter 7.10.1, pg/types 8.23.1, dotenv 18.0.8 and server-only 0.0.1 pinned; ORM build scripts explicitly allowed. No framework/scene dependency upgrades.
+- Implemented bounded POST /api/configurations with strict catalog/schema validation, server-estimated integer cents, opaque 192-bit public IDs, persisted idempotency fingerprint/UUID and advisory-lock retry serialization. Same-key different payload returns 409; malformed/oversize/foreign-origin/rate-limit/unavailable states have explicit failures, never fake success.
+- Added allowlisted public GET and /s/[publicId] read-only page with saved/current estimate and Edit a copy. Server resolves snapshots before mounting the editor, so local draft never overrides a share. Edits create local copies; originals stay immutable. Unknown/unsupported/removed catalog states are explicit. Published v1 is retained; no invented legacy catalog support claimed.
+- Restricted private app schema with RLS/grants, narrow NOLOGIN runtime role and immutable DML trigger. Existing anon/authenticated/PUBLIC access (including public Prisma migration metadata) revoked. Database-clock atomic per-client/global rate buckets shared across instances; HMAC identity, trusted Vercel ingress only, conservative non-Vercel fallback. No quote fields or admin data in public responses/rows.
+- Added honest Save & share UI with stable retry key, selectable/copyable link and current-selection result association. Unconfigured backend returns 503 and preserves selection; no link appears. Quote submission remains disabled.
+- Verification: lint/typecheck, 79 unit tests and production build passed. Full local Postgres production-browser suite: 37 passed (1.2m). Fresh disposable-cluster test harness rebuilt and passed all seven database-sharing tests after final shared-page copy/metadata hardening. It applies the migration under an owner, runs app using restricted runtime, then stops/removes its own cluster. See docs/evidence/step-7/README.md.
+- Tests verify independent browser restoration, shared/local precedence, unique row from six concurrent retries, conflicting payload, immutable row rejection, malformed/oversize/contact/price payload rejection, client/global limits under concurrency, spoofed local headers, unknown/obsolete catalogs, grants and committed-but-unconfirmed save retry. No production DB was touched.
+- Visual evidence: shared/edit copy at 1440/390/360 px; inspected mobile shared layout. No overflow/page errors in recorded audit. Separate no-environment app returns explicit 503, preserves walnut selection and shows no success link. Physical phone/cloud Supabase API/pooler/TLS/Vercel ingress remain unverified; prior Step 3 device acceptance stays pending.
+- Supabase project/credentials were not supplied. Live account provisioning, owner migration and Vercel env/deployment were not performed. Concrete instructions: docs/SHARING.md and .env.example. No commit/push; suggested commit: feat: add immutable PostgreSQL save and share workflow.
+- Next: configure live backend using SHARING.md, then Step 8 demo quote workflow when requested.
+
+## Previous session — Step 6 pricing and local draft (2026-10-20)
 
 - Added pure versioned validateConfig/calculatePrice in lib/catalog: strict shape/ID/version/duplicate/injected-field rejection, canonical ordering, integer-cent itemization, product subtotal, surcharges, USD estimate and unavailable tax/shipping. Idempotent reducer accessory actions stay unique; external duplicate lists now reject rather than silently deduplicate.
 - Golden prices verified: default $399; default walnut + all accessories $539; small desk + cable tray $369. UI itemization/totals use one validated price result. Lighting/camera remain independent. Server price/security verification is still future work.

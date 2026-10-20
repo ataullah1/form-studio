@@ -4,6 +4,7 @@ import { catalogV1, formatUsd, type FinishId, type FrameColourId, type SizeId, t
 import type { Dispatch } from 'react';
 import { type ConfigurationAction } from './configuration-state';
 
+import { ShareButton } from '@/features/sharing/share-button';
 import { calculatePrice } from '@/lib/catalog/pricing';
 
 interface Props { configuration: ProductConfiguration; dispatch: Dispatch<ConfigurationAction> }
@@ -35,7 +36,7 @@ export function ConfigurationPanel({ configuration, dispatch }: Props) {
       <div className="total"><span>Illustrative estimate</span><strong>{formatUsd(price.estimatedTotalCents)} <small>USD</small></strong></div>
       <p>Tax and shipping unavailable; excluded from this estimate. No furniture is offered for sale.</p>
       <a href="#quote-draft" className="button">View demo quote draft ↗</a>
-      <button type="button" className="share" disabled>Save & share · In development</button>
+      <ShareButton configuration={configuration} />
     </section>
   </aside>;
 }

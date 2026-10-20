@@ -290,14 +290,14 @@ Complete Step 6 only. Implement versioned pure config validation, integer-cent p
 সময় ২ দিন। Dependency Step 6।
 
 ## কী বানাবেন
-- Supabase PostgreSQL, Prisma migration ও environment placeholders।
+- Neon PostgreSQL (user-selected; replaces Supabase), Prisma migration ও environment placeholders।
 - POST configuration save; GET /s/[publicId] shared configuration page।
 - Server normalized IDs, schema/catalog version ও compatibility যাচাই করে immutable snapshot রাখবে।
 - Opaque random public ID; customer data বা secret token এতে থাকবে না।
 - Share page এ version ও selection summary এবং Edit a Copy action।
 
 ## Server rules
-Client total, arbitrary material URL বা serialized JS trust নয়। Server calculatePrice দিয়ে estimate হিসাব করবে। Application tables browser Data API থেকে বন্ধ বা যথাযথ grants/RLS দিয়ে restricted থাকবে। Prisma request Supabase user context স্বয়ংক্রিয়ভাবে বহন করে ধরে নেবেন না।
+Client total, arbitrary material URL বা serialized JS trust নয়। Server calculatePrice দিয়ে estimate হিসাব করবে। Application tables browser Data API থেকে বন্ধ বা যথাযথ grants/RLS দিয়ে restricted থাকবে। Prisma request browser user context স্বয়ংক্রিয়ভাবে বহন করে ধরে নেবেন না।
 
 Save endpoint এ payload limit এবং shared atomic rate limiter দিন। Multi-instance deployment এ শুধু process memory limiter যথেষ্ট নয়। Same idempotency key ও payload safe retry হবে; conflicting payload হলে reject। Public saved config immutable, তাই account বা edit authorization এখন দরকার নেই।
 

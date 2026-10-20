@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+datasource db {
+  provider = "postgresql"
+  schemas  = ["app"]
+}
+model SharedConfiguration {
+  publicId String @id @map("public_id") @db.VarChar(32)
+  idempotencyKey String @unique @map("idempotency_key") @db.Uuid
+  fingerprint String @db.Char(64)
+  configuration Json
+  schemaVersion Int @map("schema_version")
+  catalogVersion String @map("catalog_version") @db.VarChar(32)
+  estimatedTotalCents Int @map("estimated_total_cents")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@map("shared_configurations")
+  @@schema("app")
+}
+model RateBucket {
+  key String @id @db.VarChar(80)
+  windowStart DateTime @map("window_start") @db.Timestamptz(3)
+  count Int
+  @@map("rate_buckets")
+  @@schema("app")
+}

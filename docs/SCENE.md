@@ -117,3 +117,7 @@ The canonical reducer now shares strict validateConfig with calculatePrice and l
 A hydration-safe pending shell prevents default selections flashing before the local draft resolves. Only validated product state saves, debounced with immediate reset and lifecycle flushes. Invalid/obsolete drafts remain untouched until explicit discard; unavailable storage leaves the session usable. All renderer/fallback paths receive the restored canonical configuration; 3D still requires explicit user activation after refresh. Quote fields remain unsaved and separate.
 
 See [Pricing and drafts contract](PRICING-AND-DRAFTS.md) and [Step 6 evidence](evidence/step-6/README.md). Shared snapshot precedence is defined/tested as a future server-resolved input contract, not a completed shared URL/backend.
+
+## Step 7 shared entry points
+
+A public shared page passes only a server-resolved configuration to the existing lazy viewer; it exposes read-only product options and labels Edit a copy clearly. Copy editing mounts the same canonical configurator keyed by public ID, with the supplied snapshot taking precedence over local draft state. Shared snapshots never include camera/lighting or quote fields. Rendering/model/camera ownership stays unchanged. See SHARING.md for storage, public payload, catalog resolver and deployment boundaries.

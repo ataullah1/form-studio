@@ -24,7 +24,7 @@ function Unavailable({ reason, configuration }: { reason: string; configuration:
 }
 
 /** Starts no WebGL or Three import until explicitly requested. */
-export function SceneViewer({ configuration }: { configuration: ProductConfiguration }) {
+export function SceneViewer({ configuration, readOnly = false }: { configuration: ProductConfiguration; readOnly?: boolean }) {
   const [lighting, setLighting] = useState<LightingMode>('day');
   const [active, setActive] = useState(true);
   const region = useRef<HTMLDivElement>(null);
@@ -74,7 +74,7 @@ export function SceneViewer({ configuration }: { configuration: ProductConfigura
   const fallback = <Unavailable reason="3D is unavailable. Showing the 2D schematic." configuration={configuration} />;
   return <section className="scene-viewer" aria-labelledby="viewer-title">
     <div className="viewer-top"><h2 id="viewer-title">Scene preview</h2><span className="scene-version">01 / 3D</span></div>
-    <p className="scene-notice">Choose a size, finish, frame and fixed-position accessories. Rotate or zoom to explore.</p>
+    <p className="scene-notice">{readOnly ? 'Explore this saved design. Choose Edit a copy to change its options.' : 'Choose a size, finish, frame and fixed-position accessories. Rotate or zoom to explore.'}</p>
     {(mode === 'idle') && <div className="scene-idle">
       <DeskSchematic configuration={configuration} />
       <button type="button" className="button" onClick={start}>View desk in 3D ↗</button>
