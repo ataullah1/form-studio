@@ -110,3 +110,9 @@ The user chose Google. Use server OIDC code flow with PKCE/state/nonce and jose 
 - Validate safe return paths by allowlist and bind return cookies to the verified one-time browser flow with HMAC. Admin destinations additionally require the already-verified owner destination; no return URL grants roles. Reuse existing Google callback, sessions and environment settings.
 - Scope list skeletons in route groups so private quote detail misses retain HTTP 404 rather than committing a streaming 200 response first. Routes/records/grants remain unchanged.
 - Keep physical-device, deployed-provider/cron and release acceptance separate from local production/isolated fixture evidence. No commit/push/deploy or production writes.
+
+## 2026-10-21 — reversible desk workbench and scene tools
+
+Keep ProductConfiguration v1 and the server price/ownership boundaries unchanged. Starting setups are validated catalogue configurations; history is bounded and never serialized into product drafts. A comparison is an in-memory reference, never the implicit save/quote target. Room/floor/dimensions/lamp power are explicitly transient viewer preferences. Arbitrary dimensions, new tabletop types and draggable accessory layouts require a separately versioned product contract before they can be shared or priced.
+
+Reuse the existing demand-rendered scene and self-owned room primitives instead of adding a room asset/HDRI. Draw dimension labels with existing Drei HTML support only inside the lazy scene. PNG export explicitly renders once and immediately reads the buffer, avoiding permanent preserveDrawingBuffer; HTML labels are excluded. New top/rear presets respect existing camera bounds. Native form undo takes precedence over product shortcuts.

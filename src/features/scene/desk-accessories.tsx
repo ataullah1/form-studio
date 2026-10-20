@@ -10,14 +10,14 @@ function Solid({ size, position, colour }: { size: Triple; position: Triple; col
 }
 
 /** Original code geometry; physical dimensions never scale with the tabletop. */
-export function DeskAccessories({ dimensions, configuration, lighting }: { lighting: LightingMode; dimensions: DeskDimensions; configuration: ProductConfiguration }) {
+export function DeskAccessories({ dimensions, configuration, lighting, lampOn = lighting === 'night', onLampToggle }: { onLampToggle?: () => void; lampOn?: boolean; lighting: LightingMode; dimensions: DeskDimensions; configuration: ProductConfiguration }) {
   const layout = deriveAccessoryLayout(dimensions);
   const colour = configuration.frameColourId === 'white' ? '#e9e6df' : '#292d29';
   return <group name="accessories">
-    {configuration.accessoryIds.map(id => <group key={id} name={`accessory-${id}`} position={layout[id].position}>
+    {configuration.accessoryIds.map(id => <group key={id} name={`accessory-${id}`} position={layout[id].position} onClick={id === 'lamp' && onLampToggle ? event => { event.stopPropagation(); onLampToggle(); } : undefined}>
       {id === 'lamp' && <>
-        <mesh position={[0.037, 0.333, 0]}><sphereGeometry args={[0.019, 12, 8]} /><meshStandardMaterial color="#fff5df" emissive="#ffcc88" emissiveIntensity={lighting === 'night' ? 0.7 : 0} /></mesh>
-        {lighting === 'night' && <pointLight name="desk-lamp-light" position={[0.05, 0.315, 0.025]} color="#ffd29a" intensity={0.35} distance={1.1} decay={2} />}
+        <mesh position={[0.037, 0.333, 0]}><sphereGeometry args={[0.019, 12, 8]} /><meshStandardMaterial color="#fff5df" emissive="#ffcc88" emissiveIntensity={lampOn ? 0.9 : 0} /></mesh>
+        {lampOn && <pointLight name="desk-lamp-light" position={[0.05, 0.315, 0.025]} color="#ffd29a" intensity={0.35} distance={1.1} decay={2} />}
 
         <mesh position={[0, 0.009, 0]} castShadow receiveShadow><cylinderGeometry args={[0.065, 0.07, 0.018, 24]} /><meshStandardMaterial color={colour} metalness={0.4} roughness={0.55} /></mesh>
         <mesh position={[0, 0.177, 0]} castShadow><cylinderGeometry args={[0.009, 0.009, 0.32, 12]} /><meshStandardMaterial color={colour} metalness={0.4} roughness={0.55} /></mesh>

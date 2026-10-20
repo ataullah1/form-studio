@@ -1,7 +1,7 @@
 import type { Triple } from './desk-dimensions';
 
 export const CAMERA_FOV = 38;
-export interface CameraCommand { revision: number; action: 'reset' | 'front' | 'detail' | 'zoom-in' | 'zoom-out' }
+export interface CameraCommand { revision: number; action: 'reset' | 'front' | 'detail' | 'top' | 'rear' | 'zoom-in' | 'zoom-out' }
 
 /** Fit a bounding sphere to the smaller camera field of view, including portrait screens. */
 export function calculateCameraFraming(dimensions: { width: number; height: number; depth: number }, aspect: number) {
@@ -35,11 +35,11 @@ export function calculateCameraFraming(dimensions: { width: number; height: numb
 }
 
 /** Presets remain inside the same orbit/zoom envelope as manual interaction. */
-export function cameraPreset(frame: ReturnType<typeof calculateCameraFraming>, action: 'reset' | 'front' | 'detail'): Triple {
+export function cameraPreset(frame: ReturnType<typeof calculateCameraFraming>, action: 'reset' | 'front' | 'detail' | 'top' | 'rear'): Triple {
   if (action === 'reset') return [...frame.position];
   const distance = action === 'detail' ? Math.max(frame.minDistance, frame.distance * 0.72) : frame.distance;
-  const polar = Math.min(frame.maxPolarAngle, action === 'front' ? 1.05 : 0.8);
-  const azimuth = action === 'front' ? 0 : 0.65;
+  const polar = Math.min(frame.maxPolarAngle, action === 'top' ? frame.minPolarAngle : action === 'front' || action === 'rear' ? 1.05 : 0.8);
+  const azimuth = action === 'top' || action === 'front' ? 0 : action === 'rear' ? Math.PI : 0.65;
   return [
     frame.target[0] + distance * Math.sin(polar) * Math.sin(azimuth),
     frame.target[1] + distance * Math.cos(polar),

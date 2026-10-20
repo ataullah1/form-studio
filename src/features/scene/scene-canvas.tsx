@@ -11,11 +11,13 @@ import { CAMERA_FOV, type CameraCommand } from './camera-framing';
 import type { ProductConfiguration } from '@/lib/catalog';
 import { RenderPolicy } from './render-policy';
 import { lightingPresets, qualityPresets, type LightingMode, type ViewerQuality } from './viewer-settings';
+import { CaptureView, DesignRoom, DimensionGuides } from './design-tools';
+import type { RoomView, FloorFinish } from './design-settings';
 import type { TextureReport } from './wood-surface';
 
-interface Props { allowZoom?: boolean; quality: ViewerQuality; lighting: LightingMode; active: boolean; onReady: () => void; onUnavailable: () => void; command: CameraCommand; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }
+interface Props { onLampToggle?: () => void; room?: RoomView; floor?: FloorFinish; showDimensions?: boolean; lampOn?: boolean; captureRevision?: number; onCapture?: (data: string | null) => void; allowZoom?: boolean; quality: ViewerQuality; lighting: LightingMode; active: boolean; onReady: () => void; onUnavailable: () => void; command: CameraCommand; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }
 
-export default function SceneCanvas({ onReady, onUnavailable, command, lighting, active, configuration, attempt, onTextureStatus, quality, allowZoom = true }: Props) {
+export default function SceneCanvas({ onReady, onUnavailable, command, lighting, active, configuration, attempt, onTextureStatus, quality, allowZoom = true, room, floor = 'sand', showDimensions = false, lampOn, captureRevision = 0, onCapture, onLampToggle }: Props) {
   const preset = lightingPresets[lighting];
   const renderQuality = qualityPresets[quality];
   const sceneColours = useMemo(() => {
@@ -86,11 +88,12 @@ export default function SceneCanvas({ onReady, onUnavailable, command, lighting,
       shadow-radius={3}
     />
     <directionalLight position={[2, 2, -3]} intensity={preset.fill} />
-    <DeskModel quality={quality} dimensions={dimensions} configuration={configuration} lighting={lighting} attempt={attempt} onTextureStatus={onTextureStatus} />
-    <mesh name="floor" rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-      <planeGeometry args={[200, 200]} />
-      <shadowMaterial color={sceneColours.shadow} transparent opacity={preset.shadowOpacity} />
-    </mesh>
+    <DeskModel quality={quality} dimensions={dimensions} configuration={configuration} lighting={lighting} lampOn={lampOn} onLampToggle={onLampToggle} attempt={attempt} onTextureStatus={onTextureStatus} />
+    {room ? <DesignRoom view={room} floor={floor} lighting={lighting} /> : <mesh name="floor" rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+      <planeGeometry args={[200, 200]} /><shadowMaterial color={sceneColours.shadow} transparent opacity={preset.shadowOpacity} />
+    </mesh>}
+    {showDimensions && <DimensionGuides dimensions={dimensions} />}
+    <CaptureView revision={captureRevision} onCapture={onCapture} />
     <RenderPolicy quality={quality} active={active} configuration={configuration} lighting={lighting} />
     <DeskCamera allowZoom={allowZoom} dimensions={framingDimensions} command={command} active={active} />
   </Canvas>;

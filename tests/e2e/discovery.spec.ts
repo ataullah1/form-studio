@@ -56,6 +56,6 @@ test('story fits desktop and mobile widths and respects reduced motion', async (
     await expect(page.locator('.story-invitation .button')).toHaveAttribute('href', '/configure');
   }
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  expect(await page.locator('.poster-frame').evaluate(el => getComputedStyle(el).animationName)).toBe('none');
+  expect(await page.locator('.hero-copy').evaluate(el => getComputedStyle(el).animationName)).toBe('none');
   expect(errors).toEqual([]);
 });

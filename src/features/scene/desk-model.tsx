@@ -9,7 +9,7 @@ import { WoodSurface, type TextureReport } from './wood-surface';
 import type { LightingMode, ViewerQuality } from './viewer-settings';
 import type { ProductConfiguration } from '@/lib/catalog';
 
-export function DeskModel({ dimensions, configuration, lighting, attempt, onTextureStatus, quality }: { quality: ViewerQuality; lighting: LightingMode; dimensions: DeskDimensions; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }) {
+export function DeskModel({ dimensions, configuration, lighting, attempt, onTextureStatus, quality, lampOn, onLampToggle }: { onLampToggle?: () => void; lampOn?: boolean; quality: ViewerQuality; lighting: LightingMode; dimensions: DeskDimensions; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }) {
   const { shape, settings } = useMemo(() => tabletopExtrusion(dimensions), [dimensions]);
 
   return <group name="studio-desk-01">
@@ -36,10 +36,10 @@ export function DeskModel({ dimensions, configuration, lighting, attempt, onText
     >
       <meshStandardMaterial
         color={part.id.startsWith('foot-') ? '#242923' : configuration.frameColourId === 'white' ? '#e9e6df' : '#292d29'}
-        metalness={part.id.startsWith('foot-') ? 0 : 0.45}
+        metalness={part.id.startsWith('foot-') ? 0 : 0.25}
         roughness={0.58}
       />
     </RoundedBox>)}
-    <DeskAccessories dimensions={dimensions} configuration={configuration} lighting={lighting} />
+    <DeskAccessories dimensions={dimensions} configuration={configuration} lighting={lighting} lampOn={lampOn} onLampToggle={onLampToggle} />
   </group>;
 }

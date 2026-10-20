@@ -46,7 +46,7 @@ export function DeskCamera({ dimensions, command, active, allowZoom = true }: { 
     appliedRevision.current = command.revision;
     if (!controls.current) return;
     let destination: Vector3;
-    if (command.action === 'reset' || command.action === 'front' || command.action === 'detail') {
+    if (command.action === 'reset' || command.action === 'front' || command.action === 'detail' || command.action === 'top' || command.action === 'rear') {
       destination = new Vector3(...cameraPreset(frame, command.action));
     } else {
       const target = controls.current.target;

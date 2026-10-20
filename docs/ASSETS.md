@@ -69,3 +69,7 @@ Day/night use original code-authored fixed light presets. The lamp bulb is origi
 ## Owner-supplied marketing images — 2026-10-20
 
 The owner supplied `public/assets/studio-desk-01.webp`, the three WebP files in `public/assets/accessories/`, and `public/assets/Studio Desk 01_ Designed Around You.webp`. The desk replaces the historical model screenshot in the landing hero; the accessory images replace inline marketing SVGs. The banner is converted to a 1200 × 630 PNG at `src/app/opengraph-image.png` for social metadata, with proportional fitting. Original supplied files are retained. External source/license was not provided; no third-party provenance claim is made. These are concept marketing illustrations; interactive geometry, saved design schematics and licensed runtime wood textures remain unchanged.
+
+## Desk workbench — 2026-10-21
+
+Room walls, matte floor, baseboards and dimension guides are original code geometry in `features/scene/design-tools.tsx`, using existing lighting/materials and no external models, textures or HDRIs. Downloaded previews capture the actual model and existing licensed wood maps. The derived 1200 × 630 social PNG was palette-optimized to 171,872 bytes to meet the existing 300 KB budget; the owner's original supplied WebP is unchanged.

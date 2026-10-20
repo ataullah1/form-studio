@@ -18,7 +18,14 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [ ] Step 11 Tests and mobile performance — automated checks/budgets verified; physical-phone acceptance pending
 - [ ] Step 12 Release and portfolio
 
-## Current session — whole-application portfolio polish (2026-10-20)
+## Current session — desk design workbench (2026-10-21)
+
+- Added editable starting setups, fifty-step Undo/Redo with scoped keyboard shortcuts, in-memory comparison, inline expanded preview and actual model PNG export.
+- Added Studio/Room, three floor finishes, original room geometry, matte floor with cached shadows, true-dimension guides, top/rear detail views and independent lamp power (button or model click). Existing product options, validated pricing, local drafts, public shares and quote ownership remain intact.
+- Kept viewer preferences outside the catalogue configuration. No arbitrary dimensions, unsaved accessory repositioning, schema/migration, external model/HDRI, new dependency or production data mutation.
+- Verified types/build/135 unit tests, affected viewer/browser checks and isolated backend regressions. Measured production scene resources remain within budgets. Details and exact run results: docs/evidence/desk-workbench/README.md. Physical-mobile and deployed acceptance remain open; no automatic commit, push or deployment.
+
+## Previous session — whole-application portfolio polish (2026-10-20)
 
 - Implemented a cohesive collection/workspace/operations presentation across all ten route variants. Kept all later features and private boundaries; no production data, credentials, schema/grants or dependency changes.
 - Landing now uses a static render of the actual implemented desk, visual accessory studies, licensed grain details and concise guest/account workflow. App screens use a compact footer and shared wordmark, controls, headings, specification lists, previews and status badges.
