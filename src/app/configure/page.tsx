@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { Configurator } from '@/features/configurator/configurator';
-import { QuoteDraft } from '@/features/quotes/quote-draft';
 
 export const metadata: Metadata = {
   title: 'Build your desk — Form Studio',
@@ -16,7 +15,6 @@ export default function ConfigurePage() {
         <div className="configure-heading"><div><p className="eyebrow">STUDIO DESK 01 / FORM STUDIES</p><h1 id="configure-title">Your desk,<br />in perspective.</h1></div><p>Explore its proportions.<br />Rotate, zoom, take a closer look.</p></div>
         <Configurator />
       </section>
-      <QuoteDraft />
     </main>
     <SiteFooter />
   </>;

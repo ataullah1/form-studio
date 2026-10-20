@@ -3,6 +3,7 @@
 import { useEffect, useReducer, useRef, useState, useSyncExternalStore, type Dispatch } from 'react';
 import { defaultConfiguration } from '@/lib/catalog';
 import { validateConfig } from '@/lib/catalog/pricing';
+import { QuoteDraft } from '@/features/quotes/quote-draft';
 import { SceneViewer } from '@/features/scene/scene-viewer';
 import { ConfigurationPanel } from './configuration-panel';
 import { configurationReducer, type ConfigurationAction } from './configuration-state';
@@ -14,18 +15,18 @@ const serverSnapshot = () => false;
 const storage = () => window.localStorage;
 
 /** Resolves local state before mounting interactive choices; no default-selection flash or hydration mismatch. */
-export function Configurator({ sharedSnapshot }: { sharedSnapshot?: unknown }) {
+export function Configurator({ sharedSnapshot, sourcePublicId }: { sharedSnapshot?: unknown; sourcePublicId?: string }) {
   const hydrated = useSyncExternalStore(subscribe, hydratedSnapshot, serverSnapshot);
   const serverConfiguration = sharedSnapshot === undefined ? defaultConfiguration : validateConfig(sharedSnapshot);
-  if (!hydrated) return <div className="draft-pending" aria-busy="true">
+  if (!hydrated) return <><div className="draft-pending" aria-busy="true">
     <p className="draft-loading" role="status">Loading your desk draft…</p>
     <div className="builder" style={{ visibility: 'hidden' }}><SceneViewer configuration={serverConfiguration} /><ConfigurationPanel configuration={serverConfiguration} dispatch={() => {}} /></div>
     <noscript><style>{'.draft-pending .builder { visibility: visible !important; } .draft-loading { display: none; }'}</style></noscript>
-  </div>;
-  return <DraftConfigurator sharedSnapshot={sharedSnapshot} />;
+  </div><QuoteDraft configuration={serverConfiguration} active={false} /></>;
+  return <DraftConfigurator sharedSnapshot={sharedSnapshot} sourcePublicId={sourcePublicId} />;
 }
 
-function DraftConfigurator({ sharedSnapshot }: { sharedSnapshot?: unknown }) {
+function DraftConfigurator({ sharedSnapshot, sourcePublicId }: { sharedSnapshot?: unknown; sourcePublicId?: string }) {
   const [boot] = useState(() => loadInitialConfiguration(storage, sharedSnapshot));
   const [configuration, reduce] = useReducer(configurationReducer, boot.configuration);
   const [status, setStatus] = useState<DraftStatus>(boot.status);
@@ -64,5 +65,6 @@ function DraftConfigurator({ sharedSnapshot }: { sharedSnapshot?: unknown }) {
   return <>
     <div className="draft-notice" role="status"><p>{messages[status]}</p>{blocked && <button type="button" className="secondary-button" onClick={() => dispatch({ type: 'reset' })}>Discard saved draft</button>}</div>
     <div className="builder"><SceneViewer configuration={configuration} /><ConfigurationPanel configuration={configuration} dispatch={dispatch} /></div>
+    <QuoteDraft configuration={configuration} sourcePublicId={sourcePublicId} />
   </>;
 }

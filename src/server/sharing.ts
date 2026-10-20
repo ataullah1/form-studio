@@ -21,10 +21,10 @@ export function rateIdentity(headers: Headers) {
 }
 
 /** Database-clock fixed windows; each counter update is atomic across all instances. */
-export async function consumeShareRate(identity: string) {
+export async function consumeShareRate(identity: string, scope: 'share' | 'quote' = 'share') {
   try {
     await database().$transaction(async tx => {
-      for (const [key, limit] of [['share:global', 100], [`share:${identity}`, 10]] as const) {
+      for (const [key, limit] of [[`${scope}:global`, scope === 'share' ? 100 : 20], [`${scope}:${identity}`, scope === 'share' ? 10 : 5]] as const) {
         const rows = await tx.$queryRaw<{ count: number }[]>`
           INSERT INTO app.rate_buckets (key, window_start, count)
           VALUES (${key}, date_trunc('minute', CURRENT_TIMESTAMP), 1)
@@ -33,7 +33,7 @@ export async function consumeShareRate(identity: string) {
             count = CASE WHEN app.rate_buckets.window_start < EXCLUDED.window_start THEN 1 ELSE app.rate_buckets.count + 1 END
           WHERE app.rate_buckets.window_start < EXCLUDED.window_start OR app.rate_buckets.count < ${limit}
           RETURNING count`;
-        if (rows.length === 0) throw new ShareError(429, 'Too many saves. Please try again in a minute.');
+        if (rows.length === 0) throw new ShareError(429, 'Too many requests. Please try again in a minute.');
       }
     });
   } catch (error) { if (error instanceof ShareError) throw error; throw new ShareError(503, 'Sharing is temporarily unavailable. Your design is still here.'); }

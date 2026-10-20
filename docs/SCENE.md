@@ -121,3 +121,7 @@ See [Pricing and drafts contract](PRICING-AND-DRAFTS.md) and [Step 6 evidence](e
 ## Step 7 shared entry points
 
 A public shared page passes only a server-resolved configuration to the existing lazy viewer; it exposes read-only product options and labels Edit a copy clearly. Copy editing mounts the same canonical configurator keyed by public ID, with the supplied snapshot taking precedence over local draft state. Shared snapshots never include camera/lighting or quote fields. Rendering/model/camera ownership stays unchanged. See SHARING.md for storage, public payload, catalog resolver and deployment boundaries.
+
+## Quote integration (Step 8)
+
+QuoteDraft now receives the canonical configuration from Configurator. It remains outside Canvas and renderer error boundaries, including the pending/no-WebGL fallback. Only product drafts use localStorage; contacts remain transient until explicit consent and server submission. See QUOTES.md.

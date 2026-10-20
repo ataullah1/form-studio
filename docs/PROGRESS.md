@@ -11,18 +11,28 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [x] Step 4 Sizes and accessories
 - [x] Step 5 Lighting and interaction
 - [x] Step 6 Pricing and local draft
-- [x] Step 7 Save and share backend — local verified; Neon/Vercel connection pending
-- [ ] Step 8 Quote request workflow
+- [x] Step 7 Save and share backend — local and Neon connection verified
+- [x] Step 8 Quote request workflow — verified locally; deployment/cron activation pending
 - [ ] Step 9 Restricted admin inbox
 - [ ] Step 10 Product story and discovery
 - [ ] Step 11 Tests and mobile performance
 - [ ] Step 12 Release and portfolio
 
+## Current session — Step 8 demo quote workflow (2026-10-20)
+
+- Added consent-based demo requests tied to the canonical configuration, server-authoritative prices, opaque receipts, transactional private persistence, HMAC idempotency, concurrent retry handling and explicit current-price confirmation for shared designs.
+- Contact data is isolated in an insert-only runtime table, excluded from public shares, browser storage and application telemetry. Failure preserves fields; success clears them only after server confirmation. No email, order or public quote lookup.
+- Added strict bounded validation, honeypot, database-backed request limits, five-day contact expiry and authenticated daily cleanup with a seven-day removal target. Quote persistence fails closed without cleanup configuration and on Vercel preview deployments.
+- Verified lint/typecheck, 98 unit tests and production build. Full browser run passed 44 checks; two further quote cases were added and all 16 sharing/quote checks passed. See docs/evidence/step-8/README.md for final run and migration status.
+- Applied the Step 8 migration to Neon and verified runtime contact SELECT/DELETE are denied while INSERT and cleanup EXECUTE are granted. No test contact data was written remotely.
+- Generated CRON_SECRET only in ignored local .env. Vercel Production must receive that value and deploy vercel.json to activate the daily schedule. No deployment or production contact submissions performed.
+- Next: Step 9 restricted admin inbox using provider-independent authentication; Supabase is no longer a requirement. No commit/push.
+
 ## Provider update — Neon selected
 
 - User explicitly chose Neon instead of Supabase. Updated .env.example, current README/setup guide and Step 7 roadmap provider. Existing Prisma/PostgreSQL persistence, private schema, SQL-created runtime role, immutable snapshots and shared database rate limits remain unchanged.
 - Runtime uses the Neon pooled -pooler endpoint with plain form_studio_runtime username; migrations use a direct owner endpoint. No Supabase SDK/API key dependency exists. Historical Step 7 references below describe the original provider plan, not current setup requirements.
-- Checked Neon's official connection/role documentation: use the SQL-created restricted role, not Console-created elevated runtime roles. Live Neon project/credentials, migration and Vercel deployment are still pending; no account action performed.
+- Checked Neon's official connection/role documentation: use the SQL-created restricted role, not Console-created elevated runtime roles. Neon owner migration and restricted runtime connectivity were subsequently configured and verified. User reports Vercel environment setup complete; deployed behavior has not been independently verified.
 - No commit/push. Suggested commit: chore: configure Neon PostgreSQL deployment setup.
 
 ## Current session — Step 7 immutable save/share backend (2026-10-20)

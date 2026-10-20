@@ -22,7 +22,7 @@ export default async function SharedPage({ params, searchParams }: { params: Pro
   return <><SiteHeader configurator /><main className="configure">
     <div className="configure-heading"><div><p className="eyebrow">{editing ? 'EDIT A COPY' : 'SAVED DESIGN'} · CATALOG {snapshot.catalogVersion}</p><h1>{editing ? 'Make it yours.' : 'A desk, shared.'}</h1></div></div>
     <p className="draft-notice">{editing ? 'You are editing a copy. The saved design stays unchanged.' : `Saved design · Catalog ${snapshot.catalogVersion}. Edit a copy to make changes.`}</p>
-    {editing ? <Configurator key={publicId} sharedSnapshot={resolved.configuration} /> : <div className="builder">
+    {editing ? <Configurator key={publicId} sharedSnapshot={resolved.configuration} sourcePublicId={publicId} /> : <div className="builder">
       <SceneViewer configuration={resolved.configuration} readOnly />
       <section className="panel summary" aria-label="Saved design summary">
         <h2>Studio Desk 01</h2>

@@ -41,8 +41,8 @@ Step 0 থেকে Step 12 ক্রমে কাজ করুন। প্র�
 | UI motion | Motion শুধু প্রয়োজনীয় transition এ |
 | Validation | Zod এবং pure configuration functions |
 | Backend | Next.js server handlers, PostgreSQL এবং Prisma |
-| Admin identity | Supabase Auth এবং server allowlist |
-| Hosting and data | Vercel এবং Supabase PostgreSQL |
+| Admin identity | Provider-independent authentication এবং server allowlist |
+| Hosting and data | Vercel এবং Neon PostgreSQL |
 | Verification | Vitest এবং Playwright |
 
 Stable compatible package versions শুরুতে যাচাই ও lock করুন। React, React DOM, Fiber ও Drei peer dependencies একসঙ্গে মিলতে হবে। বর্তমান stable docs ব্যবহার করবেন; /next বা alpha guide ভুল করে ব্যবহার নয়।
@@ -339,7 +339,7 @@ Complete Step 8 only. Implement a clearly labelled demo quote form, server-autho
 সময় ১ থেকে ২ দিন। Dependency Step 8।
 
 ## Admin scope
-শুধু আপনার quote inbox; customer login বা public signup dashboard নয়। Supabase Auth login এবং server-controlled allowed user IDs ব্যবহার করুন। Allowlist .env বা server configuration এ থাকবে। নতুন user ID client request বা public sign up দিয়ে admin হতে পারবে না।
+শুধু আপনার quote inbox; customer login বা public signup dashboard নয়। Provider-independent verified login এবং server-controlled allowed user IDs ব্যবহার করুন। Allowlist .env বা server configuration এ থাকবে। নতুন user ID client request বা public sign up দিয়ে admin হতে পারবে না।
 
 ## প্রয়োজনীয় screens
 - /admin/login এবং protected /admin/quotes।
@@ -349,13 +349,13 @@ Complete Step 8 only. Implement a clearly labelled demo quote form, server-autho
 - Filter by status; private response public cache এ যাবে না।
 
 ## Authentication rules
-Official Supabase SSR integration অনুসরণ করুন। Browser redirect শুধু UX; প্রতিটি private query ও mutation এ verified identity এবং allowlist check হবে। Service-role key, DB credentials বা auth secret কখনো NEXT_PUBLIC prefix পাবে না। Open redirect এ external return URL ব্যবহার নয়।
+নির্বাচিত authentication provider-এর official server-side integration অনুসরণ করুন; Supabase প্রয়োজন নেই। Browser redirect শুধু UX; প্রতিটি private query ও mutation এ verified identity এবং allowlist check হবে। Service-role key, DB credentials বা auth secret কখনো NEXT_PUBLIC prefix পাবে না। Open redirect এ external return URL ব্যবহার নয়।
 
 ## Acceptance checks
 Logged-out এবং non-allowlisted authenticated user দুজনেই quote data পায় না। URL বা action replay দিয়ে admin status change হয় না। Own admin session detail দেখে status update করতে পারে। Cross-tab state stale হলে refreshed value দেখায়। Public demo admin access পাবে না।
 
 ## Codex prompt
-Complete Step 9 only. Add a minimal Supabase-authenticated admin quote inbox with a server-maintained user-ID allowlist. Protect every private read and status mutation. Add pagination, status filter and transactional status history. Test logged-out, non-allowlisted and replayed requests. Do not expose customer contact data through public routes or shared caches.
+Complete Step 9 only. Add a minimal authenticated admin quote inbox (Neon database; auth provider to be selected) with a server-maintained user-ID allowlist. Protect every private read and status mutation. Add pagination, status filter and transactional status history. Test logged-out, non-allowlisted and replayed requests. Do not expose customer contact data through public routes or shared caches.
 
 Public portfolio walkthrough এ admin অংশ দেখাতে হলে fictional seed data ব্যবহার করুন। নিজের actual enquiries screen record করবেন না।
 

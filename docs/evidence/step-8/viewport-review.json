@@ -1,0 +1,23 @@
+{
+  "browser": "155.0.8059.85",
+  "rendering": "Headless desktop Chrome; emulated viewports, not physical phones",
+  "audit": [
+    {
+      "width": 1440,
+      "documentWidth": 1440,
+      "canvases": 0
+    },
+    {
+      "width": 390,
+      "documentWidth": 390,
+      "canvases": 0
+    },
+    {
+      "width": 360,
+      "documentWidth": 360,
+      "canvases": 0
+    }
+  ],
+  "pageErrors": [],
+  "contacts": "Fictional UI-only examples, not submitted by this screenshot review"
+}

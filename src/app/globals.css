@@ -355,3 +355,12 @@ img, svg { display: block; }
 .summary>.share-control { display: block; }
 .share-control .share:enabled { border: 1px solid var(--colour-control-border); color: var(--colour-ink); font-size: 13px; }
 .share-control .share:enabled:hover { background: var(--colour-selection); }
+
+.configure .quote-draft { padding: 70px 0 0; }
+.quote-selection { font-size: 13px; line-height: 1.8; color: var(--colour-muted); margin-top: 22px; }
+.quote-fields .quote-consent { display: flex; flex-wrap: nowrap; align-items: flex-start; gap: 10px; line-height: 1.6; }
+.quote-consent input[type="checkbox"] { width: 18px; min-width: 18px; height: 18px; min-height: 18px; margin-top: 2px; padding: 0; accent-color: var(--colour-accent); }
+.quote-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.quote-error, .quote-success, .quote-price-review { font-size: 13px; line-height: 1.7; padding: 14px; border: 1px solid var(--colour-control-border); }
+.quote-success { margin-bottom: 20px; }
+.field-error { color: var(--colour-accent) !important; }

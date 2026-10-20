@@ -25,3 +25,32 @@ model RateBucket {
   @@map("rate_buckets")
   @@schema("app")
 }
+
+model QuoteRequest {
+  id String @id @db.Uuid
+  reference String @unique @db.VarChar(32)
+  idempotencyKey String @unique @map("idempotency_key") @db.Uuid
+  fingerprint String @db.Char(64)
+  configuration Json
+  catalogVersion String @map("catalog_version") @db.VarChar(32)
+  estimatedTotalCents Int @map("estimated_total_cents")
+  sourcePublicId String? @map("source_public_id") @db.VarChar(32)
+  status String @default("NEW") @db.VarChar(16)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  contact QuoteContact?
+  @@map("quote_requests")
+  @@schema("app")
+}
+model QuoteContact {
+  quoteId String @id @map("quote_id") @db.Uuid
+  name String @db.VarChar(100)
+  email String @db.VarChar(254)
+  company String @db.VarChar(120)
+  country String @db.VarChar(100)
+  message String @db.VarChar(1000)
+  expiresAt DateTime @default(dbgenerated("(CURRENT_TIMESTAMP + '5 days'::interval)")) @map("expires_at") @db.Timestamptz(3)
+  quote QuoteRequest @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  @@index([expiresAt])
+  @@map("quote_contacts")
+  @@schema("app")
+}

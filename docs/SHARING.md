@@ -27,7 +27,7 @@ Schedule that maintenance when deploying; no scheduled cleanup/account service i
 
 ## Neon / Vercel setup — connection still required
 
-Neon is the selected provider, replacing the original Supabase plan. The existing Prisma PostgreSQL adapter uses standard TCP and works with Neon's PostgreSQL endpoints; no Neon HTTP driver or account SDK is required. No cloud project, live connection, production migration or Vercel deployment has been performed here. Keep credentials in ignored .env or provider environment settings, not chat/Git/NEXT_PUBLIC_ variables.
+Neon is the selected provider, replacing the original Supabase plan. The existing Prisma PostgreSQL adapter uses standard TCP and works with Neon's PostgreSQL endpoints; no Neon HTTP driver or account SDK is required. The Neon connection, owner migration and restricted runtime grants have been verified. Vercel deployment remains user-controlled. Keep credentials in ignored .env or provider environment settings, not chat/Git/NEXT_PUBLIC_ variables.
 
 1. In [Neon Console](https://console.neon.tech), create/select the intended project, branch and database. Choose a region appropriate to the app deployment. Use the same branch/database for both URLs; separate preview environments should use their own branch and credentials.
 2. Copy .env.example to ignored .env. In Neon Connect, select the owner role and turn **Connection pooling off**. Copy that direct URL into DIRECT_URL. The sample host/region/database are placeholders; use the actual values Neon supplies. URL-encode passwords and keep TLS certificate verification (`sslmode=verify-full`).
@@ -56,11 +56,11 @@ The published visual catalog currently has only version 1. `resolveSnapshot` ret
 
 ## Local database verification
 
-`pnpm check` needs no database. Default `pnpm test:e2e` skips the seven DB-sharing tests unless TEST_DATABASE_URL is explicitly supplied. To reproduce real persistence tests safely, have PostgreSQL tools (`initdb`, `pg_ctl`, `createdb`, `psql`) on PATH and installed Playwright Chromium (or an installed Chrome path):
+`pnpm check` needs no database. Default `pnpm test:e2e` skips the database sharing/quote tests unless TEST_DATABASE_URL is explicitly supplied. To reproduce real persistence tests safely, have PostgreSQL tools (`initdb`, `pg_ctl`, `createdb`, `psql`) on PATH and installed Playwright Chromium (or an installed Chrome path):
 
 ```sh
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:sharing
-# Full 37-browser-test suite using a newly created disposable database:
+# Full 46-browser-test suite using a newly created disposable database:
 pnpm test:sharing --all
 ```
 
@@ -74,3 +74,5 @@ The script creates a fresh localhost-only trust-authenticated cluster on an avai
 - [Neon role permissions and SQL-created roles](https://neon.com/docs/manage/roles)
 - [Neon connections](https://neon.com/docs/connect/connect-from-any-app)
 - [Vercel request headers](https://vercel.com/docs/headers/request-headers)
+
+Step 8 adds nine private quote tests to the seven sharing checks in the default disposable-database harness. Quote deployment also requires CRON_SECRET; see [QUOTES.md](QUOTES.md).

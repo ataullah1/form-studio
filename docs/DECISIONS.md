@@ -91,3 +91,7 @@
 - Resolve storage after hydration before interactive choices appear. Hide the pending defaults inline before stylesheets arrive; retain a noscript default-facts/schematic path. Invalid/obsolete/oversized drafts require explicit discard/reset; unavailable storage remains session-usable.
 - Give a supplied server-resolved shared snapshot priority without reading local storage; invalid shared input must fail explicitly. Unedited shared source does not overwrite local draft; product edits create a local copy. Actual shared URLs/backend remain Step 7.
 - Verify golden prices, invalid payloads, hydration visibility, refresh/reset, privacy, rapid debounce/exit flush and blocked/quota modes. No new dependency/asset, commit, push, deployment or production write.
+
+## Step 8 — private demo quotes
+
+Quote fields live below the canonical configurator and outside Canvas, so submitted design and visible estimate share one state. Contact details stay in transient component state until explicit submission. PostgreSQL separates insert-only contact rows from private receipt metadata; raw parameterized inserts use one database clock. Five-day expiry plus daily authenticated production cleanup targets removal within seven days. Persistence requires cleanup configuration. Admin authentication is deferred to Step 9 and does not require Supabase.
