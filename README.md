@@ -1,6 +1,6 @@
 # Form Studio
 
-An independent furniture configurator concept by Md Ataullah. Steps 0–10 are implemented locally (latest deployment acceptance pending; user reports Google authentication configured) (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. Validated integer-cent estimates and a browser-local product draft now preserve designs across refresh. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
+An independent furniture configurator concept by Md Ataullah. Steps 0–10 and Step 11 automated performance checks are implemented locally (latest deployment acceptance pending; user reports Google authentication configured) (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Balanced/Low preview quality, day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. Validated integer-cent estimates and a browser-local product draft now preserve designs across refresh. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
 
 ## Run locally
 
@@ -79,6 +79,8 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Current visual identity screenshots and contrast evidence](docs/evidence/visual-identity/README.md)
 - [Pricing and local draft contract](docs/PRICING-AND-DRAFTS.md)
 - [Sharing backend and Neon setup](docs/SHARING.md)
+- [Performance measurements and device gate](docs/PERFORMANCE.md)
+- [Step 11 evidence](docs/evidence/step-11/README.md)
 - [Product story and SEO](docs/DISCOVERY.md)
 - [Step 10 evidence](docs/evidence/step-10/README.md)
 - [Private Google admin setup](docs/ADMIN.md)
@@ -92,4 +94,4 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Step 3 materials evidence](docs/evidence/step-3/README.md)
 - [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
-Next: **Step 11**, tests and mobile performance. Deploy Step 10 to publish the new landing, sitemap and social metadata. Physical-phone review of the Step 3 material milestone remains pending. No automatic commit, push or deployment is performed.
+Next: physical-phone acceptance and **Step 12**, release/portfolio preparation. Step 11 automated checks pass; hardware FPS and Safari/Android acceptance remain pending. Deploy the latest changes to publish the landing, metadata and preview-quality controls. Physical-phone review of the Step 3 material milestone remains pending. No automatic commit, push or deployment is performed.

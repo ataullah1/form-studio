@@ -7,7 +7,7 @@ import { SceneBoundary } from './scene-boundary';
 import type { CameraCommand } from './camera-framing';
 import { catalogV1 } from '@/lib/catalog';
 import type { ProductConfiguration } from '@/lib/catalog';
-import type { LightingMode } from './viewer-settings';
+import type { LightingMode, ViewerQuality } from './viewer-settings';
 import type { TextureReport } from './wood-surface';
 
 const SceneCanvas = dynamic(() => import('./scene-canvas'), {
@@ -25,13 +25,14 @@ function Unavailable({ reason, configuration }: { reason: string; configuration:
 
 /** Starts no WebGL or Three import until explicitly requested. */
 export function SceneViewer({ configuration, readOnly = false }: { configuration: ProductConfiguration; readOnly?: boolean }) {
+  const [quality, setQuality] = useState<ViewerQuality>('balanced');
   const [lighting, setLighting] = useState<LightingMode>('day');
   const [active, setActive] = useState(true);
   const region = useRef<HTMLDivElement>(null);
   const [attempt, setAttempt] = useState(0);
   const [textureReport, setTextureReport] = useState<TextureReport | null>(null);
   const onTextureStatus = useCallback((report: TextureReport) => setTextureReport(report), []);
-  const textureStatus = textureReport?.finishId === configuration.finishId && textureReport.attempt === attempt ? textureReport.status : 'loading';
+  const textureStatus = textureReport?.quality === quality && textureReport.finishId === configuration.finishId && textureReport.attempt === attempt ? textureReport.status : 'loading';
   const finishLabel = catalogV1.finishes[configuration.finishId].label;
   const [mode, setMode] = useState<'idle' | 'loading' | 'ready' | 'fallback'>('idle');
   const [cameraCommand, setCameraCommand] = useState<CameraCommand>({ revision: 0, action: 'reset' });
@@ -75,6 +76,10 @@ export function SceneViewer({ configuration, readOnly = false }: { configuration
   return <section className="scene-viewer" aria-labelledby="viewer-title">
     <div className="viewer-top"><h2 id="viewer-title">Scene preview</h2><span className="scene-version">01 / 3D</span></div>
     <p className="scene-notice">{readOnly ? 'Explore this saved design. Choose Edit a copy to change its options.' : 'Choose a size, finish, frame and fixed-position accessories. Rotate or zoom to explore.'}</p>
+    {mode !== 'fallback' && <div className="quality-actions" role="group" aria-label="Preview quality">
+      <span>Preview quality</span>{(['balanced', 'low'] as const).map(value => <button key={value} type="button" className="secondary-button" aria-pressed={quality === value} onClick={() => setQuality(value)}>{value === 'low' ? 'Low' : 'Balanced'}</button>)}
+      <p>{quality === 'low' ? 'Lower resolution and no shadows for a lighter preview.' : 'Balanced detail and soft shadows.'} Your design and estimate stay the same.</p>
+    </div>}
     {(mode === 'idle') && <div className="scene-idle">
       <DeskSchematic configuration={configuration} />
       <button type="button" className="button" onClick={start}>View desk in 3D ↗</button>
@@ -83,7 +88,7 @@ export function SceneViewer({ configuration, readOnly = false }: { configuration
     {(mode === 'loading' || mode === 'ready') && <>
       <div ref={region} className="canvas-region" data-testid="scene-region" aria-busy={mode === 'loading'}>
         <SceneBoundary fallback={fallback} onError={unavailable}>
-          <SceneCanvas onReady={ready} onUnavailable={unavailable} command={cameraCommand} lighting={lighting} active={active} configuration={configuration} attempt={attempt} onTextureStatus={onTextureStatus} />
+          <SceneCanvas quality={quality} onReady={ready} onUnavailable={unavailable} command={cameraCommand} lighting={lighting} active={active} configuration={configuration} attempt={attempt} onTextureStatus={onTextureStatus} />
         </SceneBoundary>
       </div>
       <p className="scene-status" role="status">{mode === 'loading' ? 'Starting 3D renderer…' : '3D desk ready. Drag to rotate; scroll or pinch to zoom.'}</p>

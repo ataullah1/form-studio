@@ -6,10 +6,10 @@ import { useMemo } from 'react';
 import { tabletopExtrusion } from './tabletop-shape';
 import type { DeskDimensions } from './desk-dimensions';
 import { WoodSurface, type TextureReport } from './wood-surface';
-import type { LightingMode } from './viewer-settings';
+import type { LightingMode, ViewerQuality } from './viewer-settings';
 import type { ProductConfiguration } from '@/lib/catalog';
 
-export function DeskModel({ dimensions, configuration, lighting, attempt, onTextureStatus }: { lighting: LightingMode; dimensions: DeskDimensions; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }) {
+export function DeskModel({ dimensions, configuration, lighting, attempt, onTextureStatus, quality }: { quality: ViewerQuality; lighting: LightingMode; dimensions: DeskDimensions; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }) {
   const { shape, settings } = useMemo(() => tabletopExtrusion(dimensions), [dimensions]);
 
   return <group name="studio-desk-01">
@@ -21,7 +21,7 @@ export function DeskModel({ dimensions, configuration, lighting, attempt, onText
       receiveShadow
     >
       <extrudeGeometry args={[shape, settings]} onUpdate={geometry => geometry.center()} />
-      <WoodSurface finishId={configuration.finishId} attempt={attempt} onStatus={onTextureStatus} />
+      <WoodSurface key={quality} quality={quality} finishId={configuration.finishId} attempt={attempt} onStatus={onTextureStatus} />
     </mesh>
     {dimensions.parts.map(part => <RoundedBox
       key={part.id}

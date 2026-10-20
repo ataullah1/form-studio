@@ -173,9 +173,9 @@ img, svg { display: block; }
 .swatches input { position: absolute; opacity: 0; }
 .swatch { display: block; width: 38px; height: 38px; border: 4px solid var(--colour-surface); }
 .swatches input:checked+.swatch { outline: 2px solid var(--colour-accent); }
-.oak { background: url('/assets/textures/wood/oak/colour.webp') center / cover; }
-.walnut { background: url('/assets/textures/wood/walnut/colour.webp') center / cover; }
-.ash { background: url('/assets/textures/wood/ash/colour.webp') center / cover; }
+.oak { background: url('/assets/material-studies/oak.svg') center / cover; }
+.walnut { background: url('/assets/material-studies/walnut.svg') center / cover; }
+.ash { background: url('/assets/material-studies/ash.svg') center / cover; }
 .choices { clear: both; display: flex; gap: 8px; }
 .choices button { flex: 1; min-width: 0; min-height: 46px; padding: 10px 6px; border: 1px solid var(--colour-border); background: transparent; color: var(--colour-muted); font-size: 12px; }
 .choices .chosen { border-color: var(--colour-accent); color: var(--colour-accent); background: var(--colour-selection); box-shadow: inset 0 0 0 1px var(--colour-accent); }
@@ -417,3 +417,7 @@ img, svg { display: block; }
   .material-study:hover .material-crop img { transform:scale(1.025); }
 }
 @keyframes poster-arrival { from { opacity:.65; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+.quality-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:18px 0; font-size:12px; }
+.quality-actions>span { margin-right:4px; font-weight:600; }
+.quality-actions>p { flex-basis:100%; color:var(--colour-muted); font-size:12px; }

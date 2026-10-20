@@ -31,7 +31,7 @@ test('logged-out, expired and non-allowlisted sessions receive no private quote 
   expect((await request.post(`/api/admin/quotes/${q.reference}/status`, { headers: changeHeaders, data: { status: 'CLOSED', version: 0 } })).status()).toBe(401);
   await signIn(context, '999999999999999999999'); await page.goto(`/admin/quotes/${q.reference}`); await expect(page.locator('main').getByRole('alert')).toContainText('cannot access'); expect(await page.content()).not.toContain('fictional-admin@example.com');
   expect((await context.request.post(`/api/admin/quotes/${q.reference}/status`, { headers: changeHeaders, data: { status: 'CLOSED', version: 0 } })).status()).toBe(403);
-  await context.clearCookies(); await signIn(context, ownerId, true); await page.goto(`/admin/quotes/${q.reference}`); expect(await page.content()).not.toContain('fictional-admin@example.com');
+  await context.clearCookies(); await signIn(context, ownerId, true); await page.goto(`/admin/quotes/${q.reference}`); await expect(page).toHaveURL(/\/admin\/login$/); expect(await page.content()).not.toContain('fictional-admin@example.com');
 });
 
 test('owner can read original details and paginated status-filtered list with private cache policy', async ({ page, context }) => {
@@ -65,7 +65,7 @@ test('origin checks and logout prevent forged and replayed status updates', asyn
   for (const requestOrigin of ['https://evil.example', '']) expect((await context.request.post(`/api/admin/quotes/${q.reference}/status`, { headers: { ...changeHeaders, Origin: requestOrigin }, data: { status: 'CLOSED', version: 0 } })).status()).toBe(403);
   expect((await context.request.post('/api/admin/logout', { headers: { Origin: origin }, maxRedirects: 0 })).status()).toBe(303);
   await context.addCookies([{ name: 'fs_admin_session', value: session, url: origin }]);
-  expect((await context.request.post(`/api/admin/quotes/${q.reference}/status`, { headers: changeHeaders, data: { status: 'CLOSED', version: 0 } })).status()).toBe(403);
+  expect((await context.request.post(`/api/admin/quotes/${q.reference}/status`, { headers: changeHeaders, data: { status: 'CLOSED', version: 0 } })).status()).toBe(401);
 });
 
 test('Google login binds PKCE, nonce and state to one browser; invalid callback is denied', async ({ page }) => {

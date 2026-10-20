@@ -35,7 +35,7 @@ export class WoodTextureLibrary {
   private controllers = new Set<AbortController>();
   private disposed = false;
 
-  constructor(private readonly anisotropy: number) {}
+  constructor(private readonly anisotropy: number, private readonly textureSize = 1024) {}
 
   private async loadMap(finishId: FinishId, kind: TextureKind, attempt: number) {
     const controller = new AbortController();
@@ -48,6 +48,7 @@ export class WoodTextureLibrary {
       if (!response.ok) throw new Error('Wood texture download failed');
       bitmap = await createImageBitmap(await response.blob(), {
         imageOrientation: 'flipY', premultiplyAlpha: 'none', colorSpaceConversion: 'none',
+        resizeWidth: this.textureSize, resizeHeight: this.textureSize, resizeQuality: 'high',
       });
       if (this.disposed || controller.signal.aborted) throw new Error('Wood texture request cancelled');
       const texture = new Texture(bitmap);

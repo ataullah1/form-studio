@@ -125,3 +125,7 @@ A public shared page passes only a server-resolved configuration to the existing
 ## Quote integration (Step 8)
 
 QuoteDraft now receives the canonical configuration from Configurator. It remains outside Canvas and renderer error boundaries, including the pending/no-WebGL fallback. Only product drafts use localStorage; contacts remain transient until explicit consent and server submission. See QUOTES.md.
+
+## Step 11 viewer quality
+
+Balanced retains DPR ≤1.5, one cached 1024px directional shadow and 1K maps. Low uses DPR 1, no shadow pass and 512px decoded maps with anisotropy 1. Both download the same licensed source WebPs; UI selector chips reuse the existing lightweight illustrative SVG studies. Quality stays outside canonical configuration/pricing and refreshes cached rendering without a second Canvas. See PERFORMANCE.md for production measurements and the outstanding physical-device gate.

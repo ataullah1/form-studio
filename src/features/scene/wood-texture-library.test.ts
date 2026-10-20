@@ -71,3 +71,12 @@ describe('owned wood resources', () => {
     await expect(library.load('oak')).rejects.toThrow('disposed');
   });
 });
+
+it('low quality decodes 512px textures with minimal anisotropy and releases the set', async () => {
+  const { close } = browserStubs();
+  const library = new WoodTextureLibrary(1, 512);
+  const set = await library.load('oak');
+  expect(createImageBitmap).toHaveBeenCalledWith(expect.any(Blob), expect.objectContaining({ resizeWidth: 512, resizeHeight: 512, resizeQuality: 'high' }));
+  expect(set.colour.anisotropy).toBe(1);
+  library.dispose(); expect(close).toHaveBeenCalledTimes(3);
+});

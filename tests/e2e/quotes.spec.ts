@@ -123,3 +123,26 @@ test('a contact storage failure rolls back metadata and preserves form inputs wi
     });
   }
 });
+
+test('without WebGL the configuration, estimate and real demo quote submission remain usable', async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function(this: HTMLCanvasElement, ...args: unknown[]) {
+      if (args[0] === 'webgl2') return null;
+      return Reflect.apply(original, this, args);
+    } as typeof original;
+  });
+  await page.goto('/configure');
+  await page.getByRole('button', { name: 'View desk in 3D' }).click();
+  await expect(page.getByText('3D is unavailable.', { exact: false })).toBeVisible();
+  await page.getByRole('radio', { name: 'Walnut', exact: true }).check();
+  await expect(page.locator('.quote-selection')).toContainText('$439');
+  await page.getByLabel('Name', { exact: true }).fill('Fictional fallback demo');
+  await page.getByLabel('Email', { exact: true }).fill('fallback@example.com');
+  await page.getByRole('checkbox', { name: /I understand this is a demo enquiry/ }).check();
+  const response = page.waitForResponse(r => r.url().endsWith('/api/quotes'));
+  await page.getByRole('button', { name: 'Demo quote submission', exact: true }).click();
+  expect((await response).status()).toBe(201);
+  await expect(page.getByText('Demo request received.', { exact: false })).toBeVisible();
+  await expect(page.locator('canvas')).toHaveCount(0);
+});

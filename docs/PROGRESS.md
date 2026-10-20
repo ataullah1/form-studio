@@ -15,10 +15,20 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [x] Step 8 Quote request workflow — verified locally; deployment/cron activation pending
 - [x] Step 9 Restricted admin inbox — local verification complete; real Google login/deployment acceptance pending
 - [x] Step 10 Product story and discovery — local acceptance verified; deployment pending
-- [ ] Step 11 Tests and mobile performance
+- [ ] Step 11 Tests and mobile performance — automated checks/budgets verified; physical-phone acceptance pending
 - [ ] Step 12 Release and portfolio
 
-## Current session — Step 10 product story and discovery (2026-10-20)
+## Current session — Step 11 tests and mobile performance (2026-10-20)
+
+- Added transient Balanced/Low preview quality: Low caps DPR at 1, disables shadows and decodes wood maps at 512px with anisotropy 1. Quality does not alter canonical configuration, estimate or saved drafts. Switching releases owned map resources.
+- Production audit exposed full-size wood downloads in selector chips before the viewer starts. Chips now use existing lightweight illustrative material-study SVGs; actual map loading stays deferred to 3D activation. No new images/assets or packages.
+- Expired/revoked admin sessions now produce 401 and return to login; non-allowlisted authenticated users remain denied. Added real no-WebGL quote persistence and low-quality decoding/resource tests.
+- Verified lint/types, 111 unit tests, build and 61 unique browser checks across full 60/61 plus final affected 5/5 runs. Isolated local Postgres only; no live data changes. Detailed evidence: docs/evidence/step-11/README.md.
+- Measured first requested 3D resource bodies 1,522,442 bytes (1.45 MiB), peak 54 grouped draw submissions and 12,306 submitted triangles including shadows; within roadmap targets. Repeated rendered accessory/quality changes keep GPU resources bounded; idle draws stop; synthetic visibility resume works.
+- Physical iPhone/Safari, Android/Chrome, real drag FPS and OS background lifecycle unavailable. Keep Step 11's physical-phone gate and Step 3 material review unchecked. No FPS/Lighthouse score, screenshot set, commit/push/deploy or production migration claimed.
+- Next: physical-device acceptance per PERFORMANCE.md; Step 12 release/portfolio preparation can follow while these manual release gates remain explicit.
+
+## Previous session — Step 10 product story and discovery (2026-10-20)
 
 - User reports authentication is configured. Added customization preview, workflow, native concept FAQ and final configurator/demo-enquiry entry. Updated outdated planned-option copy to reflect implemented sizes/finishes/frame/accessories; displayed option prices derive from the catalog. Existing SVG poster/material studies retained.
 - Added canonical production metadata, Open Graph/Twitter card, public-only sitemap and robots route. Shared/admin noindex retained. A single code-rendered 1200 × 630 social preview uses existing colours; no AI imagery, screenshots, extra Canvas, dependency or new analytics events.

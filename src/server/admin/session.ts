@@ -16,7 +16,8 @@ export async function requireAdmin() {
   const value = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!value || !/^[A-Za-z0-9_-]{43}$/.test(value)) throw new AdminError(401, 'Sign in to continue.');
   const { rows } = await adminDB().query<{ user_id: string }>('SELECT user_id FROM app.admin_sessions WHERE token_hash=$1 AND expires_at > CURRENT_TIMESTAMP', [digest(value)]);
-  if (!rows[0] || !allowedUser(rows[0].user_id)) throw new AdminError(403, 'This account cannot access the inbox.');
+  if (!rows[0]) throw new AdminError(401, 'Your session has expired. Sign in again.');
+  if (!allowedUser(rows[0].user_id)) throw new AdminError(403, 'This account cannot access the inbox.');
   return { id: rows[0].user_id, tokenHash: digest(value) };
 }
 export function checkOrigin(request: Request) {

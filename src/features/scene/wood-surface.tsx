@@ -5,53 +5,54 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { Color, type MeshStandardMaterial } from 'three';
 import type { FinishId } from '@/lib/catalog';
 import { WoodTextureLibrary, type WoodTextureSet } from './wood-texture-library';
+import { qualityPresets, type ViewerQuality } from './viewer-settings';
 import { woodPresets } from './wood-presets';
 
-export interface TextureReport { finishId: FinishId; attempt: number; status: 'loading' | 'ready' | 'error' }
+export interface TextureReport { quality: ViewerQuality; finishId: FinishId; attempt: number; status: 'loading' | 'ready' | 'error' }
 interface Loaded extends TextureReport { textures?: WoodTextureSet }
-interface Props { finishId: FinishId; attempt: number; onStatus: (report: TextureReport) => void }
+interface Props { quality: ViewerQuality; finishId: FinishId; attempt: number; onStatus: (report: TextureReport) => void }
 
-export function WoodSurface({ finishId, attempt, onStatus }: Props) {
+export function WoodSurface({ finishId, attempt, onStatus, quality }: Props) {
   const renderer = useThree(state => state.gl);
   const invalidate = useThree(state => state.invalidate);
   const library = useRef<WoodTextureLibrary | null>(null);
   const material = useRef<MeshStandardMaterial>(null);
-  const [loaded, setLoaded] = useState<Loaded>({ finishId, attempt, status: 'loading' });
+  const [loaded, setLoaded] = useState<Loaded>({ quality, finishId, attempt, status: 'loading' });
   const reveal = useRef(1);
   const reducedMotion = useRef(false);
   const revealStart = useRef(new Color('#c9b8a4'));
   const revealEnd = useRef(new Color('#ffffff'));
 
   useEffect(() => {
-    const owned = new WoodTextureLibrary(renderer.capabilities.getMaxAnisotropy());
+    const owned = new WoodTextureLibrary(Math.min(renderer.capabilities.getMaxAnisotropy(), qualityPresets[quality].anisotropy), qualityPresets[quality].textureSize);
     library.current = owned;
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
     const updateMotion = () => { reducedMotion.current = query.matches; };
     updateMotion();
     query.addEventListener('change', updateMotion);
     return () => { query.removeEventListener('change', updateMotion); owned.dispose(); library.current = null; };
-  }, [renderer]);
+  }, [renderer, quality]);
 
   useEffect(() => {
     const owned = library.current;
     if (!owned) return;
     let current = true;
-    queueMicrotask(() => { if (current) onStatus({ finishId, attempt, status: 'loading' }); });
+    queueMicrotask(() => { if (current) onStatus({ quality, finishId, attempt, status: 'loading' }); });
     owned.load(finishId, attempt).then(textures => {
       if (!current) return;
-      const result: Loaded = { finishId, attempt, status: 'ready', textures };
+      const result: Loaded = { quality, finishId, attempt, status: 'ready', textures };
       setLoaded(result);
-      onStatus({ finishId, attempt, status: 'ready' });
+      onStatus({ quality, finishId, attempt, status: 'ready' });
       invalidate();
     }).catch(() => {
       if (!current) return;
-      const result: Loaded = { finishId, attempt, status: 'error' };
+      const result: Loaded = { quality, finishId, attempt, status: 'error' };
       setLoaded(result);
       onStatus(result);
       invalidate();
     });
     return () => { current = false; };
-  }, [attempt, finishId, invalidate, onStatus, renderer]);
+  }, [attempt, finishId, invalidate, onStatus, renderer, quality]);
 
   // Keep the last successfully rendered wood while a new selection downloads.
   // A failure deliberately drops the maps and shows an explicit neutral fallback.
