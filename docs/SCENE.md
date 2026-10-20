@@ -62,7 +62,7 @@ A geometry describes shape, a material describes surface response to light, and 
 
 ## Step 3 surfaces and resource ownership
 
-Step 3 initially gave `Configurator` only finish/frame state; its partial functional updates feed both HTML summary and lazy scene. Step 4 supersedes that state with the full canonical configuration below. The small illustrative estimate includes the catalog walnut surcharge; the full pricing engine remains Step 6. Selection is immediately visible even while textures download. 2D references use the selected finish/frame labels.
+Step 3 initially gave `Configurator` only finish/frame state; its partial functional updates feed both HTML summary and lazy scene. Step 4 supersedes that state with the full canonical configuration below. The small illustrative estimate includes the catalog walnut surcharge; Step 6 now supplies strict pure pricing (see PRICING-AND-DRAFTS.md). Selection is immediately visible even while textures download. 2D references use the selected finish/frame labels.
 
 Each finish has independent 1k colour, OpenGL normal and roughness maps. Colour uses SRGBColorSpace; data maps use NoColorSpace. ImageBitmap decoding disables colour conversion/premultiplication and explicitly flips Y; Texture.flipY remains false. Source grain was visually checked as horizontal: texture rotation is zero, aligned with tabletop width. ExtrudeGeometry's metre-based XY UVs and a 1/m tile repeat preserve the one-metre source scale. Offset centres the tile. Edge UVs are the extrusion's procedural wrapping, not modeled end grain or veneer seams.
 
@@ -76,7 +76,7 @@ See [Step 3 evidence](evidence/step-3/README.md). Physical-phone/GPU checks rema
 
 ## Step 4 configuration and accessories
 
-One `useReducer` in Configurator owns the complete catalog-versioned ProductConfiguration. Controls dispatch typed size/finish/frame/accessory/reset actions; scene, HTML estimate and 2D summary receive that same object. No duplicate UI configuration or persistence. `normalizeConfiguration` rejects unknown IDs, metadata versions and extra fields, and gives known accessories canonical catalog order/set semantics. There is one desk and at most one of each accessory. No share transport is implemented yet; its future input must use the same validation contract.
+One `useReducer` in Configurator owns the complete catalog-versioned ProductConfiguration. Controls dispatch typed size/finish/frame/accessory/reset actions; scene, HTML estimate and 2D summary receive that same object. No duplicate UI configuration; Step 6 adds validated local persistence below. `normalizeConfiguration` rejects unknown IDs, metadata versions and extra fields, and gives known unique accessories canonical catalog order. Step 6 rejects duplicate external IDs while keeping reducer accessory actions idempotent. There is one desk and at most one of each accessory. No share transport is implemented yet; its future input must use the same validation contract.
 
 The three footprints derive tabletop geometry, leg spacing, rails and crossbar from metres, without whole-model scaling. R3F disposes replaced declarative geometry/materials. Finish textures remain owned by the existing per-viewer library and survive size changes. Reset configuration restores the 140×70 oak/black desk with no accessories; it leaves the unsaved quote draft alone.
 
@@ -92,7 +92,7 @@ All parts are original code geometry with matte frame-matching materials; no dow
 
 Camera framing uses the product bounds including selected accessory height. Size/height changes reframe the whole product; changing finish/frame or an accessory that leaves bounds unchanged preserves the current camera. This changes framing only, not mesh scale or grain scale. Existing orbit/zoom limits, error boundary, demand rendering and fallback remain.
 
-The 2D schematic updates numeric dimensions and explicitly lists selected accessories; it is labelled not to scale and does not illustrate accessory geometry. The live estimate adds size, walnut surcharge and unique accessories from catalog facts; server-authoritative pricing, draft storage and backend work remain future steps.
+The 2D schematic updates numeric dimensions and explicitly lists selected accessories; it is labelled not to scale and does not illustrate accessory geometry. The live estimate adds size, walnut surcharge and unique accessories from catalog facts; server-authoritative pricing and backend work remain future steps; Step 6 adds browser-local product drafts.
 
 Evidence: [Step 4 tests and screenshots](evidence/step-4/README.md). Real-phone checks remain unperformed.
 
@@ -109,3 +109,11 @@ Named views blend camera direction and distance separately over 260ms, retaining
 The UI explicitly distinguishes the drag/pinch area from page scrolling. Existing touch-action:none is scoped to Canvas; exterior document scrolling remains native. Day/Night use pressed-state buttons and visible mode text. All buttons have at least 44px height. Front/Detail/Reset, zoom and 2D fallback remain HTML outside the renderer. Product options, selected swatch text/keyboard handling, quote draft and context-loss fallback are preserved.
 
 Evidence: [Step 5 checks](evidence/step-5/README.md). Chrome touch emulation passed; physical phone, Safari/Android and actual background-tab lifecycle/hardware performance remain unverified.
+
+## Step 6 local product state and pricing
+
+The canonical reducer now shares strict validateConfig with calculatePrice and local draft decoding. One price result feeds itemized lines, base subtotal, surcharges and illustrative estimated total. Unknown/duplicate/injected options do not produce an estimate. Viewer lighting/camera state remains separate and unpersisted.
+
+A hydration-safe pending shell prevents default selections flashing before the local draft resolves. Only validated product state saves, debounced with immediate reset and lifecycle flushes. Invalid/obsolete drafts remain untouched until explicit discard; unavailable storage leaves the session usable. All renderer/fallback paths receive the restored canonical configuration; 3D still requires explicit user activation after refresh. Quote fields remain unsaved and separate.
+
+See [Pricing and drafts contract](PRICING-AND-DRAFTS.md) and [Step 6 evidence](evidence/step-6/README.md). Shared snapshot precedence is defined/tested as a future server-resolved input contract, not a completed shared URL/backend.

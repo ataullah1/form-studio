@@ -2,16 +2,16 @@
 
 import { catalogV1, formatUsd, type FinishId, type FrameColourId, type SizeId, type ProductConfiguration } from '@/lib/catalog';
 import type { Dispatch } from 'react';
-import { illustrativeEstimate, type ConfigurationAction } from './configuration-state';
+import { type ConfigurationAction } from './configuration-state';
+
+import { calculatePrice } from '@/lib/catalog/pricing';
 
 interface Props { configuration: ProductConfiguration; dispatch: Dispatch<ConfigurationAction> }
 
 /** All product choices read and update the canonical reducer. */
 export function ConfigurationPanel({ configuration, dispatch }: Props) {
-  const size = catalogV1.sizes[configuration.sizeId];
   const finish = catalogV1.finishes[configuration.finishId];
-  const frame = catalogV1.frameColours[configuration.frameColourId];
-  const estimate = illustrativeEstimate(configuration);
+  const price = calculatePrice(configuration);
   return <aside className="panel" aria-label="Product options and estimate">
     <div className="product-heading"><p className="eyebrow">01 / SPECIFICATION</p><h2>{catalogV1.label}</h2><p>Choose your proportions, materials and workspace details. Quantity is fixed at one.</p></div>
     <fieldset><legend><span>01</span> Wood finish <strong>{finish.label}</strong></legend>
@@ -28,13 +28,12 @@ export function ConfigurationPanel({ configuration, dispatch }: Props) {
     <fieldset><legend><span>04</span> Accessories</legend>{Object.entries(catalogV1.accessories).map(([id, option]) => <label className="extra" key={id}><span><input type="checkbox" checked={configuration.accessoryIds.includes(id as keyof typeof catalogV1.accessories)} onChange={event => dispatch({ type: 'accessory', id: id as keyof typeof catalogV1.accessories, enabled: event.target.checked })} />{option.label}</span><span>+{formatUsd(option.priceCents)}</span></label>)}</fieldset>
     <button type="button" className="secondary-button configuration-reset" onClick={() => dispatch({ type: 'reset' })}>Reset configuration</button>
     <section className="summary" aria-labelledby="summary-title"><h3 id="summary-title" className="sr-only">Configuration summary</h3>
-      <div><span>Desk · {size.label}</span><span>{formatUsd(size.priceCents)}</span></div>
-      <div><span>{finish.label} finish</span><span>{finish.priceCents ? `+${formatUsd(finish.priceCents)}` : 'Included'}</span></div>
-      <div><span>{frame.label} frame</span><span>Included</span></div>
-      {configuration.accessoryIds.map(id => <div key={id}><span>{catalogV1.accessories[id].label} × 1</span><span>+{formatUsd(catalogV1.accessories[id].priceCents)}</span></div>)}
+      {price.lines.map((line, index) => <div key={line.id}><span>{line.label}</span><span>{line.amountCents ? `${index ? '+' : ''}${formatUsd(line.amountCents)}` : 'Included'}</span></div>)}
+      <div><span>Product subtotal</span><span>{formatUsd(price.productSubtotalCents)}</span></div>
+      <div><span>Selected surcharges</span><span>{formatUsd(price.surchargeCents)}</span></div>
       <p>{configuration.accessoryIds.length ? "Fixed accessory positions · Quantity 1 each" : "No accessories"} · Desk quantity 1</p>
-      <div className="total"><span>Illustrative estimate</span><strong>{formatUsd(estimate)} <small>USD</small></strong></div>
-      <p>Tax and shipping excluded. No furniture is offered for sale.</p>
+      <div className="total"><span>Illustrative estimate</span><strong>{formatUsd(price.estimatedTotalCents)} <small>USD</small></strong></div>
+      <p>Tax and shipping unavailable; excluded from this estimate. No furniture is offered for sale.</p>
       <a href="#quote-draft" className="button">View demo quote draft ↗</a>
       <button type="button" className="share" disabled>Save & share · In development</button>
     </section>

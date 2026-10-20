@@ -24,7 +24,8 @@ describe('canonical configuration', () => {
       state = configurationReducer(state, { type: 'accessory', id: 'cable-tray', enabled: i % 2 === 0 });
     }
     expect(state.accessoryIds).toEqual(['lamp']);
-    expect(normalizeConfiguration({ ...state, accessoryIds: ['cable-tray', 'lamp', 'lamp', 'monitor-stand'] }).accessoryIds).toEqual(['lamp', 'monitor-stand', 'cable-tray']);
+    expect(normalizeConfiguration({ ...state, accessoryIds: ['cable-tray', 'lamp', 'monitor-stand'] }).accessoryIds).toEqual(['lamp', 'monitor-stand', 'cable-tray']);
+    expect(() => normalizeConfiguration({ ...state, accessoryIds: ['lamp', 'lamp'] })).toThrow();
   });
 
   it('rejects unknown IDs, prototype names, versions and extra payload fields', () => {

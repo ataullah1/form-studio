@@ -1,6 +1,6 @@
 # Form Studio
 
-An independent furniture configurator concept by Md Ataullah. Steps 0–5 are implemented (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
+An independent furniture configurator concept by Md Ataullah. Steps 0–6 are implemented (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. Validated integer-cent estimates and a browser-local product draft now preserve designs across refresh. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
 
 ## Run locally
 
@@ -53,15 +53,16 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - `/configure`: canonical typed configuration with three sizes, three finishes, two frames and three optional accessories; Reset configuration, itemized illustrative estimate, selected 2D dimensions and optional interactive 3D desk. Default estimate $399; accessories/size/walnut change the local estimate.
 - Renderer load/start errors, unavailable WebGL2, a 20-second startup timeout or context loss show a 2D schematic. Summary and editable quote draft fields stay outside the renderer boundary.
 - Quote fields are a **local draft only**, with no form action, persistence or transmission. Submission is disabled until Step 8. Do not use real contact details for demo checks.
-- Full pricing validation/engine, localStorage, share persistence, quote backend and admin are future steps. No claims of manufacturing suitability or sales performance.
+- Validated product configuration is saved in localStorage after a 350ms debounce, with refresh restore, immediate reset, invalid-draft discard and a usable storage-unavailable path. Quote fields, lighting and camera are excluded.
+- Share persistence, server price recomputation, quote backend and admin are future steps. No claims of manufacturing suitability or sales performance.
 
 ## Project structure
 
 - `src/app`: server-rendered routes, root layout and styles.
 - `src/features/scene`: client-only viewer, parameterized desk, pure dimensions/framing, bounded camera, lazy Canvas, error boundary and standalone 2D schematic.
-- `src/features/configurator`: typed canonical reducer, strict configuration normalization, accessible controls and itemized live summary.
+- `src/features/configurator`: typed canonical reducer, browser-local draft lifecycle, accessible controls and validated itemized live summary.
 - `src/features/quotes`: HTML quote draft, isolated from WebGL.
-- `src/lib/catalog`: versioned product facts and configuration types.
+- `src/lib/catalog`: versioned product facts/types plus pure strict validation and integer-cent pricing.
 - `public/assets`: local concept illustration, UI grain studies and self-hosted CC0 wood maps; provenance in docs/ASSETS.md.
 - `tests/e2e`: production-browser integration checks.
 - `preview`: archived Step 0 HTML/CSS/SVG screen plan (superseded visual identity), viewable directly via `preview/index.html`.
@@ -75,9 +76,11 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Assets](docs/ASSETS.md), [decisions](docs/DECISIONS.md)
 - [Scene geometry and camera guide](docs/SCENE.md)
 - [Current visual identity screenshots and contrast evidence](docs/evidence/visual-identity/README.md)
+- [Pricing and local draft contract](docs/PRICING-AND-DRAFTS.md)
+- [Step 6 evidence](docs/evidence/step-6/README.md)
 - [Step 5 interaction evidence](docs/evidence/step-5/README.md)
 - [Step 4 configuration evidence](docs/evidence/step-4/README.md)
 - [Step 3 materials evidence](docs/evidence/step-3/README.md)
 - [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
-Next: **Step 6**, pricing validation and local draft. Physical-phone review of the Step 3 material milestone remains pending. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.
+Next: **Step 7**, save/share backend. Physical-phone review of the Step 3 material milestone remains pending. No push, deployment, external accounts, payments or database provisioning is performed by these local development steps.

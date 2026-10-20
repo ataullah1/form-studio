@@ -53,9 +53,9 @@ export const defaultConfiguration: ProductConfiguration = {
   accessoryIds: [],
 };
 
-/** Display helper only. Authoritative validation/pricing comes in later steps. */
+/** Display helper only. Strict pricing lives in pricing.ts; server recomputation is a later step. */
 export function formatUsd(cents: number): string {
   return new Intl.NumberFormat('en-US', {
-    style: 'currency', currency: 'USD', maximumFractionDigits: 0,
+    style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2,
   }).format(cents / 100);
 }

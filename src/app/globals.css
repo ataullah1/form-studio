@@ -340,3 +340,7 @@ img, svg { display: block; }
 .lighting-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0; }
 .lighting-actions span { font-size: 12px; color: var(--colour-muted); }
 .lighting-actions [aria-pressed="true"] { border-color: var(--colour-accent); color: var(--colour-accent); background: var(--colour-selection); }
+
+.draft-pending .builder { visibility: hidden; }
+.draft-loading, .draft-notice { color: var(--colour-muted); font-size: 13px; margin-bottom: 18px; }
+.draft-notice { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }

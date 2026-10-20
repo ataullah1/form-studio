@@ -83,3 +83,11 @@
 - Keep demand rendering and update fixed-light shadows only after product/lighting/resume changes. Pause offscreen/hidden rendering through IntersectionObserver/visibility state; disable paused controls and invalidate on resume.
 - Preserve context-loss 2D fallback and all product/draft boundaries. Test touch orbit/pinch, exterior scrolling and form usability through Chromium touch emulation; document that these are not physical-phone or Safari checks.
 - No new dependency, third-party asset, backend, persistence, commit, push or deployment. Next is Step 6 when requested.
+
+## Step 6 — strict pricing and local product drafts
+
+- Move the reusable trust boundary to pure lib/catalog/pricing.ts with validateConfig/calculatePrice. Reject duplicate external IDs, unsupported metadata, extra fields and injected prices; retain idempotent reducer actions. Price solely from catalog facts in integer cents, expose base/surcharge/estimate and null unavailable tax/shipping. No server-security claim.
+- Persist only validated ProductConfiguration under form-studio:product-draft, 350ms debounce plus exit/unmount flush. Reset writes defaults immediately. Never include quote contact/message fields or viewer preferences.
+- Resolve storage after hydration before interactive choices appear. Hide the pending defaults inline before stylesheets arrive; retain a noscript default-facts/schematic path. Invalid/obsolete/oversized drafts require explicit discard/reset; unavailable storage remains session-usable.
+- Give a supplied server-resolved shared snapshot priority without reading local storage; invalid shared input must fail explicitly. Unedited shared source does not overwrite local draft; product edits create a local copy. Actual shared URLs/backend remain Step 7.
+- Verify golden prices, invalid payloads, hydration visibility, refresh/reset, privacy, rapid debounce/exit flush and blocked/quota modes. No new dependency/asset, commit, push, deployment or production write.

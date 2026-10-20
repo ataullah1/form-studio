@@ -10,7 +10,7 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [ ] Step 3 Materials and visual quality — implementation verified; physical-phone acceptance pending
 - [x] Step 4 Sizes and accessories
 - [x] Step 5 Lighting and interaction
-- [ ] Step 6 Pricing and local draft
+- [x] Step 6 Pricing and local draft
 - [ ] Step 7 Save and share backend
 - [ ] Step 8 Quote request workflow
 - [ ] Step 9 Restricted admin inbox
@@ -18,7 +18,19 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [ ] Step 11 Tests and mobile performance
 - [ ] Step 12 Release and portfolio
 
-## Current session — Step 5 lighting and interaction
+## Current session — Step 6 pricing and local draft (2026-10-20)
+
+- Added pure versioned validateConfig/calculatePrice in lib/catalog: strict shape/ID/version/duplicate/injected-field rejection, canonical ordering, integer-cent itemization, product subtotal, surcharges, USD estimate and unavailable tax/shipping. Idempotent reducer accessory actions stay unique; external duplicate lists now reject rather than silently deduplicate.
+- Golden prices verified: default $399; default walnut + all accessories $539; small desk + cable tray $369. UI itemization/totals use one validated price result. Lighting/camera remain independent. Server price/security verification is still future work.
+- Added 350ms debounced product-only localStorage, valid refresh restore, immediate durable reset, pagehide/unmount flush, invalid/obsolete draft warning and explicit discard. Blocked access/quota failures preserve session usability. No contact fields, quote message, viewer state or price are persisted.
+- Hydration resolves browser state before mounting interactive choices. Pending defaults are hidden inline before CSS arrives; noscript exposes default catalog/schematic for JS-disabled readers. Supplied shared snapshots win without local reads; unedited shared source does not overwrite local draft and product edits make a local copy. Actual shared route/API remain Step 7; future route must resolve snapshot before mounting.
+- Final verification: PASS lint, typecheck, all 77 unit tests, production build and all 30 browser tests (1.1m). Tests cover 72 size/finish/accessory price subsets with frame invariance, malformed inputs, shared/local priority, refresh/reset, visible hydration selections, privacy, debounce coalescing/fast-refresh flush and blocked/quota modes, plus all prior scene/configuration checks.
+- Review fixes: hide pending defaults inline as well as stylesheet rules, so early parser/layout observations never see the default price. Invalid-draft browser fixtures now navigate away before seeding another case, respecting the intentional outgoing-state flush. Final full suite passed after both fixes.
+- Evidence: docs/evidence/step-6/README.md and viewport-review.json; restored/invalid states at 1440/390/360 px and unavailable-storage mobile screenshot. Inspected restored mobile itemization and desktop recovery; no overflow or recorded page errors. Headless installed Chrome on macOS; no physical phone or deployed-site check. Prior Step 3 real-phone acceptance remains pending.
+- No package/asset dependency, commit, push, deployment or backend change. Suggested commit: feat: add validated pricing and persistent local drafts.
+- Next: Step 7 save/share backend, when requested.
+
+## Previous session — Step 5 lighting and interaction
 
 - Implemented separate viewer-only day/night state, readable night studio and restrained warm lamp contribution only when selected at night. Product configuration/illustrative estimate remain unchanged by lighting or camera controls.
 - Added Front and Detail alongside Reset/zoom, preserving one OrbitControls. Named views have a bounded 260ms direction/distance transition, immediate reduced-motion behavior, manual-input cancellation and immediate reframe on resize/product-bound change. Corrected tall-accessory reset position to obey the polar envelope explicitly.
