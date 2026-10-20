@@ -60,7 +60,7 @@ The published visual catalog currently has only version 1. `resolveSnapshot` ret
 
 ```sh
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:sharing
-# Full 46-browser-test suite using a newly created disposable database:
+# Full 54-browser-test suite using a newly created disposable database:
 pnpm test:sharing --all
 ```
 
@@ -76,3 +76,5 @@ The script creates a fresh localhost-only trust-authenticated cluster on an avai
 - [Vercel request headers](https://vercel.com/docs/headers/request-headers)
 
 Step 8 adds nine private quote tests to the seven sharing checks in the default disposable-database harness. Quote deployment also requires CRON_SECRET; see [QUOTES.md](QUOTES.md).
+
+Step 9 adds eight admin checks (24 default database checks; 54 with --all). The harness creates a separate restricted admin role and local-only hashed session fixtures. See [ADMIN.md](ADMIN.md).

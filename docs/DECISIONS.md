@@ -95,3 +95,7 @@
 ## Step 8 — private demo quotes
 
 Quote fields live below the canonical configurator and outside Canvas, so submitted design and visible estimate share one state. Contact details stay in transient component state until explicit submission. PostgreSQL separates insert-only contact rows from private receipt metadata; raw parameterized inserts use one database clock. Five-day expiry plus daily authenticated production cleanup targets removal within seven days. Persistence requires cleanup configuration. Admin authentication is deferred to Step 9 and does not require Supabase.
+
+## Step 9 — Google owner authentication
+
+The user chose Google. Use server OIDC code flow with PKCE/state/nonce and jose verification; authorize stable sub IDs from server environment. Store only random session hashes in Neon, with a separate restricted admin web role so the public quote runtime still cannot read contacts. Versioned status updates and actor history commit together. No Google API scopes beyond openid, provider tokens, customer accounts or public admin preview. Admin routes bypass Analytics.

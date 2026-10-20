@@ -21,7 +21,7 @@ export function rateIdentity(headers: Headers) {
 }
 
 /** Database-clock fixed windows; each counter update is atomic across all instances. */
-export async function consumeShareRate(identity: string, scope: 'share' | 'quote' = 'share') {
+export async function consumeShareRate(identity: string, scope: 'share' | 'quote' | 'admin-auth' = 'share') {
   try {
     await database().$transaction(async tx => {
       for (const [key, limit] of [[`${scope}:global`, scope === 'share' ? 100 : 20], [`${scope}:${identity}`, scope === 'share' ? 10 : 5]] as const) {
@@ -36,7 +36,7 @@ export async function consumeShareRate(identity: string, scope: 'share' | 'quote
         if (rows.length === 0) throw new ShareError(429, 'Too many requests. Please try again in a minute.');
       }
     });
-  } catch (error) { if (error instanceof ShareError) throw error; throw new ShareError(503, 'Sharing is temporarily unavailable. Your design is still here.'); }
+  } catch (error) { if (error instanceof ShareError) throw error; throw new ShareError(503, scope === 'admin-auth' ? 'Admin login is temporarily unavailable. Please retry.' : 'Sharing is temporarily unavailable. Your design is still here.'); }
 }
 
 export async function saveConfiguration(input: unknown, idempotencyKey: string) {

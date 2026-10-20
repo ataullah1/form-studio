@@ -1,6 +1,6 @@
 # Form Studio
 
-An independent furniture configurator concept by Md Ataullah. Steps 0–8 are implemented locally (Step 8 deployment pending) (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. Validated integer-cent estimates and a browser-local product draft now preserve designs across refresh. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
+An independent furniture configurator concept by Md Ataullah. Steps 0–9 are implemented locally (Google OAuth setup and deployment acceptance pending) (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. Validated integer-cent estimates and a browser-local product draft now preserve designs across refresh. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
 
 ## Run locally
 
@@ -54,7 +54,7 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - Renderer load/start errors, unavailable WebGL2, a 20-second startup timeout or context loss show a 2D schematic. Summary and editable quote draft fields stay outside the renderer boundary.
 - The labelled demo quote form sends contact fields only on explicit consent and submission. Requests are private, server-priced and idempotent; contact fields never enter localStorage or public shares. No email or order is created. Use fictional details for demo checks. See docs/QUOTES.md for cleanup and deployment requirements.
 - Validated product configuration is saved in localStorage after a 350ms debounce, with refresh restore, immediate reset, invalid-draft discard and a usable storage-unavailable path. Quote fields, lighting and camera are excluded.
-- Save & share now stores immutable server-priced PostgreSQL snapshots; `/s/[publicId]` offers read-only viewing and Edit a copy. Neon connectivity is configured and verified; see docs/SHARING.md. The private demo quote backend is implemented; the admin inbox remains Step 9. No claims of manufacturing suitability or sales performance.
+- Save & share now stores immutable server-priced PostgreSQL snapshots; `/s/[publicId]` offers read-only viewing and Edit a copy. Neon connectivity is configured and verified; see docs/SHARING.md. The private demo quote backend is implemented; the private Google-authenticated admin inbox supports filters, pagination and transactional status history; see docs/ADMIN.md. No claims of manufacturing suitability or sales performance.
 
 ## Project structure
 
@@ -79,6 +79,8 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Current visual identity screenshots and contrast evidence](docs/evidence/visual-identity/README.md)
 - [Pricing and local draft contract](docs/PRICING-AND-DRAFTS.md)
 - [Sharing backend and Neon setup](docs/SHARING.md)
+- [Private Google admin setup](docs/ADMIN.md)
+- [Step 9 evidence](docs/evidence/step-9/README.md)
 - [Demo quote workflow and deployment](docs/QUOTES.md)
 - [Step 8 evidence](docs/evidence/step-8/README.md)
 - [Step 7 evidence](docs/evidence/step-7/README.md)
@@ -88,4 +90,4 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Step 3 materials evidence](docs/evidence/step-3/README.md)
 - [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
-Next: deploy Step 8 with CRON_SECRET configured, then **Step 9**, protected admin inbox. Physical-phone review of the Step 3 material milestone remains pending. No automatic commit, push or deployment is performed.
+Next: configure Google OAuth and deploy the private inbox, then **Step 10**, product story and discovery. Physical-phone review of the Step 3 material milestone remains pending. No automatic commit, push or deployment is performed.

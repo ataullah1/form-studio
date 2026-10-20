@@ -14,7 +14,8 @@ const port = listener.address().port;
 await new Promise(resolve => listener.close(resolve));
 const admin = `postgresql://form_studio_admin@127.0.0.1:${port}/form_studio_step7`;
 const runtime = `postgresql://form_studio_runtime@127.0.0.1:${port}/form_studio_step7`;
-const environment = { ...process.env, DIRECT_URL: admin, DATABASE_URL: runtime, TEST_DATABASE_URL: admin, SHARE_RATE_LIMIT_SECRET: randomBytes(32).toString('hex'), CRON_SECRET: randomBytes(32).toString('hex') };
+const adminWeb = `postgresql://form_studio_admin_web@127.0.0.1:${port}/form_studio_step7`;
+const environment = { ...process.env, DIRECT_URL: admin, DATABASE_URL: runtime, TEST_DATABASE_URL: admin, ADMIN_DATABASE_URL: adminWeb, ADMIN_ORIGIN: 'http://127.0.0.1:4173', ADMIN_GOOGLE_SUB_IDS: '123456789012345678901', GOOGLE_CLIENT_ID: 'local-test-client', GOOGLE_CLIENT_SECRET: 'local-test-only-secret', SHARE_RATE_LIMIT_SECRET: randomBytes(32).toString('hex'), CRON_SECRET: randomBytes(32).toString('hex') };
 function run(command, args, env = environment) {
   const result = spawnSync(command, args, { stdio: 'inherit', env });
   if (result.error || result.status !== 0) throw new Error(`${command} failed; check the output above. PostgreSQL tools must be on PATH.`);
@@ -26,9 +27,9 @@ try {
   run('createdb', ['-h', '127.0.0.1', '-p', String(port), '-U', 'form_studio_admin', 'form_studio_step7']);
   run('psql', [admin, '-v', 'ON_ERROR_STOP=1', '-c', 'CREATE ROLE anon NOLOGIN; CREATE ROLE authenticated NOLOGIN;']);
   run('pnpm', ['db:migrate']);
-  run('psql', [admin, '-v', 'ON_ERROR_STOP=1', '-c', 'ALTER ROLE form_studio_runtime LOGIN;']);
+  run('psql', [admin, '-v', 'ON_ERROR_STOP=1', '-c', 'ALTER ROLE form_studio_runtime LOGIN; ALTER ROLE form_studio_admin_web LOGIN;']);
   run('pnpm', ['build']);
-  run('pnpm', ['exec', 'playwright', 'test', ...(process.argv.includes('--all') ? [] : ['tests/e2e/sharing.spec.ts', 'tests/e2e/quotes.spec.ts'])]);
+  run('pnpm', ['exec', 'playwright', 'test', ...(process.argv.includes('--all') ? [] : process.argv.includes('--admin') ? ['tests/e2e/admin.spec.ts'] : ['tests/e2e/sharing.spec.ts', 'tests/e2e/quotes.spec.ts', 'tests/e2e/admin.spec.ts'])]);
 } catch (error) { console.error(error.message); process.exitCode = 1; }
 finally {
   if (started) spawnSync('pg_ctl', ['-D', data, '-m', 'fast', 'stop'], { stdio: 'inherit' });

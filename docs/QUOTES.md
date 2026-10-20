@@ -23,7 +23,7 @@ Invalid requests return 400, unsupported media 415, oversized bodies 413, rate l
 
 A transaction locks the idempotency key, checks its HMAC fingerprint, prices the design and inserts metadata plus private contact rows atomically. Both timestamps use database defaults. A failed contact insert rolls back metadata. No application contact logging or custom analytics events are added.
 
-Runtime can select/insert quote metadata but only insert contact rows; it cannot read contacts, update statuses or delete rows directly. RLS and explicit grants exclude public/browser roles. Owner access remains privileged. Metadata includes design, price, source, reference and keyed fingerprint; it contains no raw contact fields and stays private after contact cleanup. No restricted admin UI is implemented yet.
+Runtime can select/insert quote metadata but only insert contact rows; it cannot read contacts, update statuses or delete rows directly. RLS and explicit grants exclude public/browser roles. Owner access remains privileged. Metadata includes design, price, source, reference and keyed fingerprint; it contains no raw contact fields and stays private after contact cleanup. The restricted Google-authenticated admin inbox is described in ADMIN.md.
 
 Atomic database buckets permit five quote requests per client and twenty globally per minute, independently of save/share limits. HMAC identity follows the existing trusted-ingress policy. Honeypot, consent, validation and size limits supplement these quotas.
 
@@ -39,4 +39,4 @@ Official schedule behavior: [Vercel cron management](https://vercel.com/docs/cro
 
 ## Verification
 
-`pnpm check` validates lint, types, unit tests and build. `pnpm test:sharing` runs seven sharing and nine quote checks against a fresh disposable local PostgreSQL cluster; `--all` runs the full 46-browser-test suite. The harness overrides database credentials, applies migrations, runs under restricted runtime grants and removes its cluster afterward. Never seed demo contacts into the live database for these checks.
+`pnpm check` validates lint, types, unit tests and build. `pnpm test:sharing` runs seven sharing, nine quote and eight admin checks against a fresh disposable local PostgreSQL cluster; `--all` runs the full 54-browser-test suite. The harness overrides database credentials, applies migrations, runs under restricted runtime grants and removes its cluster afterward. Never seed demo contacts into the live database for these checks.

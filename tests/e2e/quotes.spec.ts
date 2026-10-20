@@ -25,7 +25,6 @@ test('quote form uses the canonical design, stores a server-priced private reque
   await expect(page.getByText('Demo request received.', { exact: false })).toBeVisible();
   expect(Object.keys(receipt).sort()).toEqual(['reference','estimatedTotalCents','catalogVersion'].sort()); expect(receipt.estimatedTotalCents).toBe(43900);
   await expect(page.getByLabel('Name', { exact: true })).toBeEmpty();
-  await page.screenshot({ path: 'docs/evidence/step-8/screenshots/confirmed-request.png', fullPage: true });
   const row = await admin(db => db.query('SELECT q.estimated_total_cents,q.status,c.email,c.expires_at,q.created_at FROM app.quote_requests q JOIN app.quote_contacts c ON q.id=c.quote_id WHERE q.reference=$1',[receipt.reference]));
   expect(row.rows[0].email).toBe('fictional@example.com'); expect(row.rows[0].status).toBe('NEW');
   expect(row.rows[0].expires_at - row.rows[0].created_at).toBe(5 * 86400000);

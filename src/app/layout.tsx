@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Bodoni_Moda, Manrope } from 'next/font/google';
-import { Analytics } from '@vercel/analytics/next';
+import { PublicAnalytics } from '@/components/public-analytics';
 import './globals.css';
 
 const display = Bodoni_Moda({ subsets: ['latin'], style: 'normal', variable: '--font-display', display: 'swap' });
@@ -12,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${display.variable} ${body.variable}`}><body><a className="skip-link" href="#main-content">Skip to content</a>{children}<Analytics /></body></html>;
+  return <html lang="en" className={`${display.variable} ${body.variable}`}><body><a className="skip-link" href="#main-content">Skip to content</a>{children}<PublicAnalytics /></body></html>;
 }

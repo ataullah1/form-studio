@@ -13,12 +13,20 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [x] Step 6 Pricing and local draft
 - [x] Step 7 Save and share backend — local and Neon connection verified
 - [x] Step 8 Quote request workflow — verified locally; deployment/cron activation pending
-- [ ] Step 9 Restricted admin inbox
+- [x] Step 9 Restricted admin inbox — local verification complete; real Google login/deployment acceptance pending
 - [ ] Step 10 Product story and discovery
 - [ ] Step 11 Tests and mobile performance
 - [ ] Step 12 Release and portfolio
 
-## Current session — Step 8 demo quote workflow (2026-10-20)
+## Current session — Step 9 restricted admin inbox (2026-10-20)
+
+- User selected Google login. Added server OIDC authorization-code flow with PKCE/state/nonce, cryptographic ID-token validation using jose 6.2.12 and immutable Google-sub allowlist. Opaque hashed database sessions expire after eight hours; logout revokes them.
+- Added private login, twenty-record paginated/status-filtered inbox, original saved quote details and transactional actor/status history. Each query/mutation checks session and allowlist; same-origin mutations and optimistic versions reject forged/stale/replayed changes. Focus refresh handles stale tabs.
+- Added a separate restricted admin database role, auth tables and RLS that hides expired contacts immediately. Public runtime contact/session/history access remains denied. Private pages use no-store/noindex/same-origin referrer policy/denied framing; admin Analytics is suppressed.
+- Verification: 110 unit tests, 24 database/browser checks, production build and final lint/typecheck passed. Neon migration and restricted admin role connectivity/ACL inspection passed; credential stored privately in ignored .env. See docs/evidence/step-9/README.md. No screenshots or generated images; fixtures use fictional local contacts only. Google account authorization cannot be verified until the owner supplies OAuth credentials.
+- Setup: docs/ADMIN.md. No commit, push or deployment. Next functional step: Step 10 product story/discovery, after configuring live Google login.
+
+## Previous session — Step 8 demo quote workflow (2026-10-20)
 
 - Added consent-based demo requests tied to the canonical configuration, server-authoritative prices, opaque receipts, transactional private persistence, HMAC idempotency, concurrent retry handling and explicit current-price confirmation for shared designs.
 - Contact data is isolated in an insert-only runtime table, excluded from public shares, browser storage and application telemetry. Failure preserves fields; success clears them only after server confirmation. No email, order or public quote lookup.

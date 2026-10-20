@@ -339,7 +339,7 @@ Complete Step 8 only. Implement a clearly labelled demo quote form, server-autho
 সময় ১ থেকে ২ দিন। Dependency Step 8।
 
 ## Admin scope
-শুধু আপনার quote inbox; customer login বা public signup dashboard নয়। Provider-independent verified login এবং server-controlled allowed user IDs ব্যবহার করুন। Allowlist .env বা server configuration এ থাকবে। নতুন user ID client request বা public sign up দিয়ে admin হতে পারবে না।
+শুধু আপনার quote inbox; customer login বা public signup dashboard নয়। Google OIDC verified login এবং server-controlled allowed user IDs ব্যবহার করুন। Allowlist .env বা server configuration এ থাকবে। নতুন user ID client request বা public sign up দিয়ে admin হতে পারবে না।
 
 ## প্রয়োজনীয় screens
 - /admin/login এবং protected /admin/quotes।
@@ -355,7 +355,7 @@ Complete Step 8 only. Implement a clearly labelled demo quote form, server-autho
 Logged-out এবং non-allowlisted authenticated user দুজনেই quote data পায় না। URL বা action replay দিয়ে admin status change হয় না। Own admin session detail দেখে status update করতে পারে। Cross-tab state stale হলে refreshed value দেখায়। Public demo admin access পাবে না।
 
 ## Codex prompt
-Complete Step 9 only. Add a minimal authenticated admin quote inbox (Neon database; auth provider to be selected) with a server-maintained user-ID allowlist. Protect every private read and status mutation. Add pagination, status filter and transactional status history. Test logged-out, non-allowlisted and replayed requests. Do not expose customer contact data through public routes or shared caches.
+Complete Step 9 only. Add a minimal authenticated admin quote inbox (Neon database; Google OIDC authentication selected) with a server-maintained user-ID allowlist. Protect every private read and status mutation. Add pagination, status filter and transactional status history. Test logged-out, non-allowlisted and replayed requests. Do not expose customer contact data through public routes or shared caches.
 
 Public portfolio walkthrough এ admin অংশ দেখাতে হলে fictional seed data ব্যবহার করুন। নিজের actual enquiries screen record করবেন না।
 

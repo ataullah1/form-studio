@@ -364,3 +364,17 @@ img, svg { display: block; }
 .quote-error, .quote-success, .quote-price-review { font-size: 13px; line-height: 1.7; padding: 14px; border: 1px solid var(--colour-control-border); }
 .quote-success { margin-bottom: 20px; }
 .field-error { color: var(--colour-accent) !important; }
+
+/* Private owner inbox uses the existing atelier palette. */
+.admin-shell { max-width: 980px; margin: auto; padding: 24px clamp(16px,4vw,48px) 72px; overflow-wrap: anywhere; }
+.admin-header,.admin-heading,.admin-filter,.admin-pagination { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:24px; }
+.admin-header { padding-bottom:20px; border-bottom:1px solid currentColor; }
+.admin-shell h1 { font-family:var(--font-display); font-size:clamp(32px,5vw,56px); margin:24px 0; }
+.admin-shell h2 { font-family:var(--font-display); font-size:28px; }
+.admin-shell button,.admin-shell select { padding:10px 14px; border:1px solid currentColor; background:transparent; font:inherit; color:inherit; }
+.admin-shell button { cursor:pointer; } .admin-shell button:disabled { opacity:.5; cursor:default; }
+.admin-card { margin:24px 0; padding:24px; border:1px solid currentColor; }
+.admin-list { list-style:none; padding:0; } .admin-list li { border-bottom:1px solid currentColor; }
+.admin-list a { display:grid; gap:8px; padding:20px 0; text-decoration:none; }
+.admin-shell dl { display:grid; grid-template-columns:100px minmax(0,1fr); gap:12px; } .admin-shell dd { margin:0; }
+.admin-message { white-space:pre-wrap; } .admin-shell pre { white-space:pre-wrap; overflow-wrap:anywhere; } .admin-reference { font-family:monospace; }
