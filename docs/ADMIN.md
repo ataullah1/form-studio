@@ -8,13 +8,13 @@ Step 9 adds `/admin/login`, a private paginated `/admin/quotes` inbox, quote det
 2. Add this exact authorized redirect URI: `https://formstudioo.vercel.app/api/admin/auth/callback`. For local work, create a separate client or add `http://localhost:3000/api/admin/auth/callback` and set ADMIN_ORIGIN accordingly. Credentials and redirect URI must belong to the same environment.
 3. Put GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in ignored .env / Vercel Production. Set ADMIN_ORIGIN to the canonical site origin. HTTPS is required outside localhost; arbitrary return URLs are never accepted.
 4. Set ADMIN_DATABASE_URL to the separate restricted pooled `form_studio_admin_web` role. Local setup prepares this credential privately; never use DIRECT_URL/owner as the web admin credential.
-5. Leave ADMIN_GOOGLE_SUB_IDS empty initially. Attempt Google login: after successful verification, the denied response displays **your verified Google account ID** (`sub`). Copy that ID into ADMIN_GOOGLE_SUB_IDS, then restart/redeploy and sign in again. Empty allowlist denies everyone. This ID is not your email; use comma-separated IDs only for additional owners.
+5. Leave ADMIN_GOOGLE_SUB_IDS empty initially. Sign in at /login and open Dashboard → Account details to find **your verified Google account ID** (`sub`). Copy that ID into ADMIN_GOOGLE_SUB_IDS, then restart/redeploy. Empty allowlist denies admin inbox access while personal dashboards remain available. This ID is not your email; use comma-separated IDs only for additional owners.
 
 The application requests only the `openid` identity scope. No Google password, Gmail, Drive access, refresh token or provider token is stored. Google credentials cannot be generated locally: the owner must create the OAuth client. Configure all five admin variables before deployment and verify a real login afterward. Do not paste the client secret into chat or Git.
 
 ## Authentication
 
-The server authorization-code flow uses PKCE S256, nonce and a one-time state bound to a separate HttpOnly browser cookie. Login flows expire after ten minutes; callback consumption is atomic before provider exchange. Fixed Google token/JWKS endpoints prevent client-controlled provider URLs. jose verifies RS256 signature, issuer, audience, expiration, issued-at, nonce and authorized party. The immutable Google `sub` is checked against the server allowlist.
+The server authorization-code flow uses PKCE S256, nonce and a one-time state bound to a separate HttpOnly browser cookie. Login flows expire after ten minutes; callback consumption is atomic before provider exchange. Fixed Google token/JWKS endpoints prevent client-controlled provider URLs. jose verifies RS256 signature, issuer, audience, expiration, issued-at, nonce and authorized party. The immutable Google `sub` identifies the user session. Private admin reads and mutations additionally check the server allowlist.
 
 Opaque random session tokens live only in HttpOnly SameSite=Lax cookies (Secure on HTTPS). PostgreSQL stores their SHA-256 hashes, allowed subject ID and an eight-hour expiry. Every private service checks the database session and current allowlist. Removing a subject immediately denies subsequent reads/mutations; logout deletes the session, so replaying the cookie cannot restore access. Login initiations use database-backed quotas independently of public quote/share requests.
 
@@ -39,3 +39,7 @@ List pages contain twenty records, newest first, with status filtering. Paginati
 A real Google authorization, deployed cookies/callback and Vercel configuration require owner-provided OAuth credentials and remain deployment acceptance checks.
 
 References: [Google server OIDC flow and validation](https://developers.google.com/identity/openid-connect/openid-connect), [Google OIDC parameters](https://developers.google.com/identity/openid-connect/reference).
+
+## Public accounts update
+
+All verified Google accounts can now use `/login` and `/dashboard`; only ADMIN_GOOGLE_SUB_IDS subjects may open the admin inbox. The old first-login denied-ID bootstrap is superseded: sign in normally, then find your own verified subject under Dashboard → Account details and put it in the admin allowlist if you are the owner. The allowlist remains required for admin access. See ACCOUNTS.md.

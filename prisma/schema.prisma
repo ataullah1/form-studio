@@ -9,12 +9,14 @@ datasource db {
 model SharedConfiguration {
   publicId String @id @map("public_id") @db.VarChar(32)
   idempotencyKey String @unique @map("idempotency_key") @db.Uuid
+  ownerUserId String? @map("owner_user_id") @db.VarChar(255)
   fingerprint String @db.Char(64)
   configuration Json
   schemaVersion Int @map("schema_version")
   catalogVersion String @map("catalog_version") @db.VarChar(32)
   estimatedTotalCents Int @map("estimated_total_cents")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@index([ownerUserId,createdAt(sort: Desc),publicId], map: "shared_configurations_owner_idx")
   @@map("shared_configurations")
   @@schema("app")
 }
@@ -30,6 +32,7 @@ model QuoteRequest {
   id String @id @db.Uuid
   reference String @unique @db.VarChar(32)
   idempotencyKey String @unique @map("idempotency_key") @db.Uuid
+  ownerUserId String? @map("owner_user_id") @db.VarChar(255)
   fingerprint String @db.Char(64)
   configuration Json
   catalogVersion String @map("catalog_version") @db.VarChar(32)
@@ -41,6 +44,7 @@ model QuoteRequest {
   history QuoteStatusHistory[]
   contact QuoteContact?
   @@index([status,createdAt(sort: Desc),id], map: "quote_requests_inbox_idx")
+  @@index([ownerUserId,createdAt(sort: Desc),id], map: "quote_requests_owner_idx")
   @@map("quote_requests")
   @@schema("app")
 }
@@ -67,6 +71,7 @@ model AdminSession {
   @@schema("app")
 }
 model AdminLoginFlow {
+  destination String @default("/admin/quotes") @db.VarChar(32)
   stateHash String @id @map("state_hash") @db.Char(64)
   bindingHash String @map("binding_hash") @db.Char(64)
   verifier String @db.VarChar(128)

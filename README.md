@@ -49,6 +49,8 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 
 ## Current behavior and limits
 
+- `/login` and `/dashboard`: any verified Google user can see their own new saved designs and demo requests; only allowlisted owners can open the admin inbox. Sign in before saving/submitting to link new activity. Guest records are not claimed later.
+
 - `/`: English product landing, with an explicitly described static concept illustration. No Canvas is mounted here.
 - `/configure`: canonical typed configuration with three sizes, three finishes, two frames and three optional accessories; Reset configuration, itemized illustrative estimate, selected 2D dimensions and optional interactive 3D desk. Default estimate $399; accessories/size/walnut change the local estimate.
 - Renderer load/start errors, unavailable WebGL2, a 20-second startup timeout or context loss show a 2D schematic. Summary and editable quote draft fields stay outside the renderer boundary.
@@ -83,6 +85,7 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Step 11 evidence](docs/evidence/step-11/README.md)
 - [Product story and SEO](docs/DISCOVERY.md)
 - [Step 10 evidence](docs/evidence/step-10/README.md)
+- [Google accounts and personal dashboard](docs/ACCOUNTS.md)
 - [Private Google admin setup](docs/ADMIN.md)
 - [Step 9 evidence](docs/evidence/step-9/README.md)
 - [Demo quote workflow and deployment](docs/QUOTES.md)

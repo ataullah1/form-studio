@@ -13,6 +13,7 @@ export function SiteHeader({ configurator = false }: { configurator?: boolean })
       <span className="product-identifier">01<span>STUDIO DESK</span></span>
     </div>
     <nav aria-label="Main navigation">
+      <Link className="nav-account" href="/dashboard">My studio</Link>
       {configurator ? <Link className="nav-return" href="/">← Back to collection</Link> : <>
         <a className="nav-secondary" href="#materials">Materials</a>
         <a className="nav-secondary" href="#details">Specifications</a>

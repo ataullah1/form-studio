@@ -9,7 +9,7 @@ import { ShareError } from './sharing';
 export class EstimateChanged extends Error {
   constructor(public offer: { catalogVersion: string; estimatedTotalCents: number }) { super('Please confirm the current estimate before sending this demo request.'); }
 }
-export async function submitQuote(input: unknown, key: string) {
+export async function submitQuote(input: unknown, key: string, ownerUserId: string | null = null) {
   const payload = validateQuote(input);
   const cleanupSecret = process.env.CRON_SECRET;
   if (!quoteServiceReady(cleanupSecret, process.env.VERCEL, process.env.VERCEL_ENV)) throw new ShareError(503, 'Demo requests are temporarily unavailable.');
@@ -20,7 +20,7 @@ export async function submitQuote(input: unknown, key: string) {
     await tx.$queryRaw`SELECT true AS locked FROM pg_advisory_xact_lock(hashtextextended(${'quote:' + key.toLowerCase()}, 0))`;
     const existing = await tx.quoteRequest.findUnique({ where: { idempotencyKey: key } });
     if (existing) {
-      if (existing.fingerprint !== fingerprint) throw new ShareError(409, 'This request key belongs to a different demo enquiry.');
+      if (existing.ownerUserId !== ownerUserId || existing.fingerprint !== fingerprint) throw new ShareError(409, 'This request key belongs to a different demo enquiry.');
       return { reference: existing.reference, created: false, estimatedTotalCents: existing.estimatedTotalCents, catalogVersion: existing.catalogVersion };
     }
     const price = calculatePrice(payload.configuration);
@@ -32,8 +32,8 @@ export async function submitQuote(input: unknown, key: string) {
     const id = randomUUID(); const reference = randomBytes(24).toString('base64url');
     // Use database defaults for both timestamps so contact expiry and creation share one clock.
     const configurationJSON = JSON.stringify(payload.configuration);
-    await tx.$executeRaw`INSERT INTO app.quote_requests (id,reference,idempotency_key,fingerprint,configuration,catalog_version,estimated_total_cents,source_public_id)
-      VALUES (${id}::uuid,${reference},${key}::uuid,${fingerprint},${configurationJSON}::jsonb,${price.catalogVersion},${price.estimatedTotalCents},${payload.sourcePublicId ?? null})`;
+    await tx.$executeRaw`INSERT INTO app.quote_requests (id,reference,idempotency_key,fingerprint,configuration,catalog_version,estimated_total_cents,source_public_id,owner_user_id)
+      VALUES (${id}::uuid,${reference},${key}::uuid,${fingerprint},${configurationJSON}::jsonb,${price.catalogVersion},${price.estimatedTotalCents},${payload.sourcePublicId ?? null},${ownerUserId})`;
     const contact = payload.contact;
     // No SELECT permission on contact data; bind inserts explicitly without RETURNING private fields.
     await tx.$executeRaw`INSERT INTO app.quote_contacts (quote_id,name,email,company,country,message) VALUES (${id}::uuid,${contact.name},${contact.email},${contact.company},${contact.country},${contact.message})`;

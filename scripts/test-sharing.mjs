@@ -29,7 +29,7 @@ try {
   run('pnpm', ['db:migrate']);
   run('psql', [admin, '-v', 'ON_ERROR_STOP=1', '-c', 'ALTER ROLE form_studio_runtime LOGIN; ALTER ROLE form_studio_admin_web LOGIN;']);
   run('pnpm', ['build']);
-  run('pnpm', ['exec', 'playwright', 'test', ...(process.argv.includes('--all') ? [] : process.argv.includes('--admin') ? ['tests/e2e/admin.spec.ts'] : ['tests/e2e/sharing.spec.ts', 'tests/e2e/quotes.spec.ts', 'tests/e2e/admin.spec.ts'])]);
+  run('pnpm', ['exec', 'playwright', 'test', ...(process.argv.includes('--all') ? [] : process.argv.includes('--account') ? ['tests/e2e/account.spec.ts', 'tests/e2e/admin.spec.ts', 'tests/e2e/sharing.spec.ts', 'tests/e2e/quotes.spec.ts', 'tests/e2e/discovery.spec.ts', 'tests/e2e/foundation.spec.ts'] : process.argv.includes('--admin') ? ['tests/e2e/admin.spec.ts'] : ['tests/e2e/sharing.spec.ts', 'tests/e2e/quotes.spec.ts', 'tests/e2e/admin.spec.ts', 'tests/e2e/account.spec.ts'])]);
 } catch (error) { console.error(error.message); process.exitCode = 1; }
 finally {
   if (started) spawnSync('pg_ctl', ['-D', data, '-m', 'fast', 'stop'], { stdio: 'inherit' });

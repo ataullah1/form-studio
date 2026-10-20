@@ -7,9 +7,9 @@ export async function GET(request: NextRequest) {
   try {
     const params = request.nextUrl.searchParams;
     const session = await finishGoogleLogin(params.get('state') ?? '', request.cookies.get(FLOW_COOKIE)?.value ?? '', params.get('code') ?? '');
-    const response = NextResponse.redirect(adminOrigin() + '/admin/quotes', { status: 303, headers: privateHeaders });
+    const response = NextResponse.redirect(adminOrigin() + session.destination, { status: 303, headers: privateHeaders });
     response.cookies.set(FLOW_COOKIE, '', cookieOptions(0));
-    response.cookies.set(SESSION_COOKIE, session, sessionCookieOptions(8 * 3600));
+    response.cookies.set(SESSION_COOKIE, session.session, sessionCookieOptions(8 * 3600));
     return response;
   } catch (error) {
     const failure = adminFailure(error);

@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useRef, useState, type FormEvent } from 'react';
 import { calculatePrice } from '@/lib/catalog/pricing';
 import { catalogV1, formatUsd, type ProductConfiguration } from '@/lib/catalog';
@@ -50,7 +51,7 @@ export function QuoteDraft({ configuration, active = true, sourcePublicId }: { c
       </div>
     </div>
     <form action="/api/quotes" method="post" onSubmit={submit} aria-label="Demo quote request" autoComplete="off">
-      {receipt && <div className="quote-success" role="status"><p>Demo request received. No email was sent and no furniture order was placed.</p><p>Reference: <strong>{receipt.reference}</strong></p><p>Recorded estimate: {formatUsd(receipt.estimatedTotalCents)} USD</p></div>}
+      {receipt && <div className="quote-success" role="status"><p>Demo request received. No email was sent and no furniture order was placed.</p><p>Reference: <strong>{receipt.reference}</strong></p><p>If you submitted while signed in, view this request in <Link href="/dashboard">your dashboard</Link>.</p><p>Recorded estimate: {formatUsd(receipt.estimatedTotalCents)} USD</p></div>}
       <fieldset className="quote-fields" disabled={busy} aria-describedby="quote-draft-note"><legend className="sr-only">Demo quote draft details</legend>
         {(['name', 'email', 'company', 'country', 'message'] as const).map(key => <label key={key} className={key === 'message' ? 'full-width' : ''}>
           {key === 'message' ? 'Project message' : key[0].toUpperCase() + key.slice(1)}{key !== 'name' && key !== 'email' && <span>(optional)</span>}
@@ -61,7 +62,7 @@ export function QuoteDraft({ configuration, active = true, sourcePublicId }: { c
         <div className="quote-trap" aria-hidden="true"><label>Website<input name="website" value={website} onChange={event => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" maxLength={200} /></label></div>
         <label className="quote-consent full-width"><input name="consent" type="checkbox" checked={consent} onChange={event => setConsent(event.target.checked)} required />I understand this is a demo enquiry and my contact details will be stored temporarily.</label>
         {currentOffer && <div className="full-width quote-price-review"><p>Updated estimate: {formatUsd(currentOffer.estimatedTotalCents)} USD · Catalog {currentOffer.catalogVersion}. Tax and shipping excluded.</p><label className="quote-consent"><input type="checkbox" checked={accepted} onChange={event => setAccepted(event.target.checked)} required />I confirm this current estimate.</label></div>}
-        <p id="quote-draft-note" className="full-width">Contact fields stay in this page until submitted. They are never saved in your browser draft or public share.</p>
+        <p id="quote-draft-note" className="full-width">Sign in before submitting to track this request in your dashboard. Guest requests are not linked later. Contact fields stay in this page until submitted. They are never saved in your browser draft or public share.</p>
         {Object.keys(errors).length > 0 && <div className="full-width quote-error" role="alert">{errors.form ?? errors.configuration ?? errors.consent ?? 'Check the highlighted fields.'}</div>}
         <button type="submit" className="button full-width" disabled={!active || busy || !consent || (!!currentOffer && !accepted)}>{busy ? 'Sending demo request…' : 'Demo quote submission'}</button>
         {!active && <p className="full-width">Enable JavaScript to submit this demo enquiry.</p>}

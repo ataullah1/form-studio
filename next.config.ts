@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 
 const config: NextConfig = {
   reactStrictMode: true,
-  async headers() { return ['/admin/:path*', '/api/admin/:path*'].map(source => ({ source, headers: [
+  async headers() { return ['/admin/:path*', '/api/admin/:path*', '/dashboard/:path*', '/login', '/api/account/:path*'].map(source => ({ source, headers: [
     { key: 'Cache-Control', value: 'private, no-store, max-age=0' },
     { key: 'Referrer-Policy', value: 'same-origin' },
     { key: 'X-Robots-Tag', value: 'noindex, nofollow' },

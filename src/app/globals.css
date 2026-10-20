@@ -421,3 +421,8 @@ img, svg { display: block; }
 .quality-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:18px 0; font-size:12px; }
 .quality-actions>span { margin-right:4px; font-weight:600; }
 .quality-actions>p { flex-basis:100%; color:var(--colour-muted); font-size:12px; }
+
+.nav-account { white-space:nowrap; }
+.draft-notice a,.quote-draft a { text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:850px) { .site-header nav { gap:16px; } .site-header nav .nav-secondary { display:none; } }
+@media (max-width:650px) { .site-header nav { gap:12px; } .brand-lockup .product-identifier { display:none; } .nav-account { font-size:11px; } }

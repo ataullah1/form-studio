@@ -18,7 +18,16 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [ ] Step 11 Tests and mobile performance — automated checks/budgets verified; physical-phone acceptance pending
 - [ ] Step 12 Release and portfolio
 
-## Current session — Step 11 tests and mobile performance (2026-10-20)
+## Current session — public accounts and personal dashboard (2026-10-20)
+
+- User requested anyone be able to Google-sign-in and see only their own designs/quote requests. Added public /login, personal /dashboard and owner-filtered request detail; admin inbox/status mutations retain the server allowlist.
+- Reused existing Google callback/credentials and eight-hour hashed sessions; login destination is stored with the one-time flow. Non-admins receive user sessions and dashboard access. Logout/revocation and expired-session write failures apply to all accounts.
+- New saves/submissions receive ownership only from the verified session. Existing guest rows stay unowned, and cross-account idempotency conflicts cannot transfer ownership. Public share serialization omits ownership. No client-supplied user/email ownership is accepted.
+- Added account notice/navigation, paginated lists, saved estimate/current status, focus/manual refresh and noindex/no-store/Analytics exclusions. No automatic cloud upload on every local edit; no contact values shown in the personal dashboard.
+- Verified 116 unit tests, production build, final lint/types and 47 integration/browser checks. Applied the additive Neon migration and verified schema/ACLs without private-row reads. Details: docs/evidence/accounts/README.md. Setup/access contract: docs/ACCOUNTS.md. No new OAuth callback, package, environment variable, screenshot or generated image required.
+- This is a user-requested capability beyond the original owner-only roadmap. Step 11 physical-device and Step 12 release gates remain unchanged. No automatic commit, push or deployment.
+
+## Previous session — Step 11 tests and mobile performance (2026-10-20)
 
 - Added transient Balanced/Low preview quality: Low caps DPR at 1, disables shadows and decodes wood maps at 512px with anisotropy 1. Quality does not alter canonical configuration, estimate or saved drafts. Switching releases owned map resources.
 - Production audit exposed full-size wood downloads in selector chips before the viewer starts. Chips now use existing lightweight illustrative material-study SVGs; actual map loading stays deferred to 3D activation. No new images/assets or packages.

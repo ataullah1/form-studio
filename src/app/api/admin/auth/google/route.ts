@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     checkOrigin(request);
     await consumeShareRate(rateIdentity(request.headers), 'admin-auth');
-    const flow = await startGoogleLogin();
+    const flow = await startGoogleLogin(new URL(request.url).searchParams.get('intent') === 'account' ? '/dashboard' : '/admin/quotes');
     const response = NextResponse.redirect(flow.url, { status: 303, headers: privateHeaders });
     response.cookies.set(FLOW_COOKIE, flow.binding, cookieOptions(600));
     return response;

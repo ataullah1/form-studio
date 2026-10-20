@@ -12,13 +12,21 @@ export function cookieOptions(maxAge: number) {
   return { httpOnly: true, secure: adminOrigin().startsWith('https:'), sameSite: 'lax' as const, path: '/api/admin', maxAge };
 }
 export function sessionCookieOptions(maxAge: number) { return { ...cookieOptions(maxAge), path: '/' }; }
-export async function requireAdmin() {
+export async function requireUser() {
   const value = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!value || !/^[A-Za-z0-9_-]{43}$/.test(value)) throw new AdminError(401, 'Sign in to continue.');
   const { rows } = await adminDB().query<{ user_id: string }>('SELECT user_id FROM app.admin_sessions WHERE token_hash=$1 AND expires_at > CURRENT_TIMESTAMP', [digest(value)]);
   if (!rows[0]) throw new AdminError(401, 'Your session has expired. Sign in again.');
-  if (!allowedUser(rows[0].user_id)) throw new AdminError(403, 'This account cannot access the inbox.');
   return { id: rows[0].user_id, tokenHash: digest(value) };
+}
+export async function requireAdmin() {
+  const user = await requireUser();
+  if (!allowedUser(user.id)) throw new AdminError(403, 'This account cannot access the inbox.');
+  return user;
+}
+export async function optionalUser() {
+  if (!(await cookies()).has(SESSION_COOKIE)) return null;
+  return requireUser();
 }
 export function checkOrigin(request: Request) {
   if (request.headers.get('origin') !== adminOrigin()) throw new AdminError(403, 'Invalid request origin.');

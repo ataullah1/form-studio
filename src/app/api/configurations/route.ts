@@ -1,3 +1,4 @@
+import { AdminError, optionalUser } from '@/server/admin/session';
 import { ShareError, IDEMPOTENCY_KEY, rateIdentity, consumeShareRate, saveConfiguration } from '@/server/sharing';
 import { validateConfig } from '@/lib/catalog/pricing';
 export const runtime = 'nodejs';
@@ -32,9 +33,11 @@ export async function POST(request: Request) {
     try { configuration = validateConfig(JSON.parse(Buffer.concat(chunks).toString('utf8'))); }
     catch { return Response.json({ error: 'This design contains invalid options or an unsupported version.' }, { status: 400, headers }); }
     await consumeShareRate(rateIdentity(request.headers));
-    const result = await saveConfiguration(configuration, key);
+    const user = await optionalUser();
+    const result = await saveConfiguration(configuration, key, user?.id ?? null);
     return Response.json({ publicId: result.publicId, path: `/s/${result.publicId}` }, { status: result.created ? 201 : 200, headers });
   } catch (error) {
+    if (error instanceof AdminError) return Response.json({ error: error.status === 401 ? 'Your session expired. Sign in again before saving or submitting.' : error.message }, { status: error.status, headers });
     const status = error instanceof ShareError ? error.status : 503;
     return Response.json({ error: error instanceof ShareError ? error.message : 'Sharing is temporarily unavailable. Your design is still here.' }, { status, headers: { ...headers, ...(status === 429 ? { 'Retry-After': '60' } : {}) } });
   }

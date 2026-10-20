@@ -1,3 +1,4 @@
+import { AdminError, optionalUser } from '@/server/admin/session';
 import { QuoteValidationError, validateQuote } from '@/lib/quotes/validation';
 import { submitQuote, EstimateChanged } from '@/server/quotes';
 import { IDEMPOTENCY_KEY, ShareError, rateIdentity, consumeShareRate } from '@/server/sharing';
@@ -23,9 +24,11 @@ export async function POST(request: Request) {
     let input; try { input = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch { return Response.json({ error: 'Invalid request body.' }, { status: 400, headers }); }
     validateQuote(input);
     await consumeShareRate(rateIdentity(request.headers), 'quote');
-    const result = await submitQuote(input, key);
+    const user = await optionalUser();
+    const result = await submitQuote(input, key, user?.id ?? null);
     return Response.json({ reference: result.reference, estimatedTotalCents: result.estimatedTotalCents, catalogVersion: result.catalogVersion }, { status: result.created ? 201 : 200, headers });
   } catch (error) {
+    if (error instanceof AdminError) return Response.json({ error: error.status === 401 ? 'Your session expired. Sign in again before saving or submitting.' : error.message }, { status: error.status, headers });
     if (error instanceof QuoteValidationError) return Response.json({ error: error.message, fields: error.fields }, { status: 400, headers });
     if (error instanceof EstimateChanged) return Response.json({ error: error.message, offer: error.offer }, { status: 409, headers });
     const status = error instanceof ShareError ? error.status : 503;

@@ -60,7 +60,7 @@ The published visual catalog currently has only version 1. `resolveSnapshot` ret
 
 ```sh
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:sharing
-# Full 61-browser-test suite using a newly created disposable database:
+# Full 66-browser-test suite using a newly created disposable database:
 pnpm test:sharing --all
 ```
 
@@ -77,4 +77,6 @@ The script creates a fresh localhost-only trust-authenticated cluster on an avai
 
 Step 8 adds nine private quote tests to the seven sharing checks in the default disposable-database harness. Quote deployment also requires CRON_SECRET; see [QUOTES.md](QUOTES.md).
 
-Step 9 adds eight admin checks (25 default database checks; 61 with --all). The harness creates a separate restricted admin role and local-only hashed session fixtures. See [ADMIN.md](ADMIN.md).
+Step 9 adds eight admin checks (30 default database checks; 66 with --all). The harness creates a separate restricted admin role and local-only hashed session fixtures. See [ADMIN.md](ADMIN.md).
+
+Public account ownership is described in [ACCOUNTS.md](ACCOUNTS.md). The default harness includes five account-isolation checks; --account includes those plus admin/share/quote and foundation/discovery (47 checks). Public share JSON still omits ownership.

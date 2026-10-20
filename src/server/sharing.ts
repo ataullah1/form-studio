@@ -39,7 +39,7 @@ export async function consumeShareRate(identity: string, scope: 'share' | 'quote
   } catch (error) { if (error instanceof ShareError) throw error; throw new ShareError(503, scope === 'admin-auth' ? 'Admin login is temporarily unavailable. Please retry.' : 'Sharing is temporarily unavailable. Your design is still here.'); }
 }
 
-export async function saveConfiguration(input: unknown, idempotencyKey: string) {
+export async function saveConfiguration(input: unknown, idempotencyKey: string, ownerUserId: string | null = null) {
   if (!IDEMPOTENCY_KEY.test(idempotencyKey)) throw new ShareError(400, 'A valid save request key is required.');
   const configuration = validateConfig(input);
   const fingerprint = createHash('sha256').update(JSON.stringify(configuration)).digest('hex');
@@ -48,12 +48,12 @@ export async function saveConfiguration(input: unknown, idempotencyKey: string) 
     await tx.$queryRaw`SELECT true AS locked FROM pg_advisory_xact_lock(hashtextextended(${idempotencyKey.toLowerCase()}, 0))`;
     const existing = await tx.sharedConfiguration.findUnique({ where: { idempotencyKey } });
     if (existing) {
-      if (existing.fingerprint !== fingerprint) throw new ShareError(409, 'This save key belongs to a different design.');
+      if (existing.ownerUserId !== ownerUserId || existing.fingerprint !== fingerprint) throw new ShareError(409, 'This save key belongs to a different design.');
       return { publicId: existing.publicId, created: false };
     }
     const price = calculatePrice(configuration);
     const record = await tx.sharedConfiguration.create({ data: {
-      publicId: randomBytes(24).toString('base64url'), idempotencyKey, fingerprint,
+      publicId: randomBytes(24).toString('base64url'), idempotencyKey, fingerprint, ownerUserId,
       configuration: { ...configuration, accessoryIds: [...configuration.accessoryIds] },
       schemaVersion: configuration.schemaVersion, catalogVersion: configuration.catalogVersion,
       estimatedTotalCents: price.estimatedTotalCents,
