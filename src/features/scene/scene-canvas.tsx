@@ -13,9 +13,9 @@ import { RenderPolicy } from './render-policy';
 import { lightingPresets, qualityPresets, type LightingMode, type ViewerQuality } from './viewer-settings';
 import type { TextureReport } from './wood-surface';
 
-interface Props { quality: ViewerQuality; lighting: LightingMode; active: boolean; onReady: () => void; onUnavailable: () => void; command: CameraCommand; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }
+interface Props { allowZoom?: boolean; quality: ViewerQuality; lighting: LightingMode; active: boolean; onReady: () => void; onUnavailable: () => void; command: CameraCommand; configuration: ProductConfiguration; attempt: number; onTextureStatus: (report: TextureReport) => void }
 
-export default function SceneCanvas({ onReady, onUnavailable, command, lighting, active, configuration, attempt, onTextureStatus, quality }: Props) {
+export default function SceneCanvas({ onReady, onUnavailable, command, lighting, active, configuration, attempt, onTextureStatus, quality, allowZoom = true }: Props) {
   const preset = lightingPresets[lighting];
   const renderQuality = qualityPresets[quality];
   const sceneColours = useMemo(() => {
@@ -92,6 +92,6 @@ export default function SceneCanvas({ onReady, onUnavailable, command, lighting,
       <shadowMaterial color={sceneColours.shadow} transparent opacity={preset.shadowOpacity} />
     </mesh>
     <RenderPolicy quality={quality} active={active} configuration={configuration} lighting={lighting} />
-    <DeskCamera dimensions={framingDimensions} command={command} active={active} />
+    <DeskCamera allowZoom={allowZoom} dimensions={framingDimensions} command={command} active={active} />
   </Canvas>;
 }

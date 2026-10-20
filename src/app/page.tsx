@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { HeroDesk } from '@/components/product/hero-desk';
 import Link from 'next/link';
 import { catalogV1, defaultConfiguration, formatUsd, type AccessoryId } from '@/lib/catalog';
 import { AccessoryPreview } from '@/components/product/accessory-preview';
@@ -27,10 +28,7 @@ export default function HomePage() {
             <Link className="button hero-cta" href="/configure">Build your desk <span aria-hidden="true">↗</span></Link>
             <p className="hero-price">From <strong>{formatUsd(Math.min(...Object.values(catalogV1.sizes).map(size => size.priceCents)))}</strong> <span>USD · Illustrative estimate</span></p>
           </div>
-          <figure className="hero-art">
-            <Image src="/assets/studio-desk-01.webp" alt="Studio Desk 01 concept in natural oak with a black frame, desk lamp and monitor stand" fill sizes="(max-width: 767px) 115vw, (max-width: 1440px) 92vw, 1296px" priority />
-            <figcaption>Oak / Black <span>Optional accessories shown</span></figcaption>
-          </figure>
+          <HeroDesk />
         </div>
         <div className="hero-specs" aria-label="Product overview">
           <p><span>DESIGNED TO FIT</span>Three considered sizes</p>

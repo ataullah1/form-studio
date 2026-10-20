@@ -6,7 +6,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, type Componen
 import { PerspectiveCamera, Vector3 } from 'three';
 import { calculateCameraFraming, cameraPreset, type CameraCommand } from './camera-framing';
 
-export function DeskCamera({ dimensions, command, active }: { dimensions: { width: number; height: number; depth: number }; command: CameraCommand; active: boolean }) {
+export function DeskCamera({ dimensions, command, active, allowZoom = true }: { dimensions: { width: number; height: number; depth: number }; command: CameraCommand; active: boolean; allowZoom?: boolean }) {
   const camera = useThree(state => state.camera);
   const size = useThree(state => state.size);
   const invalidate = useThree(state => state.invalidate);
@@ -80,7 +80,7 @@ export function DeskCamera({ dimensions, command, active }: { dimensions: { widt
 
   return <OrbitControls ref={controls} makeDefault enabled={active}
     onStart={() => { transition.current = null; }}
-    enablePan={false} enableDamping={false} autoRotate={false}
+    enableZoom={allowZoom} enablePan={false} enableDamping={false} autoRotate={false}
     target={frame.target} minDistance={frame.minDistance} maxDistance={frame.maxDistance}
     minPolarAngle={frame.minPolarAngle} maxPolarAngle={frame.maxPolarAngle}
     rotateSpeed={0.7} zoomSpeed={0.7}

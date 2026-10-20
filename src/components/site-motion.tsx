@@ -38,6 +38,31 @@ export function SiteMotion() {
           observer.observe(node);
         }
       }
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+      let tilted: HTMLElement | null = null;
+      let pointerFrame = 0;
+      function resetTilt() {
+        tilted?.style.removeProperty('--depth-x');
+        tilted?.style.removeProperty('--depth-y');
+        tilted = null;
+      }
+      function pointerMove(event: PointerEvent) {
+        if (!finePointer.matches || event.pointerType === 'touch') return;
+        const card = event.target instanceof Element ? event.target.closest<HTMLElement>('.accessory-library figure, .material-study, .design-card') : null;
+        if (tilted !== card) resetTilt();
+        if (!card) return;
+        tilted = card;
+        cancelAnimationFrame(pointerFrame);
+        const { clientX, clientY } = event;
+        pointerFrame = requestAnimationFrame(() => {
+          if (tilted !== card) return;
+          const bounds = card.getBoundingClientRect();
+          card.style.setProperty('--depth-x', `${((clientY - bounds.top) / bounds.height - .5) * -5}deg`);
+          card.style.setProperty('--depth-y', `${((clientX - bounds.left) / bounds.width - .5) * 7}deg`);
+        });
+      }
+      document.addEventListener('pointermove', pointerMove, { passive: true });
+      document.documentElement.addEventListener('pointerleave', resetTilt);
       register(document);
       const mutations = new MutationObserver(records => {
         for (const record of records) for (const node of record.addedNodes) {
@@ -46,6 +71,10 @@ export function SiteMotion() {
       });
       mutations.observe(document.body, { childList: true, subtree: true });
       dispose = () => {
+        document.removeEventListener('pointermove', pointerMove);
+        document.documentElement.removeEventListener('pointerleave', resetTilt);
+        cancelAnimationFrame(pointerFrame);
+        resetTilt();
         mutations.disconnect();
         observer.disconnect();
         for (const animation of animations) animation.cancel();

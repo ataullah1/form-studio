@@ -79,4 +79,19 @@ h1,h2,h3,p,figure{margin:0}h1,h2{font-family:var(--font-display),Georgia,serif;f
 }
 @keyframes content-arrival{from{opacity:.65;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes estimate-update{from{opacity:.6;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+/* One optional, demand-rendered hero scene. Scrolling remains native. */
+.hero-explore{position:absolute;right:28px;bottom:58px;display:flex;align-items:flex-end;flex-direction:column;gap:7px;max-width:300px}.hero-explore>.secondary-button{background:var(--colour-page);min-height:46px}.hero-explore p{font-size:10px;color:var(--colour-muted)}
+.hero-art[data-live]{left:43%;z-index:1;background:var(--colour-scene)}.hero-stage:has([data-live]){background:var(--colour-scene)}.hero-canvas{position:absolute;inset:0 0 170px}.hero-canvas canvas{display:block}.hero-art[data-live] .hero-explore{bottom:20px;right:24px;left:24px;max-width:none;align-items:center}.hero-finishes,.hero-view-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.hero-finishes button,.hero-view-actions button{min-height:36px;padding:6px 12px;background:var(--colour-page);border:1px solid var(--colour-border);font-size:11px}.hero-finishes [aria-pressed=true]{color:var(--colour-accent);border-color:var(--colour-accent);background:var(--colour-selection)}.hero-view-actions button{background:transparent;border-color:transparent;min-height:32px;color:var(--colour-muted);font-size:10px}.hero-explore>.text-link{font-size:11px;min-height:32px}
+@media(max-width:767px){.hero-explore{bottom:40px;right:18px;left:18px;max-width:none;align-items:center}.hero-explore>.secondary-button{min-height:42px;font-size:12px}.hero-art[data-live]{left:auto;aspect-ratio:auto;height:440px;min-height:440px;width:100%}.hero-canvas{bottom:176px}.hero-art[data-live] .hero-explore{bottom:15px;gap:5px}.hero-explore p{font-size:9px}}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .accessory-library figure:hover .accessory-preview{transform:perspective(800px) rotateX(var(--depth-x,0deg)) rotateY(var(--depth-y,0deg)) scale(1.035)}
+ .material-study:hover .material-crop img{transform:perspective(800px) rotateX(var(--depth-x,0deg)) rotateY(var(--depth-y,0deg)) scale(1.05)}
+ .design-card:hover .design-preview .schematic{transform:perspective(800px) rotateX(var(--depth-x,0deg)) rotateY(var(--depth-y,0deg))}.design-preview .schematic{transition:transform 180ms ease}
+}
+@supports(animation-timeline:view()){
+ @media(prefers-reduced-motion:no-preference){
+  .accessory-library,.details-heading .schematic{animation:depth-unfold linear both;animation-timeline:view();animation-range:entry 0% entry 100%;transform-origin:center center}
+ }
+}
+@keyframes depth-unfold{from{transform:perspective(1200px) rotateX(9deg) translateY(16px)}to{transform:perspective(1200px) rotateX(0deg) translateY(0)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
