@@ -50,13 +50,13 @@ export default function HomePage() {
       </section>
 
       <section id="materials" className="materials" aria-labelledby="materials-title">
-        <div className="material-heading"><p className="eyebrow">01 / MATERIAL LIBRARY</p><h2 id="materials-title">A character<br />of its own.</h2><p>Oak, walnut, ash. Three finishes to explore on the same form.</p></div>
+        <div className="material-heading"><p className="eyebrow">01 / MATERIAL LIBRARY</p><h2 id="materials-title">Material<br />studies.</h2><p>Oak, walnut, ash. Three finishes to explore on the same form.</p></div>
         <div className="material-library">
           {materials.map(material => <figure className={`material-study material-${material.id}`} key={material.id}>
-            <div className="material-crop"><Image src={`/assets/textures/wood/${material.id}/colour.webp`} alt={`${material.label} wood grain from the licensed 3D material library`} width={1024} height={1024} sizes="(max-width: 650px) 90vw, 30vw" /><span aria-hidden="true">{material.number}</span></div>
+            <div className="material-crop"><Image src={`/assets/material-studies/${material.id}.svg`} alt={`${material.label} illustrative wood grain study`} width={600} height={800} sizes="(max-width: 650px) 90vw, (max-width: 1000px) 30vw, 20vw" /><span aria-hidden="true">{material.number}</span></div>
             <figcaption><div><h3>{material.label}</h3><span>{material.price}</span></div><p>{material.description}</p></figcaption>
           </figure>)}
-          <p className="material-disclosure"><span aria-hidden="true">↳</span> Grain details from our 3D material library. Explore the complete finish in the viewer; lighting changes its appearance.</p>
+          <p className="material-disclosure"><span aria-hidden="true">↳</span> Illustrative grain studies. Explore the finish textures in the 3D viewer.</p>
         </div>
       </section>
 
