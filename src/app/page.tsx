@@ -30,7 +30,7 @@ export default function HomePage() {
             <div className="poster-frame">
               <span className="poster-index" aria-hidden="true">01</span>
               <div className="dimension-top"><span>W / 1400 mm</span></div>
-              <Image src="/assets/studio-desk-01.png" alt="Studio Desk 01 in oak and black, rendered from the working 3D model with optional lamp and monitor stand" width={1365} height={917} sizes="(max-width: 768px) 100vw, 60vw" priority />
+              <Image src="/assets/studio-desk-01.webp" alt="Studio Desk 01 concept in oak and black with a desk lamp and monitor stand" width={1512} height={1040} sizes="(max-width: 768px) 100vw, 60vw" priority />
               <span className="dimension-side">H / 740 mm</span>
               <div className="poster-baseline"><span>D / 700 mm</span><span>01 — STUDIO DESK</span></div>
             </div>

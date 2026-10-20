@@ -35,7 +35,7 @@ test('public metadata and social image use the canonical production origin', asy
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
     const image = await page.locator('meta[property="og:image"]').first().getAttribute('content'); expect(image).toMatch(/^https:\/\/formstudioo\.vercel\.app\/opengraph-image/);
   }
-  const image = await request.get('/opengraph-image'); expect(image.status()).toBe(200); expect(image.headers()['content-type']).toContain('image/png');
+  const image = await request.get('/opengraph-image.png'); expect(image.status()).toBe(200); expect(image.headers()['content-type']).toContain('image/png');
   const data = await image.body(); expect(data.readUInt32BE(16)).toBe(1200); expect(data.readUInt32BE(20)).toBe(630); expect(data.length).toBeLessThan(300000);
 });
 
