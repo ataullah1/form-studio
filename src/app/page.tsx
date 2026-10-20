@@ -19,25 +19,25 @@ export default function HomePage() {
     <SiteHeader />
     <main id="main-content">
       <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-kicker"><p className="eyebrow">FORM STUDIES / NO. 01</p><span>THE WORKSPACE COLLECTION</span></div>
-        <div className="hero-composition">
-          <div className="hero-copy"><h1 id="hero-title">Your desk.<span>Built around you.</span></h1>
-            <p className="intro">Studio Desk 01. Three sizes, considered materials and the details that make a workspace yours. Build it in 3D, one choice at a time.</p>
-            <Link className="button" href="/configure">Build your desk <span aria-hidden="true">↗</span></Link>
-            <p className="hero-price">Illustrative pricing from <strong>{formatUsd(Math.min(...Object.values(catalogV1.sizes).map(size => size.priceCents)))}</strong><span>USD · Independent concept</span></p>
+        <div className="hero-stage">
+          <div className="hero-copy">
+            <p className="eyebrow hero-identity">THE WORKSPACE COLLECTION <span>STUDIO DESK 01</span></p>
+            <h1 id="hero-title">Your desk.{' '}<br />Built around{' '}<br />you.</h1>
+            <p className="intro">A little more room to be you. Natural finishes, considered details. A desk shaped around the way you work.</p>
+            <Link className="button hero-cta" href="/configure">Build your desk <span aria-hidden="true">↗</span></Link>
+            <p className="hero-price">From <strong>{formatUsd(Math.min(...Object.values(catalogV1.sizes).map(size => size.priceCents)))}</strong> <span>USD · Illustrative estimate</span></p>
           </div>
           <figure className="hero-art">
-            <div className="poster-frame">
-              <span className="poster-index" aria-hidden="true">01</span>
-              <div className="dimension-top"><span>W / 1400 mm</span></div>
-              <Image src="/assets/studio-desk-01.webp" alt="Studio Desk 01 concept in oak and black with a desk lamp and monitor stand" width={1512} height={1040} sizes="(max-width: 768px) 100vw, 60vw" priority />
-              <span className="dimension-side">H / 740 mm</span>
-              <div className="poster-baseline"><span>D / 700 mm</span><span>01 — STUDIO DESK</span></div>
-            </div>
-            <figcaption><span>Oak / Black · Optional accessories shown</span><span>Actual model render</span></figcaption>
+            <Image src="/assets/studio-desk-01.webp" alt="Studio Desk 01 concept in natural oak with a black frame, desk lamp and monitor stand" fill sizes="(max-width: 767px) 115vw, (max-width: 1440px) 92vw, 1296px" priority />
+            <figcaption>Oak / Black <span>Optional accessories shown</span></figcaption>
           </figure>
         </div>
-        <div className="hero-bottom"><p>One form. Three sizes to explore.</p><a href="#details">Explore the dimensions <span aria-hidden="true">↓</span></a></div>
+        <div className="hero-specs" aria-label="Product overview">
+          <p><span>DESIGNED TO FIT</span>Three considered sizes</p>
+          <p><span>MATERIAL CHARACTER</span>Oak, walnut &amp; ash</p>
+          <p><span>MAKE IT YOURS</span>Customize in 3D</p>
+          <a href="#customization">Discover the details <span aria-hidden="true">↓</span></a>
+        </div>
       </section>
 
       <section id="customization" className="story-section customization" aria-labelledby="customization-title">
