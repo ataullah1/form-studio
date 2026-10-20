@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Bodoni_Moda, Manrope } from 'next/font/google';
+import { SiteMotion } from '@/components/site-motion';
 import { PublicAnalytics } from '@/components/public-analytics';
 import './globals.css';
 import { siteOrigin, siteDescription } from '@/lib/site';
@@ -14,5 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${display.variable} ${body.variable}`}><body><a className="skip-link" href="#main-content">Skip to content</a>{children}<PublicAnalytics /></body></html>;
+  return <html lang="en" className={`${display.variable} ${body.variable}`}><body><a className="skip-link" href="#main-content">Skip to content</a>{children}<SiteMotion /><PublicAnalytics /></body></html>;
 }

@@ -1,0 +1,7 @@
+# Interaction and motion
+
+SiteMotion is a small client enhancement mounted in the existing root layout. IntersectionObserver reveals editorial sections, workspace cards and panels once, using native Web Animations. A child-list observer registers streamed/new content. Route changes and preference changes cancel active animations and disconnect observers; there is no scroll handler, perpetual animation loop or new dependency. No content is hidden before JavaScript or made dependent on animation.
+
+CSS adds pointer-only card lifts/image zoom, button press feedback, selected-option styling, estimate-change feedback and a FAQ toggle indicator. Touch users retain native controls without hover-dependent actions. prefers-reduced-motion disables animation/transitions and skips the reveal observer; changing the preference also cancels active reveals. Keyboard focus remains visible.
+
+Verified in installed Chrome: accessory hover scale, native FAQ expansion, no running animations under reduced motion, configurator size selection updating the estimate to $449, no browser errors, and no configurator horizontal overflow at 320/390/768/1440 px. Lint (existing logout warning), TypeScript, 132 unit tests and production build passed. Real mobile devices, authenticated workspace animation and full backend/browser regression were not exercised in this pass. No database, authentication or route behavior changes.
