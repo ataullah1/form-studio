@@ -1,6 +1,6 @@
 # Form Studio
 
-An independent furniture configurator concept by Md Ataullah. Steps 0–9 are implemented locally (Google OAuth setup and deployment acceptance pending) (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. Validated integer-cent estimates and a browser-local product draft now preserve designs across refresh. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
+An independent furniture configurator concept by Md Ataullah. Steps 0–10 are implemented locally (latest deployment acceptance pending; user reports Google authentication configured) (physical-phone material review pending): responsive screen plan, Next.js application shell, typed catalog and a real parameterized 3D desk with bounded orbit/zoom/reset. The scene supports three licensed wood finishes, black/white frames, three desk sizes and fixed-position lamp/monitor stand/cable tray, with texture loading, neutral fallback and retry. Day/night studio lighting, an optional night lamp, Front/Detail/Reset views and reduced-motion-aware camera transitions are available. Validated integer-cent estimates and a browser-local product draft now preserve designs across refresh. The current visual identity is an architectural furniture atelier: mineral/espresso/terracotta surfaces, upright Bodoni Moda display headings and Manrope controls.
 
 ## Run locally
 
@@ -79,6 +79,8 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Current visual identity screenshots and contrast evidence](docs/evidence/visual-identity/README.md)
 - [Pricing and local draft contract](docs/PRICING-AND-DRAFTS.md)
 - [Sharing backend and Neon setup](docs/SHARING.md)
+- [Product story and SEO](docs/DISCOVERY.md)
+- [Step 10 evidence](docs/evidence/step-10/README.md)
 - [Private Google admin setup](docs/ADMIN.md)
 - [Step 9 evidence](docs/evidence/step-9/README.md)
 - [Demo quote workflow and deployment](docs/QUOTES.md)
@@ -90,4 +92,4 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Step 3 materials evidence](docs/evidence/step-3/README.md)
 - [Step 0 evidence](docs/evidence/step-0/README.md), [Step 1 evidence](docs/evidence/step-1/README.md), [Step 2 evidence](docs/evidence/step-2/README.md)
 
-Next: configure Google OAuth and deploy the private inbox, then **Step 10**, product story and discovery. Physical-phone review of the Step 3 material milestone remains pending. No automatic commit, push or deployment is performed.
+Next: **Step 11**, tests and mobile performance. Deploy Step 10 to publish the new landing, sitemap and social metadata. Physical-phone review of the Step 3 material milestone remains pending. No automatic commit, push or deployment is performed.

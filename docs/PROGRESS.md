@@ -14,11 +14,19 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [x] Step 7 Save and share backend — local and Neon connection verified
 - [x] Step 8 Quote request workflow — verified locally; deployment/cron activation pending
 - [x] Step 9 Restricted admin inbox — local verification complete; real Google login/deployment acceptance pending
-- [ ] Step 10 Product story and discovery
+- [x] Step 10 Product story and discovery — local acceptance verified; deployment pending
 - [ ] Step 11 Tests and mobile performance
 - [ ] Step 12 Release and portfolio
 
-## Current session — Step 9 restricted admin inbox (2026-10-20)
+## Current session — Step 10 product story and discovery (2026-10-20)
+
+- User reports authentication is configured. Added customization preview, workflow, native concept FAQ and final configurator/demo-enquiry entry. Updated outdated planned-option copy to reflect implemented sizes/finishes/frame/accessories; displayed option prices derive from the catalog. Existing SVG poster/material studies retained.
+- Added canonical production metadata, Open Graph/Twitter card, public-only sitemap and robots route. Shared/admin noindex retained. A single code-rendered 1200 × 630 social preview uses existing colours; no AI imagery, screenshots, extra Canvas, dependency or new analytics events.
+- Restrained poster/material motion respects reduced motion; normal scroll and server-rendered content remain available without JavaScript. Quote entry does not start the renderer.
+- Verified lint/typecheck, 110 unit tests, production build and 17 unique affected browser checks across foundation/discovery runs. No overflow at 1440/768/390/360 px. Details: docs/evidence/step-10/README.md; metadata contract: docs/DISCOVERY.md.
+- No database/account changes, commit, push or deployment. Live indexing/social-platform acceptance and prior physical-phone review remain unverified. Next: Step 11 tests and mobile performance.
+
+## Previous session — Step 9 restricted admin inbox (2026-10-20)
 
 - User selected Google login. Added server OIDC authorization-code flow with PKCE/state/nonce, cryptographic ID-token validation using jose 6.2.12 and immutable Google-sub allowlist. Opaque hashed database sessions expire after eight hours; logout revokes them.
 - Added private login, twenty-record paginated/status-filtered inbox, original saved quote details and transactional actor/status history. Each query/mutation checks session and allowlist; same-origin mutations and optimistic versions reject forged/stale/replayed changes. Focus refresh handles stale tabs.

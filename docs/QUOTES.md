@@ -39,4 +39,4 @@ Official schedule behavior: [Vercel cron management](https://vercel.com/docs/cro
 
 ## Verification
 
-`pnpm check` validates lint, types, unit tests and build. `pnpm test:sharing` runs seven sharing, nine quote and eight admin checks against a fresh disposable local PostgreSQL cluster; `--all` runs the full 54-browser-test suite. The harness overrides database credentials, applies migrations, runs under restricted runtime grants and removes its cluster afterward. Never seed demo contacts into the live database for these checks.
+`pnpm check` validates lint, types, unit tests and build. `pnpm test:sharing` runs seven sharing, nine quote and eight admin checks against a fresh disposable local PostgreSQL cluster; `--all` runs the full 59-browser-test suite. The harness overrides database credentials, applies migrations, runs under restricted runtime grants and removes its cluster afterward. Never seed demo contacts into the live database for these checks.

@@ -60,7 +60,7 @@ The published visual catalog currently has only version 1. `resolveSnapshot` ret
 
 ```sh
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:sharing
-# Full 54-browser-test suite using a newly created disposable database:
+# Full 59-browser-test suite using a newly created disposable database:
 pnpm test:sharing --all
 ```
 

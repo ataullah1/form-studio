@@ -16,6 +16,7 @@ export function SiteHeader({ configurator = false }: { configurator?: boolean })
       {configurator ? <Link className="nav-return" href="/">← Back to collection</Link> : <>
         <a className="nav-secondary" href="#materials">Materials</a>
         <a className="nav-secondary" href="#details">Specifications</a>
+        <a className="nav-secondary" href="#how-it-works">How it works</a>
         <Link className="nav-entry" href="/configure">Build your desk <span aria-hidden="true">↗</span></Link>
       </>}
     </nav>
