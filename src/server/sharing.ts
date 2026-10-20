@@ -36,7 +36,7 @@ export async function consumeShareRate(identity: string, scope: 'share' | 'quote
         if (rows.length === 0) throw new ShareError(429, 'Too many requests. Please try again in a minute.');
       }
     });
-  } catch (error) { if (error instanceof ShareError) throw error; throw new ShareError(503, scope === 'admin-auth' ? 'Admin login is temporarily unavailable. Please retry.' : 'Sharing is temporarily unavailable. Your design is still here.'); }
+  } catch (error) { if (error instanceof ShareError) throw error; console.error('[rate-limit] Database operation failed', { scope, code: error && typeof error === 'object' && 'code' in error ? String(error.code) : 'unknown' }); throw new ShareError(503, scope === 'admin-auth' ? 'Admin login is temporarily unavailable. Please retry.' : 'Sharing is temporarily unavailable. Your design is still here.'); }
 }
 
 export async function saveConfiguration(input: unknown, idempotencyKey: string, ownerUserId: string | null = null) {

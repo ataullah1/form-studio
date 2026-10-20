@@ -2,7 +2,7 @@
 
 import { Canvas } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
-import { PCFSoftShadowMap, type WebGLRenderer } from 'three';
+import { PCFShadowMap, type WebGLRenderer } from 'three';
 import { deriveDeskDimensions } from './desk-dimensions';
 import { DeskModel } from './desk-model';
 import { deriveProductBounds } from './accessory-layout';
@@ -56,7 +56,7 @@ export default function SceneCanvas({ onReady, onUnavailable, command, lighting,
     frameloop={active ? 'demand' : 'never'}
     dpr={renderQuality.dpr}
     camera={{ position: [2, 1.8, 2.7], fov: CAMERA_FOV, near: 0.025, far: 40 }}
-    shadows={renderQuality.shadows ? { type: PCFSoftShadowMap } : false}
+    shadows={renderQuality.shadows ? { type: PCFShadowMap } : false}
     gl={{ antialias: true, alpha: false }}
     fallback={<div role="status">3D unavailable. Please use the 2D view.</div>}
     onCreated={({ gl }) => {

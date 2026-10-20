@@ -38,6 +38,7 @@ export async function POST(request: Request) {
     return Response.json({ publicId: result.publicId, path: `/s/${result.publicId}` }, { status: result.created ? 201 : 200, headers });
   } catch (error) {
     if (error instanceof AdminError) return Response.json({ error: error.status === 401 ? 'Your session expired. Sign in again before saving or submitting.' : error.message }, { status: error.status, headers });
+    if (!(error instanceof ShareError)) console.error('[configuration-save] Database operation failed', { code: error && typeof error === 'object' && 'code' in error ? String(error.code) : 'unknown' });
     const status = error instanceof ShareError ? error.status : 503;
     return Response.json({ error: error instanceof ShareError ? error.message : 'Sharing is temporarily unavailable. Your design is still here.' }, { status, headers: { ...headers, ...(status === 429 ? { 'Retry-After': '60' } : {}) } });
   }
