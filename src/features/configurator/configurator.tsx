@@ -1,4 +1,6 @@
 'use client';
+import { AccountProvider } from '@/features/account/account-notice';
+import { readAuthDesign, clearAuthDesign } from '@/features/auth/design-context';
 
 import { useEffect, useReducer, useRef, useState, useSyncExternalStore, type Dispatch } from 'react';
 import { defaultConfiguration } from '@/lib/catalog';
@@ -15,7 +17,7 @@ const serverSnapshot = () => false;
 const storage = () => window.localStorage;
 
 /** Resolves local state before mounting interactive choices; no default-selection flash or hydration mismatch. */
-export function Configurator({ sharedSnapshot, sourcePublicId }: { sharedSnapshot?: unknown; sourcePublicId?: string }) {
+function ResolvedConfigurator({ sharedSnapshot, sourcePublicId }: { sharedSnapshot?: unknown; sourcePublicId?: string }) {
   const hydrated = useSyncExternalStore(subscribe, hydratedSnapshot, serverSnapshot);
   const serverConfiguration = sharedSnapshot === undefined ? defaultConfiguration : validateConfig(sharedSnapshot);
   if (!hydrated) return <><div className="draft-pending" aria-busy="true">
@@ -27,7 +29,8 @@ export function Configurator({ sharedSnapshot, sourcePublicId }: { sharedSnapsho
 }
 
 function DraftConfigurator({ sharedSnapshot, sourcePublicId }: { sharedSnapshot?: unknown; sourcePublicId?: string }) {
-  const [boot] = useState(() => loadInitialConfiguration(storage, sharedSnapshot));
+  const [boot] = useState(() => { const resumed=readAuthDesign(sourcePublicId); return resumed ? { configuration:resumed,status:sourcePublicId?'shared' as const:'restored' as const } : loadInitialConfiguration(storage, sharedSnapshot); });
+  useEffect(() => { if(new URLSearchParams(window.location.search).get('resume')==='1')clearAuthDesign(); }, []);
   const [configuration, reduce] = useReducer(configurationReducer, boot.configuration);
   const [status, setStatus] = useState<DraftStatus>(boot.status);
   const [blocked, setBlocked] = useState(boot.status === 'invalid');
@@ -64,7 +67,9 @@ function DraftConfigurator({ sharedSnapshot, sourcePublicId }: { sharedSnapshot?
   };
   return <>
     <div className="draft-notice" role="status"><p>{messages[status]}</p>{blocked && <button type="button" className="secondary-button" onClick={() => dispatch({ type: 'reset' })}>Discard saved draft</button>}</div>
-    <div className="builder"><SceneViewer configuration={configuration} /><ConfigurationPanel configuration={configuration} dispatch={dispatch} /></div>
+    <div className="builder"><SceneViewer configuration={configuration} /><ConfigurationPanel sourcePublicId={sourcePublicId} configuration={configuration} dispatch={dispatch} /></div>
     <QuoteDraft configuration={configuration} sourcePublicId={sourcePublicId} />
   </>;
 }
+
+export function Configurator(props:{sharedSnapshot?:unknown;sourcePublicId?:string}) { return <AccountProvider><ResolvedConfigurator {...props}/></AccountProvider>; }

@@ -43,16 +43,16 @@ export function QuoteDraft({ configuration, active = true, sourcePublicId }: { c
     finally { clearTimeout(timer); setBusy(false); }
   }
   return <section id="quote-draft" className="quote-draft" aria-labelledby="quote-title">
-    <div><p className="eyebrow">PROJECT ENQUIRY / DEMO</p><h2 id="quote-title">Your project details.</h2>
-      <p>Use fictional contact details for this demo. Submitting stores a private enquiry, not a furniture order. No email is sent. Contact details are scheduled for deletion within seven days.</p>
+    <div><p className="eyebrow">NEXT / YOUR PROJECT</p><h2 id="quote-title">Request a quote.</h2>
+      <p>Tell us a little about your workspace. This concept demo stores your request privately; no order is placed or email sent. Please use fictional contact details.</p>
       <div className="quote-selection" style={{ visibility: active ? 'visible' : 'hidden' }} aria-label="Quote design summary"><p>{catalogV1.sizes[configuration.sizeId].label} · {catalogV1.finishes[configuration.finishId].label} · {catalogV1.frameColours[configuration.frameColourId].label} frame</p>
         <p>{configuration.accessoryIds.length ? configuration.accessoryIds.map(id => catalogV1.accessories[id].label).join(', ') : 'No accessories'}</p>
-        <p>Current illustrative estimate: <strong>{formatUsd(price.estimatedTotalCents)} USD</strong>. Tax and shipping unavailable.</p>
+        <p>Your selected design · <strong>{formatUsd(price.estimatedTotalCents)} USD</strong>. Tax and shipping excluded.</p>
       </div>
     </div>
     <form action="/api/quotes" method="post" onSubmit={submit} aria-label="Demo quote request" autoComplete="off">
-      {receipt && <div className="quote-success" role="status"><p>Demo request received. No email was sent and no furniture order was placed.</p><p>Reference: <strong>{receipt.reference}</strong></p><p>If you submitted while signed in, view this request in <Link href="/dashboard">your dashboard</Link>.</p><p>Recorded estimate: {formatUsd(receipt.estimatedTotalCents)} USD</p></div>}
-      <fieldset className="quote-fields" disabled={busy} aria-describedby="quote-draft-note"><legend className="sr-only">Demo quote draft details</legend>
+      {receipt && <div className="quote-success" role="status"><p>Demo request received. Your design and estimate are saved. No email was sent and no furniture order was placed.</p><p>Reference: <strong>{receipt.reference}</strong></p><p>If signed in, track the status in <Link href="/dashboard">your dashboard</Link>.</p><p>Recorded estimate: {formatUsd(receipt.estimatedTotalCents)} USD</p></div>}
+      <fieldset className="quote-fields" disabled={busy} aria-describedby="quote-draft-note"><legend className="sr-only">Quote request details</legend>
         {(['name', 'email', 'company', 'country', 'message'] as const).map(key => <label key={key} className={key === 'message' ? 'full-width' : ''}>
           {key === 'message' ? 'Project message' : key[0].toUpperCase() + key.slice(1)}{key !== 'name' && key !== 'email' && <span>(optional)</span>}
           {key === 'message' ? <textarea name={key} value={contact[key]} onChange={event => setContact(previous => ({ ...previous, [key]: event.target.value }))} maxLength={1000} rows={4} placeholder="Tell us about your workspace concept" aria-invalid={!!errors[key]} aria-describedby={errors[key] ? `quote-error-${key}` : undefined} /> :
@@ -62,9 +62,10 @@ export function QuoteDraft({ configuration, active = true, sourcePublicId }: { c
         <div className="quote-trap" aria-hidden="true"><label>Website<input name="website" value={website} onChange={event => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" maxLength={200} /></label></div>
         <label className="quote-consent full-width"><input name="consent" type="checkbox" checked={consent} onChange={event => setConsent(event.target.checked)} required />I understand this is a demo enquiry and my contact details will be stored temporarily.</label>
         {currentOffer && <div className="full-width quote-price-review"><p>Updated estimate: {formatUsd(currentOffer.estimatedTotalCents)} USD · Catalog {currentOffer.catalogVersion}. Tax and shipping excluded.</p><label className="quote-consent"><input type="checkbox" checked={accepted} onChange={event => setAccepted(event.target.checked)} required />I confirm this current estimate.</label></div>}
-        <p id="quote-draft-note" className="full-width">Sign in before submitting to track this request in your dashboard. Guest requests are not linked later. Contact fields stay in this page until submitted. They are never saved in your browser draft or public share.</p>
+        <p className="full-width fine">Sign in before submitting to track your request in My studio. Guest requests stay separate.</p>
+        <p id="quote-draft-note" className="full-width">Contact details are scheduled for deletion within seven days. They never appear in public design links.</p>
         {Object.keys(errors).length > 0 && <div className="full-width quote-error" role="alert">{errors.form ?? errors.configuration ?? errors.consent ?? 'Check the highlighted fields.'}</div>}
-        <button type="submit" className="button full-width" disabled={!active || busy || !consent || (!!currentOffer && !accepted)}>{busy ? 'Sending demo request…' : 'Demo quote submission'}</button>
+        <button type="submit" className="button full-width" disabled={!active || busy || !consent || (!!currentOffer && !accepted)}>{busy ? 'Sending demo request…' : 'Send demo request'}</button>
         {!active && <p className="full-width">Enable JavaScript to submit this demo enquiry.</p>}
       </fieldset>
     </form>

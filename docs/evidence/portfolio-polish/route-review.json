@@ -1,0 +1,287 @@
+{
+  "browser": "chromium",
+  "checks": [
+    {
+      "route": "landing",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "landing",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "landing",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "landing",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "configure",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "configure",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "configure",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "configure",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "shared",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "shared",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "shared",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "shared",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "edit-copy",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "edit-copy",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "edit-copy",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "edit-copy",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "login",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "login",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "login",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "login",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "dashboard",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "dashboard",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "dashboard",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "dashboard",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "quote-detail",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "quote-detail",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "quote-detail",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "quote-detail",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-login",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-login",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-login",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-login",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-inbox",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-inbox",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-inbox",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-inbox",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-detail",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-detail",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-detail",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "admin-detail",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    }
+  ],
+  "fixtures": "Fictional isolated local PostgreSQL only",
+  "screenshotCount": 12
+}

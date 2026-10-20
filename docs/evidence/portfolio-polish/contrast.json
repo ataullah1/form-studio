@@ -1,0 +1,66 @@
+[
+  {
+    "usage": "Body",
+    "foreground": "#2b211c",
+    "background": "#f4ede3",
+    "ratio": 13.51,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "usage": "Muted body",
+    "foreground": "#705e53",
+    "background": "#f4ede3",
+    "ratio": 5.29,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "usage": "Muted surface",
+    "foreground": "#705e53",
+    "background": "#fffbf5",
+    "ratio": 5.96,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "usage": "Primary button",
+    "foreground": "#fffbf5",
+    "background": "#a3442d",
+    "ratio": 5.95,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "usage": "Dark surface muted",
+    "foreground": "#cbbbab",
+    "background": "#2b211c",
+    "ratio": 8.4,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "usage": "Selected status",
+    "foreground": "#a3442d",
+    "background": "#f2dfd3",
+    "ratio": 4.75,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "usage": "Control boundary",
+    "foreground": "#8c7464",
+    "background": "#fffbf5",
+    "ratio": 4.25,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "usage": "Focus",
+    "foreground": "#a3442d",
+    "background": "#f4ede3",
+    "ratio": 5.28,
+    "minimum": 3,
+    "pass": true
+  }
+]

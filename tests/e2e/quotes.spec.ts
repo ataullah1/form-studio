@@ -20,7 +20,7 @@ test('quote form uses the canonical design, stores a server-priced private reque
   await page.getByLabel('Email', { exact: true }).fill('fictional@example.com');
   await page.getByRole('checkbox', { name: /I understand this is a demo enquiry/ }).check();
   const response = page.waitForResponse(r => r.url().endsWith('/api/quotes'));
-  await page.getByRole('button', { name: 'Demo quote submission', exact: true }).click();
+  await page.getByRole('button', { name: 'Send demo request', exact: true }).click();
   const result = await response; expect(result.status()).toBe(201); const receipt = await result.json();
   await expect(page.getByText('Demo request received.', { exact: false })).toBeVisible();
   expect(Object.keys(receipt).sort()).toEqual(['reference','estimatedTotalCents','catalogVersion'].sort()); expect(receipt.estimatedTotalCents).toBe(43900);
@@ -55,8 +55,8 @@ test('unconfirmed writes retain inputs, retry the same key and expose no prematu
   await page.goto('/configure');await page.getByLabel('Name',{exact:true}).fill('Fictional Retry');await page.getByLabel('Email',{exact:true}).fill('retry@example.com');await page.getByRole('checkbox',{name:/I understand this is a demo enquiry/}).check();
   const keys: string[]=[]; let reference='';
   await page.route('**/api/quotes',async route=>{keys.push(route.request().headers()['idempotency-key']);if(keys.length===1){const result=await route.fetch();expect(result.status()).toBe(201);reference=(await result.json()).reference;await route.fulfill({status:503,json:{error:'Confirmation unavailable. Please retry.'}});}else await route.continue();});
-  await page.getByRole('button',{name:'Demo quote submission',exact:true}).click();await expect(page.locator('#quote-draft').getByRole('alert')).toContainText('Confirmation unavailable');await expect(page.getByLabel('Name',{exact:true})).toHaveValue('Fictional Retry');await expect(page.getByText('Demo request received.',{exact:false})).toHaveCount(0);
-  await page.getByRole('button',{name:'Demo quote submission',exact:true}).click();await expect(page.getByText(reference,{exact:true})).toBeVisible();expect(keys[0]).toBe(keys[1]);
+  await page.getByRole('button',{name:'Send demo request',exact:true}).click();await expect(page.locator('#quote-draft').getByRole('alert')).toContainText('Confirmation unavailable');await expect(page.getByLabel('Name',{exact:true})).toHaveValue('Fictional Retry');await expect(page.getByText('Demo request received.',{exact:false})).toHaveCount(0);
+  await page.getByRole('button',{name:'Send demo request',exact:true}).click();await expect(page.getByText(reference,{exact:true})).toBeVisible();expect(keys[0]).toBe(keys[1]);
 });
 
 test('stale source estimates require explicit confirmation of current catalog price', async ({ request }) => {
@@ -88,12 +88,12 @@ test('copy editing requires visible current-estimate acknowledgment before writi
   await page.getByLabel('Name', { exact: true }).fill('Fictional Price Review');
   await page.getByLabel('Email', { exact: true }).fill('price-review@example.com');
   await page.getByRole('checkbox', { name: /I understand this is a demo enquiry/ }).check();
-  await page.getByRole('button', { name: 'Demo quote submission', exact: true }).click();
+  await page.getByRole('button', { name: 'Send demo request', exact: true }).click();
   await expect(page.getByText('Updated estimate: $439 USD', { exact: false })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Demo quote submission', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Send demo request', exact: true })).toBeDisabled();
   await expect(page.getByLabel('Name', { exact: true })).toHaveValue('Fictional Price Review');
   await page.getByRole('checkbox', { name: 'I confirm this current estimate.', exact: true }).check();
-  await page.getByRole('button', { name: 'Demo quote submission', exact: true }).click();
+  await page.getByRole('button', { name: 'Send demo request', exact: true }).click();
   await expect(page.getByText('Recorded estimate: $439 USD', { exact: true })).toBeVisible();
 });
 
@@ -108,7 +108,7 @@ test('a contact storage failure rolls back metadata and preserves form inputs wi
     await page.getByLabel('Email', { exact: true }).fill('storage-failure@example.com');
     await page.getByRole('checkbox', { name: /I understand this is a demo enquiry/ }).check();
     const pending = page.waitForResponse(response => response.url().endsWith('/api/quotes'));
-    await page.getByRole('button', { name: 'Demo quote submission', exact: true }).click();
+    await page.getByRole('button', { name: 'Send demo request', exact: true }).click();
     const response = await pending; expect(response.status()).toBe(503);
     const key = response.request().headers()['idempotency-key'];
     await expect(page.locator('#quote-draft').getByRole('alert')).toContainText('could not be confirmed');
@@ -141,7 +141,7 @@ test('without WebGL the configuration, estimate and real demo quote submission r
   await page.getByLabel('Email', { exact: true }).fill('fallback@example.com');
   await page.getByRole('checkbox', { name: /I understand this is a demo enquiry/ }).check();
   const response = page.waitForResponse(r => r.url().endsWith('/api/quotes'));
-  await page.getByRole('button', { name: 'Demo quote submission', exact: true }).click();
+  await page.getByRole('button', { name: 'Send demo request', exact: true }).click();
   expect((await response).status()).toBe(201);
   await expect(page.getByText('Demo request received.', { exact: false })).toBeVisible();
   await expect(page.locator('canvas')).toHaveCount(0);

@@ -21,7 +21,7 @@ test('save persists across browsers; shared source beats drafts and editing crea
   await page.getByRole('button', { name: '160 × 80 cm', exact: true }).click();
   await page.getByRole('checkbox', { name: /Desk lamp/ }).check();
   await page.getByLabel('Name', { exact: true }).fill('Fictional private visitor');
-  await page.getByRole('button', { name: 'Save & share', exact: true }).click();
+  await page.getByRole('button', { name: 'Share design', exact: true }).click();
   const link = page.getByLabel('Share link', { exact: true });
   await expect(link).toBeVisible();
   const url = await link.inputValue();
@@ -32,7 +32,7 @@ test('save persists across browsers; shared source beats drafts and editing crea
   await second.goto(url);
   const summary = second.getByRole('region', { name: 'Saved design summary' });
   await expect(summary).toContainText('Walnut'); await expect(summary).toContainText('160 × 80'); await expect(summary).toContainText('Desk lamp');
-  await expect(summary.locator('.total')).toContainText('$534');
+  await expect(summary.locator('.detail-estimate')).toContainText('$534');
   await expect(second.getByRole('button', { name: 'Reset configuration' })).toHaveCount(0);
   expect(await second.evaluate(key => JSON.parse(localStorage.getItem(key)!), DRAFT_KEY)).toEqual(defaultConfiguration);
   await second.getByRole('link', { name: 'Edit a copy' }).click();
@@ -117,11 +117,11 @@ test('an unconfirmed save preserves the design and retries the same key without 
       await route.fulfill({ status: 503, json: { error: 'Save confirmation unavailable. Please retry.' } });
     } else await route.continue();
   });
-  await page.getByRole('button', { name: 'Save & share', exact: true }).click();
+  await page.getByRole('button', { name: 'Share design', exact: true }).click();
   await expect(page.getByText('Save confirmation unavailable. Please retry.', { exact: true })).toBeVisible();
   await expect(page.getByLabel('Share link', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('radio', { name: 'Walnut', exact: true })).toBeChecked();
-  await page.getByRole('button', { name: 'Save & share', exact: true }).click();
+  await page.getByRole('button', { name: 'Share design', exact: true }).click();
   await expect(page.getByLabel('Share link', { exact: true })).toHaveValue(new RegExp(savedId));
   expect(keys[0]).toBe(keys[1]);
   const rows = await admin(db => db.query('SELECT COUNT(*)::int AS count FROM app.shared_configurations WHERE idempotency_key=$1', [keys[0]]));

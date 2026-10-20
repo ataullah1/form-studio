@@ -22,7 +22,7 @@ test('story navigation reaches the live configurator and enquiry without startin
   let sceneChunks = 0; page.on('request', r => { if (/three|react-three/.test(r.url())) sceneChunks++; });
   await page.goto('/');
   await page.getByRole('link', { name: 'How it works', exact: true }).click(); await expect(page).toHaveURL(/#how-it-works$/);
-  await page.getByRole('link', { name: 'Try the demo enquiry' }).click(); await expect(page).toHaveURL(/\/configure#quote-draft$/);
+  await page.getByRole('link', { name: 'Request a quote' }).click(); await expect(page).toHaveURL(/\/configure#quote-draft$/);
   await expect(page.getByLabel('Name', { exact: true })).toBeVisible();
   await expect(page.locator('canvas')).toHaveCount(0); expect(sceneChunks).toBe(0);
 });

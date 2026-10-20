@@ -1,0 +1,1 @@
+export default function Loading(){return <section className="workspace-loading" role="status" aria-busy="true"><p className="eyebrow">MY STUDIO</p><h1>Opening your studio…</h1><div className="loading-line"/><div className="loading-panel"/><p className="fine">Loading your saved designs and quote requests.</p></section>;}

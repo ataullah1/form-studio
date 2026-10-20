@@ -75,10 +75,10 @@ export function SceneViewer({ configuration, readOnly = false }: { configuration
   const fallback = <Unavailable reason="3D is unavailable. Showing the 2D schematic." configuration={configuration} />;
   return <section className="scene-viewer" aria-labelledby="viewer-title">
     <div className="viewer-top"><h2 id="viewer-title">Scene preview</h2><span className="scene-version">01 / 3D</span></div>
-    <p className="scene-notice">{readOnly ? 'Explore this saved design. Choose Edit a copy to change its options.' : 'Choose a size, finish, frame and fixed-position accessories. Rotate or zoom to explore.'}</p>
+    <p className="scene-notice">{readOnly ? 'Explore the saved design. Edit a copy to make it yours.' : 'Your selected desk, ready to explore in 2D or 3D.'}</p>
     {mode !== 'fallback' && <div className="quality-actions" role="group" aria-label="Preview quality">
       <span>Preview quality</span>{(['balanced', 'low'] as const).map(value => <button key={value} type="button" className="secondary-button" aria-pressed={quality === value} onClick={() => setQuality(value)}>{value === 'low' ? 'Low' : 'Balanced'}</button>)}
-      <p>{quality === 'low' ? 'Lower resolution and no shadows for a lighter preview.' : 'Balanced detail and soft shadows.'} Your design and estimate stay the same.</p>
+      <p>{quality === 'low' ? 'Lighter preview.' : 'Detail and soft shadows.'}</p>
     </div>}
     {(mode === 'idle') && <div className="scene-idle">
       <DeskSchematic configuration={configuration} />

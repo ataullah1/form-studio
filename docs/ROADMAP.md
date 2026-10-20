@@ -7,6 +7,12 @@
 Md Ataullah এর জন্য সম্পূর্ণ development guide
 প্রস্তুত ১৮ অক্টোবর ২০২৬
 
+## Current implementation — 2026-10-20
+
+এই document-এর numbered steps মূল implementation history/guide। বর্তমান application Step 2-এর বাইরে: sizes/materials/accessories, pricing/local drafts, immutable public sharing, private quote persistence, Google customer accounts/My studio, admin inbox এবং automated performance checks ইতিমধ্যে আছে। পুরো-app polish এগুলো অক্ষত রাখে। Current verification ও physical-device gaps docs/PROGRESS.md-এ আছে; পুরোনো “future/disabled” descriptions দিয়ে implemented features সরাবেন না।
+
+Current journey: Discover → Configure → Save or share → Request a quote → Track the request. Account-linked new designs/requests আর guest links আলাদা থাকে; admin allowlist কেবল private inbox/status mutations নিয়ন্ত্রণ করে।
+
 ## Project এর উদ্দেশ্য
 একটি কাল্পনিক premium furniture brand এর জন্য interactive desk configurator বানাবেন। Visitor desk ঘুরিয়ে দেখবে, finish এবং size বদলাবে, accessories যোগ করবে, price দেখবে এবং নিজের configuration share বা quote request করবে। English interface বিদেশি furniture brand ও ecommerce agency কে আপনার frontend ও product engineering দেখানোর জন্য তৈরি হবে।
 
@@ -68,9 +74,9 @@ Brand direction: **Architectural furniture atelier** — bold, tactile, precise 
 
 Typography: next/font দিয়ে upright Bodoni Moda display headings এবং Manrope body/navigation/controls। Oversized headings, asymmetric product composition, square surfaces, fine rules এবং numbered specifications ব্যবহার করুন। Decorative italic emphasis, pill decoration এবং generic rounded-card grids নয়। Main action: Build your desk।
 
-Landing hero থাকবে optimized static illustration/poster; অতিরিক্ত Canvas নয়। Desktop configurator এ সবচেয়ে বড় useful scene area এবং পাশে HTML specification panel; mobile এ viewer-এর পরে controls normal document flow-তে থাকবে। Loading/error boundary, orbit/zoom/reset এবং non-WebGL fallback অক্ষত থাকবে। Full-width development banner নয়; viewer-এর পাশে compact note: “Geometry preview — material and configuration options are in development.” Material library Step 3 পর্যন্ত preview হিসেবে labelled থাকবে এবং unfinished product controls disabled থাকবে। Independent-concept ও illustrative-pricing disclosures স্পষ্ট রাখুন।
+Landing hero-তে actual implemented desk-এর optimized static render থাকবে; landing-এ Canvas নয়। Materials-এ licensed maps ও accessories-এ original technical previews ব্যবহার করুন। Functional screens-এ compact header/footer, restrained sans-serif headings, clear options/estimates/actions এবং useful loading/error/empty states রাখুন। Desktop-এ পর্যাপ্ত viewport height থাকলেই viewer sticky হবে; mobile-এ normal scrolling ও unobstructed controls থাকবে। 2D fallback selected accessories ও dimensions দেখাবে। Busy/loading/unavailable actions ছাড়া implemented choices disabled নয়।
 
-Restrained feedback transitions, prefers-reduced-motion এবং normal browser scrolling বজায় রাখুন। অতিরিক্ত glow, particle, custom cursor, continuous decorative animation বা mandatory intro নয়। এটি existing Step 2 screens-এর visual revision; Step 3–12 feature completion নয়। Final product-story expansion এখনও Step 10-এর দায়িত্ব।
+Restrained feedback transitions, prefers-reduced-motion এবং normal browser scrolling বজায় রাখুন। অতিরিক্ত glow, particle, custom cursor, continuous decorative animation বা mandatory intro নয়। Original Step 2 visual revision historical; current polish applies across the implemented application. No unverified release/device acceptance is implied.
 
 ## নির্ধারিত product
 Working product name Studio Desk 01। Height ৭৪ সেমি; tabletop thickness ৩ সেমি। Width/depth preset ১২০×৬০, ১৪০×৭০ এবং ১৬০×৮০ সেমি। এগুলো demo design dimension; load rating বা ergonomic certification দাবি করবেন না।
@@ -329,7 +335,7 @@ Name, email, optional company/country এবং short project message রাখ�
 Quote public share response থেকে আলাদা। Public reference চাইলে opaque reference দিয়ে acknowledgment দেখান, contact fields দিয়ে public lookup নয়। Raw input, email বা message server logs এ নয়। Repository বা seed এ real enquiries নয়। Public demo চাইলে fictional test details ব্যবহার করতে বলুন; purge job দিয়ে demo quote contact data ৭ দিনের মধ্যে মুছুন। Public saved setups এ PII রাখা যাবে না।
 
 ## Acceptance checks
-Invalid email rejected। Client total $1 পাঠালেও server catalog estimate থাকে। Double submit একটি quote বানায়। DB failure এ false success নয়; input বজায় থাকে। Admin ছাড়া quote list বা guessed ID থেকে contact পাওয়া যায় না। Long text বা scripted content execute হয় না।
+Invalid email rejected। Client total $1 পাঠালেও server catalog estimate থাকে। Double submit একটি quote বানায়। DB failure এ false success নয়; input বজায় থাকে। Admin ছাড়া পুরো quote list বা contact পাওয়া যায় না; signed-in customers কেবল নিজের request metadata/status দেখে। Long text বা scripted content execute হয় না।
 
 ## Codex prompt
 Complete Step 8 only. Implement a clearly labelled demo quote form, server-authoritative current-catalog price snapshots, idempotent persistence, anti-abuse limits and reliable success/error states. Keep quote PII private and out of public shares, logs and localStorage. Add a documented seven-day demo-data cleanup path. Do not send email, take payments or imply a real order was placed.
@@ -339,7 +345,7 @@ Complete Step 8 only. Implement a clearly labelled demo quote form, server-autho
 সময় ১ থেকে ২ দিন। Dependency Step 8।
 
 ## Admin scope
-শুধু আপনার quote inbox; customer login বা public signup dashboard নয়। Google OIDC verified login এবং server-controlled allowed user IDs ব্যবহার করুন। Allowlist .env বা server configuration এ থাকবে। নতুন user ID client request বা public sign up দিয়ে admin হতে পারবে না।
+এই admin step শুধু আপনার quote inbox নিয়ে। পরবর্তীতে user-requested Google customer login/My studio যোগ হয়েছে; সেটি admin permission পায় না। Google OIDC verified login এবং server-controlled allowed user IDs ব্যবহার করুন। Allowlist .env বা server configuration এ থাকবে। নতুন user ID client request বা public sign up দিয়ে admin হতে পারবে না।
 
 ## প্রয়োজনীয় screens
 - /admin/login এবং protected /admin/quotes।

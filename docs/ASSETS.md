@@ -59,3 +59,9 @@ Lamp, monitor stand and cable tray in src/features/scene/desk-accessories.tsx ar
 ## Step 5 lighting
 
 Day/night use original code-authored fixed light presets. The lamp bulb is original sphere geometry with a local light. No HDRI, environment image, external model or new font introduced; prior texture licenses remain unchanged.
+
+## Portfolio polish additions — 2026-10-20
+
+- `public/assets/studio-desk-01.png`: static screenshot of this repository's actual parameterized desk, oak/black, default 140 × 70 cm with optional lamp and monitor stand. Captured locally in the production viewer using installed Chrome/software WebGL; original geometry, existing lighting and licensed wood maps. No AI render, external model, stock photo or claim of a manufactured product. Original PNG is approximately 131 KiB; next/image serves responsive optimized variants.
+- Accessory previews and enhanced fallback are original inline SVG/code in `components/product/accessory-preview.tsx` and `features/scene/desk-schematic.tsx`, representing only the implemented lamp/stand/tray. They are technical illustrations, not additional product options.
+- Marketing material crops use the same existing Poly Haven CC0 colour maps and concept finish coats; provenance above remains unchanged. The earlier SVG grain studies remain lightweight selector-chip/archived assets.

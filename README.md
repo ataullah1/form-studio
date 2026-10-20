@@ -85,6 +85,7 @@ Setup reference: [Vercel Web Analytics quickstart](https://vercel.com/docs/analy
 - [Step 11 evidence](docs/evidence/step-11/README.md)
 - [Product story and SEO](docs/DISCOVERY.md)
 - [Step 10 evidence](docs/evidence/step-10/README.md)
+- [Whole-application polish and screenshots](docs/evidence/portfolio-polish/README.md)
 - [Google accounts and personal dashboard](docs/ACCOUNTS.md)
 - [Private Google admin setup](docs/ADMIN.md)
 - [Step 9 evidence](docs/evidence/step-9/README.md)

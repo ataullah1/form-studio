@@ -1,0 +1,3 @@
+import Link from 'next/link';
+import { SiteHeader,SiteFooter } from '@/components/site-chrome';
+export default function NotFound(){return <><SiteHeader configurator/><main id="main-content" className="workspace-shell"><div className="empty-state"><p className="eyebrow">404 / NOT FOUND</p><h1>This page is out of view.</h1><p>The link may be incomplete, unavailable, or belong to another account.</p><div className="inline-actions"><Link className="button" href="/dashboard">My studio ↗</Link><Link className="secondary-button" href="/configure">Build your desk</Link></div></div></main><SiteFooter compact/></>;}

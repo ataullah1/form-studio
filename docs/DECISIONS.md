@@ -99,3 +99,14 @@ Quote fields live below the canonical configurator and outside Canvas, so submit
 ## Step 9 — Google owner authentication
 
 The user chose Google. Use server OIDC code flow with PKCE/state/nonce and jose verification; authorize stable sub IDs from server environment. Store only random session hashes in Neon, with a separate restricted admin web role so the public quote runtime still cannot read contacts. Versioned status updates and actor history commit together. No Google API scopes beyond openid, provider tokens, customer accounts or public admin preview. Admin routes bypass Analytics.
+
+## 2026-10-20 — whole-application portfolio polish
+
+- Preserve all implemented routes, canonical configuration, pricing, immutable sharing, ownership checks, quote idempotency and admin authorization. Earlier Step 2 future-state copy is historical. No package/infrastructure/database migration changes.
+- Use one semantic palette/control scale plus reusable wordmark, workspace headers, compact app footer, product specifications/previews, status badges, page headings and empty/retry states. Oversized Bodoni belongs to collection moments; functional headings use Manrope.
+- Capture the actual implemented desk once for a lightweight static landing poster; keep a single on-demand runtime Canvas. Reuse licensed source wood maps in marketing detail and original code-drawn accessory previews. SVG fallback reflects selected size/finish/frame/accessories without claiming manufacturing accuracy.
+- Put the account-versus-guest save choice at the action. Signed-in saves remain shareable by opaque public links; contact/ownership metadata never enters public share responses. No retroactive guest claim/import is introduced.
+- Preserve product-only auth context in expiring tab session storage; restore only for an explicit resume path and matching shared source. Normal shared-link priority still wins without that explicit context. Contact fields are never stored.
+- Validate safe return paths by allowlist and bind return cookies to the verified one-time browser flow with HMAC. Admin destinations additionally require the already-verified owner destination; no return URL grants roles. Reuse existing Google callback, sessions and environment settings.
+- Scope list skeletons in route groups so private quote detail misses retain HTTP 404 rather than committing a streaming 200 response first. Routes/records/grants remain unchanged.
+- Keep physical-device, deployed-provider/cron and release acceptance separate from local production/isolated fixture evidence. No commit/push/deploy or production writes.

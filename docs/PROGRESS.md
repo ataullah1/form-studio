@@ -18,7 +18,16 @@ Save as docs/PROGRESS.md. Keep the full roadmap at docs/ROADMAP.md.
 - [ ] Step 11 Tests and mobile performance — automated checks/budgets verified; physical-phone acceptance pending
 - [ ] Step 12 Release and portfolio
 
-## Current session — public accounts and personal dashboard (2026-10-20)
+## Current session — whole-application portfolio polish (2026-10-20)
+
+- Implemented a cohesive collection/workspace/operations presentation across all ten route variants. Kept all later features and private boundaries; no production data, credentials, schema/grants or dependency changes.
+- Landing now uses a static render of the actual implemented desk, visual accessory studies, licensed grain details and concise guest/account workflow. App screens use a compact footer and shared wordmark, controls, headings, specification lists, previews and status badges.
+- Configurator follows Size → Finish → Frame → Accessories; price breakdown expands on demand; save/share choices and auth context are explained at the action; request labels are consistent. Fallback SVG renders selected accessories. Existing 3D camera/material/quality/render behavior remains.
+- Branded Google panels have pending/error/retry states. Product-only auth resume preserves local/shared-copy selections; return paths are allowlisted, flow-bound and role checked. No new callback, signup policy or guest-ownership shortcut.
+- My studio, public share, customer request and admin inbox/detail now prioritize the product, saved estimate, dates/status and clear next actions. List loading/retry/empty states and safe navigation added. Actual status history remains admin-only.
+- Verified production build, TypeScript, 132 unit tests, all 70 unique browser checks across full/targeted runs, and 40 route/viewport reviews with 12 screenshots. Lint passed with one documented intentional full-page logout navigation warning. Contrast and performance budgets passed. Evidence: docs/evidence/portfolio-polish/README.md. Remaining physical-phone, real Google provider/deployed cron and release gates remain open. No automatic commit, push, deployment or production migration.
+
+## Previous session — public accounts and personal dashboard (2026-10-20)
 
 - User requested anyone be able to Google-sign-in and see only their own designs/quote requests. Added public /login, personal /dashboard and owner-filtered request detail; admin inbox/status mutations retain the server allowlist.
 - Reused existing Google callback/credentials and eight-hour hashed sessions; login destination is stored with the one-time flow. Non-admins receive user sessions and dashboard access. Logout/revocation and expired-session write failures apply to all accounts.

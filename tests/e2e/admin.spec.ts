@@ -27,11 +27,11 @@ const changeHeaders = { Origin: origin, 'Content-Type': 'application/json' };
 
 test('logged-out, expired and non-allowlisted sessions receive no private quote data', async ({ page, context, request }) => {
   const q = await seed();
-  await page.goto(`/admin/quotes/${q.reference}`); await expect(page).toHaveURL(/\/admin\/login$/); expect(await page.content()).not.toContain('fictional-admin@example.com');
+  await page.goto(`/admin/quotes/${q.reference}`); await expect(page).toHaveURL(/\/admin\/login(?:\?|$)/); expect(await page.content()).not.toContain('fictional-admin@example.com');
   expect((await request.post(`/api/admin/quotes/${q.reference}/status`, { headers: changeHeaders, data: { status: 'CLOSED', version: 0 } })).status()).toBe(401);
   await signIn(context, '999999999999999999999'); await page.goto(`/admin/quotes/${q.reference}`); await expect(page.locator('main').getByRole('alert')).toContainText('cannot access'); expect(await page.content()).not.toContain('fictional-admin@example.com');
   expect((await context.request.post(`/api/admin/quotes/${q.reference}/status`, { headers: changeHeaders, data: { status: 'CLOSED', version: 0 } })).status()).toBe(403);
-  await context.clearCookies(); await signIn(context, ownerId, true); await page.goto(`/admin/quotes/${q.reference}`); await expect(page).toHaveURL(/\/admin\/login$/); expect(await page.content()).not.toContain('fictional-admin@example.com');
+  await context.clearCookies(); await signIn(context, ownerId, true); await page.goto(`/admin/quotes/${q.reference}`); await expect(page).toHaveURL(/\/admin\/login(?:\?|$)/); expect(await page.content()).not.toContain('fictional-admin@example.com');
 });
 
 test('owner can read original details and paginated status-filtered list with private cache policy', async ({ page, context }) => {
@@ -41,7 +41,7 @@ test('owner can read original details and paginated status-filtered list with pr
   expect(response!.headers()['cache-control']).toContain('no-store'); expect(response!.headers()['x-robots-tag']).toContain('noindex');
   await expect(page.locator('.admin-list li')).toHaveCount(20); await page.getByRole('link', { name: 'Next', exact: true }).click(); await expect(page.getByText('Page 2', { exact: true })).toBeVisible();
   let analytics = 0; page.on('request', request => { if (request.url().includes('/_vercel/insights/')) analytics++; });
-  await page.goto(`/admin/quotes/${q.reference}`); await expect(page.getByText('fictional-admin@example.com', { exact: true })).toBeVisible(); await expect(page.getByText('<script>plain text</script>', { exact: true })).toBeVisible(); await expect(page.getByText(/Saved estimate \$399.00/)).toBeVisible(); expect(analytics).toBe(0);
+  await page.goto(`/admin/quotes/${q.reference}`); await expect(page.getByText('fictional-admin@example.com', { exact: true })).toBeVisible(); await expect(page.getByText('<script>plain text</script>', { exact: true })).toBeVisible(); await expect(page.locator('.detail-estimate')).toContainText('$399'); expect(analytics).toBe(0);
   expect(await page.evaluate(() => JSON.stringify({ ...localStorage }))).not.toContain('fictional-admin');
 });
 
@@ -71,11 +71,12 @@ test('origin checks and logout prevent forged and replayed status updates', asyn
 test('Google login binds PKCE, nonce and state to one browser; invalid callback is denied', async ({ page }) => {
   await page.route('https://accounts.google.com/**', route => route.fulfill({ status: 200, contentType: 'text/plain', body: 'Google redirect reached; no provider login in tests.' }));
   await page.goto('/admin/login');
+  const navigation=page.waitForRequest(r=>r.url().startsWith('https://accounts.google.com/o/oauth2/'));
   const posted = page.waitForResponse(response => response.url().endsWith('/api/admin/auth/google'));
   await page.getByRole('button', { name: 'Continue with Google' }).click();
-  const response = await posted; expect(response.status()).toBe(303);
+  const response = await posted; expect(response.status()).toBe(200);
   expect(response.request().headers().origin).toBe(origin);
-  const location = new URL(response.headers().location); expect(location.origin).toBe('https://accounts.google.com'); expect(location.searchParams.get('scope')).toBe('openid'); expect(location.searchParams.get('code_challenge_method')).toBe('S256'); expect(location.searchParams.get('redirect_uri')).toBe(origin + '/api/admin/auth/callback');
+  const location = new URL((await navigation).url()); expect(location.origin).toBe('https://accounts.google.com'); expect(location.searchParams.get('scope')).toBe('openid'); expect(location.searchParams.get('code_challenge_method')).toBe('S256'); expect(location.searchParams.get('redirect_uri')).toBe(origin + '/api/admin/auth/callback');
   const state = location.searchParams.get('state')!; const row = (await sql('SELECT * FROM app.admin_login_flows WHERE state_hash=$1', [hash(state)])).rows[0];
   expect(location.searchParams.get('code_challenge')).toBe(Buffer.from(hash(row.verifier), 'hex').toString('base64url')); expect(location.searchParams.get('nonce')).toBe(row.nonce);
   await page.context().clearCookies(); const callback = await page.context().request.get(`/api/admin/auth/callback?code=fake&state=${state}`); expect(callback.status()).toBe(400); expect(await callback.text()).not.toContain('verifier');

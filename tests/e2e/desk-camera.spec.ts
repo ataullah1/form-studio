@@ -77,7 +77,11 @@ test('portrait/landscape changes reframe a previously orbited and zoomed desk', 
   await page.setViewportSize({ width: 390, height: 844 });
   await settle(page);
   // Last action was reset: the resize must fit the original portrait composition.
-  expect((await canvas.screenshot()).equals(portrait)).toBe(true);
+  const returned = await canvas.screenshot();
+  const interiorChange = await changedInteriorFraction(page, portrait, returned);
+  console.log(JSON.stringify({ orientationInteriorChangedFraction: interiorChange }));
+  // Ignore only clipped screenshot edges; a framing regression changes the product interior.
+  expect(interiorChange).toBeLessThan(0.001);
   await expect(page.locator('canvas')).toHaveCount(1);
 });
 

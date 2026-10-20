@@ -63,7 +63,7 @@ test('without WebGL, schematic, summary and editable quote draft remain availabl
   await expect(page.getByRole('region', { name: 'Configuration summary' })).toContainText('$399');
   await expect(page.getByLabel('Name', { exact: true })).toHaveValue('Demo Workspace');
   await page.getByLabel('Email', { exact: true }).fill('demo@example.com');
-  await expect(page.getByRole('button', { name: /Demo quote submission/ })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Send demo request/ })).toBeDisabled();
   expect(errors).toEqual([]);
 });
 
@@ -90,7 +90,7 @@ test('a failed lazy scene chunk is contained by the viewer boundary', async ({ p
   await page.getByRole('button', { name: 'View desk in 3D' }).click();
   await expect(page.getByText('3D is unavailable.', { exact: false })).toBeVisible({ timeout: 25000 });
   await expect(page.getByLabel('Project message', { exact: false })).toHaveValue('Fictional draft stays here.');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Your desk');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Build your desk');
 });
 
 test('repeated navigation creates one Canvas and tears it down on exit', async ({ page }) => {
