@@ -1,4 +1,4 @@
-/** Viewer preferences never enter ProductConfiguration, pricing or future share payloads. */
+/** Viewer preferences never enter ProductConfiguration, pricing or share payloads. */
 export type LightingMode = 'day' | 'night';
 export const lightingPresets = {
   day: { background: null, ambient: 1.15, hemisphere: 1.1, key: 2.1, fill: 0.7, keyColour: '#ffffff', shadowOpacity: 0.18 },

@@ -56,10 +56,31 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
 }
 
 test('portrait/landscape changes reframe a previously orbited and zoomed desk', async ({ page }) => {
+  await page.addInitScript(() => {
+    for (const name of ['drawArrays', 'drawElements'] as const) {
+      const draw = WebGL2RenderingContext.prototype[name];
+      Reflect.set(WebGL2RenderingContext.prototype, name, function(this: WebGL2RenderingContext, ...args: unknown[]) {
+        Reflect.set(window, '__orientationFrame', { width: this.drawingBufferWidth, height: this.drawingBufferHeight });
+        return Reflect.apply(draw, this, args);
+      });
+    }
+  });
   await page.setViewportSize({ width: 390, height: 844 });
   await openDesk(page);
   const canvas = page.locator('canvas');
-  const portrait = await canvas.screenshot();
+  async function renderedSnapshot() {
+    // Screenshots scroll the canvas into view; allow its visibility-paused renderer
+    // to resume and draw at the new buffer size before comparing the image.
+    await canvas.scrollIntoViewIfNeeded();
+    await settle(page);
+    await expect.poll(() => page.evaluate(() => {
+      const canvas = document.querySelector('canvas')!;
+      const frame = Reflect.get(window, '__orientationFrame') as { width: number; height: number } | undefined;
+      return !!frame && frame.width === canvas.width && frame.height === canvas.height;
+    })).toBe(true);
+    return canvas.screenshot();
+  }
+  const portrait = await renderedSnapshot();
   const box = (await canvas.boundingBox())!;
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
@@ -68,17 +89,22 @@ test('portrait/landscape changes reframe a previously orbited and zoomed desk', 
   await page.getByRole('button', { name: 'Zoom in', exact: true }).click();
   await page.setViewportSize({ width: 844, height: 390 });
   await settle(page);
-  const landscapeFit = await canvas.screenshot();
+  const landscapeFit = await renderedSnapshot();
   await page.getByRole('button', { name: 'Reset view' }).click();
   await settle(page);
-  expect(await changedInteriorFraction(page, landscapeFit, await canvas.screenshot())).toBeLessThan(0.001);
+  expect(await changedInteriorFraction(page, landscapeFit, await renderedSnapshot())).toBeLessThan(0.001);
   await expect(canvas).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(844);
   await page.setViewportSize({ width: 390, height: 844 });
   await settle(page);
   // Last action was reset: the resize must fit the original portrait composition.
-  const returned = await canvas.screenshot();
-  const interiorChange = await changedInteriorFraction(page, portrait, returned);
+  let returned: Buffer = portrait;
+  let interiorChange = 1;
+  await expect.poll(async () => {
+    returned = await renderedSnapshot();
+    interiorChange = await changedInteriorFraction(page, portrait, returned);
+    return interiorChange;
+  }).toBeLessThan(0.001);
   console.log(JSON.stringify({ orientationInteriorChangedFraction: interiorChange, beforeSize: [portrait.readUInt32BE(16), portrait.readUInt32BE(20)], afterSize: [returned.readUInt32BE(16), returned.readUInt32BE(20)] }));
   // Ignore only clipped screenshot edges; a framing regression changes the product interior.
   expect(interiorChange).toBeLessThan(0.001);

@@ -1,6 +1,6 @@
 import { catalogV1, defaultConfiguration, type AccessoryId, type ProductConfiguration } from './index';
 
-/** Strict boundary for drafts, future share payloads and estimates. Never trust supplied prices. */
+/** Strict boundary for drafts, share payloads and estimates. Never trust supplied prices. */
 export function validateConfig(input: unknown): ProductConfiguration {
   if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('Invalid product configuration');
   const value = input as Record<string, unknown>;

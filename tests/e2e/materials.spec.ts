@@ -13,7 +13,7 @@ async function selectFinish(page: Page, label: string) {
   await expect(page.getByText(`${label} finish ready`, { exact: false })).toBeVisible();
 }
 
-test('all six finish/frame combinations agree with the summary and preserve future disabled controls', async ({ page }) => {
+test('all six finish/frame combinations agree with the summary and retain valid selected options', async ({ page }) => {
   await openMaterials(page);
   for (const finish of ['Oak', 'Walnut', 'Ash']) {
     await selectFinish(page, finish);

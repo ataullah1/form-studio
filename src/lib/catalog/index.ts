@@ -53,7 +53,7 @@ export const defaultConfiguration: ProductConfiguration = {
   accessoryIds: [],
 };
 
-/** Display helper only. Strict pricing lives in pricing.ts; server recomputation is a later step. */
+/** Display helper only. Strict pricing and server recomputation use pricing.ts. */
 export function formatUsd(cents: number): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 2,

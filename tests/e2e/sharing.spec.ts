@@ -5,7 +5,7 @@ import { defaultConfiguration } from '../../src/lib/catalog';
 import { DRAFT_KEY } from '../../src/features/configurator/local-draft';
 
 const testURL = process.env.TEST_DATABASE_URL;
-test.skip(!testURL, 'Requires isolated local Postgres: see docs/SHARING.md');
+test.skip(!testURL, 'Requires isolated local Postgres: see docs/testing.md');
 async function admin<T>(work: (db: Client) => Promise<T>) {
   const url = new URL(testURL!);
   if (url.hostname !== '127.0.0.1' || url.pathname !== '/form_studio_step7') throw new Error('Database tests require the disposable local form_studio_step7 database');
